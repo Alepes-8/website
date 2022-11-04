@@ -1,5 +1,6 @@
 import logo from './FoodFrontPage.png';
 import './App.css';
+import RecipeList from './components/RecipeList';
 
 function App() {
   return (
@@ -8,7 +9,9 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>
          Future recipe front page
+         
         </p>
+        <RecipeList/>
         <a
           className="App-link"
           href="https://reactjs.org"
