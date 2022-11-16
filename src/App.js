@@ -1,11 +1,26 @@
 import logo from './FoodFrontPage.png';
 import './App.css';
-import RecipeList from './components/RecipeList';
+import RecipeList from './RecipeList';
+import {NavBar, Brand, CTA} from './components';
+import {Blog, Features, Possibility,Header,Footer,WhatGPT3} from './containers';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <div className='gradient_bg'>
+        <NavBar>
+
+        </NavBar>
+      </div>
+      <Brand />
+      <WhatGPT3 />
+      <Features />
+      <Possibility />
+      <CTA> 
+      </CTA>
+      <Blog/>
+      <Footer/>
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
          Future recipe front page
@@ -20,7 +35,7 @@ function App() {
         >
           Learn React
         </a>
-      </header>
+      </header> */}
     </div>
   );
 }
