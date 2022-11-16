@@ -109,68 +109,12 @@ a {
   }
 }
 
-
-
-.App {
-  /*text-align: center;*/
+.footer_bg{
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: rgb(41, 39, 39);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
-
-.App-logo {
-  height: 60vmin;
-  pointer-events: none;
-
-}
-
-/*
-media is a media Querie.
-You could have one set of style rules for computer screens, 
-one for printers, one for handheld devices, one for television-type
-devices, and so on
-https://www.w3schools.com/css/css3_mediaqueries.asp
- */
-@media (prefers-reduced-motion: no-preference) {
-/*   .App-header {
-    animation: App-header-spin infinite 10s linear;
-  }
-  .App-logo {
-    animation: App-logo-spin infinite 5s linear;
-  } */
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61fb94;
-  /* animation: App-logo-spin infinite 5s linear; */
-
-}
-
-/*The @keyframes rule specifies the animation code.*/
-@keyframes 
-  App-header-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(360deg);
-  }
-  to {
-    transform: rotate(0deg);
-  }
-}
-

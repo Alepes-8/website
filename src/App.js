@@ -19,7 +19,10 @@ function App() {
       <CTA> 
       </CTA>
       <Blog/>
-      <Footer/>
+
+      <div className='footer_bg'>
+        <Footer/>
+      </div>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
