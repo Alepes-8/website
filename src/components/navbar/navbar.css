@@ -28,7 +28,6 @@
     align-items: center;
 }
 
-.gpt3__navbar-links_container p,
 .gpt3__navbar-sign p,
 .gpt3__navbar-menu_container p {
     color: #fff;
@@ -46,7 +45,6 @@
 
 .gpt3__navbar-menu {
     margin-left: 1rem;
-
     display: flex;
     position: relative;
 }
