@@ -2,7 +2,7 @@
 import './App.css';
 import RecipeList from './RecipeList';
 import {NavBar, Brand, CTA} from './components';
-import {Blog, Features, Possibility,Header,Footer,WhatGPT3} from './containers';
+import {Blog, Features, Possibility,Header,Footer,Categories} from './containers';
 
 function App() {
   return (
@@ -13,7 +13,14 @@ function App() {
         </NavBar>
       </div>
       <Brand />
-      <WhatGPT3 />
+
+      <div className=''>
+        <Categories>
+
+        </Categories>
+      </div>
+      
+
       <Features />
       <Possibility />
       <CTA> 
