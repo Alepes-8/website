@@ -19,12 +19,20 @@ function ButtonGroup(){
 
   return (
   <div className='categories'>
-    {categories.map(type => (
-      
+    {categories.map((type) => (
       <button>
         {type}
       </button>
-    ))}
+        
+      ))}
+
+
+    {/*{categories.map((type, index) => (
+      <button key={index}>
+        {type}
+      </button>
+        
+    ))*/}
   </div>
   )
 }
