@@ -1,4 +1,4 @@
-import logo from './FoodFrontPage.png';
+
 import './App.css';
 import RecipeList from './RecipeList';
 import {NavBar, Brand, CTA} from './components';

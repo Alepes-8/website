@@ -1,30 +1,68 @@
 .footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 2rem 6rem;
+    grid-template-areas:"settings links"
+                        "test footer";
+    display: grid;
+    grid-template-columns: repeat(4, 2fr);
+    text-size-adjust: auto
 }
 
 .footer_settings{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.footer_settings img{
+    width: 62.56px;
+    height: 62.56px;
+}
+
+.footer_settings p{
+    color: #fff;
+
 }
 
 .footer_links{
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
+    grid-column-start: 2;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    grid-row-end: 2;
+
+    text-align: right;
     align-items: center;
+    padding: 1rem 4rem;
+
 }
+
 
 .footer_links a {
     color: #fff;
     font-family: var(--font-family);
     font-weight: 500;
-    font-size: 18px;
-    line-height: 25px;
+    font-size: 15px;
+    line-height: 4px;
+    text-transform: capitalize;
+
+    margin: 0 1rem;
+    cursor: pointer;
+
+}
+
+.footer_tradeMark{
+    grid-column-start: 1;
+    grid-column-end: 5;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    text-align: center;
+
+}
+
+.footer_tradeMark p{
+    color: #fff;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 15px;
     text-transform: capitalize;
 
     margin: 0 1rem;
