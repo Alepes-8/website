@@ -1,4 +1,4 @@
-import logo from './FoodFrontPage.png';
+
 import './App.css';
 import RecipeList from './RecipeList';
 import {NavBar, Brand, CTA} from './components';
@@ -19,7 +19,10 @@ function App() {
       <CTA> 
       </CTA>
       <Blog/>
-      <Footer/>
+
+      <div className='footer_bg'>
+        <Footer/>
+      </div>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
