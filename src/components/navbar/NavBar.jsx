@@ -2,14 +2,15 @@ import React, {useState} from 'react'
 import './navbar.css';
 import logo from '../../assets/logo.png';
 import {RiMenu3Line, RiCloseLine} from 'react-icons/ri';
+import { RecipePage, SearchPage } from '../../pages';
+//import App from '../../App';
+//import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-
-/*import {RiMenu3Line, RiCloseLin} from 'react-icons/ri';*/
 const Menu = () =>(
   <>
-    <p> <a href="#home"> Home</a></p>
-    <p> <a href="#home"> Recipes</a></p>
-    <p> <a href="#home"> Search</a></p>
+    <p> <a href="/"> Home</a></p>
+    <p> <a href="/RecipePage"> Recipes</a></p>
+    <p> <a href="/SearchPage"> Search</a></p>
   </>
 )
 
@@ -45,5 +46,6 @@ const NavBar = () => {
     </div>
   );
 };
+
 
 export default NavBar
