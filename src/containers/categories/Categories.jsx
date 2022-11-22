@@ -10,17 +10,31 @@ function clickMe(){
 
 
 
-const categories = ['meat', 'fish', 'greens'];
+const categories = ['meat','vegan', 'fish', 'greens','vegitarian','pig','hallal','middle east', 'apitizer', 'desert'];
 
 function ButtonGroup(){
-  
-  return <div>
-    {categories.map(type => (
+  const [hideButtons, setHideText] = useState(false);
+  const [row, column] = useState(0);
+
+
+  return (
+  <div className='categories'>
+    {categories.map((type) => (
       <button>
         {type}
       </button>
-    ))}
+        
+      ))}
+
+
+    {/*{categories.map((type, index) => (
+      <button key={index}>
+        {type}
+      </button>
+        
+    ))*/}
   </div>
+  )
 }
 
 
