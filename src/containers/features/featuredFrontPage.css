@@ -1,0 +1,113 @@
+.featured_frontpage_area{
+    padding: 2rem 10rem;
+}
+
+.feature_frontPage_catagories{
+
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    text-size-adjust: auto
+
+
+}
+
+.feature_frontPage_catagories button {
+    background-color: #3f51b5;
+    color: white;
+    padding: 50px 300px;
+    border-radius: 5px;
+    outline: 0;
+    text-transform: uppercase;
+    margin: 10px 5px;
+    cursor: pointer;
+    box-shadow: 0px 2px 2px lightgray;
+    transition-duration: 250ms;
+    
+    
+
+}
+
+.feature_frontPage_Catagori_1{
+    grid-column-start: 0;
+    grid-column-end: 2;
+    grid-row-start: 0;
+    grid-row-end: 1;
+
+    background-color: aqua;
+    text-align: center;
+
+}
+
+.feature_frontPage_Catagori_2{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 0;
+    grid-row-end: 1;
+
+    background-color:brown;
+    text-align: center;
+}
+
+.feature_frontPage_Catagori_3{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+
+    background-color: red;
+    text-align: center;
+}
+
+.feature_frontPage_Catagori_4{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+
+    background-color: violet;
+    text-align: center;
+}
+
+.feature_catagory_button_setup {
+    display: grid;
+    grid-template-columns: repeat(2, 3fr);
+    text-size-adjust: auto;
+
+}
+
+.feature_catagory_button_image {
+    grid-column-start: 0;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+
+    background-color: red;
+}
+
+.feature_catagory_button_image img{
+    width: 62.56px;
+    height: 62.56px;
+}
+
+.feature_catagory_button_title {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 0;
+    grid-row-end: 1;
+
+    background-color: violet;
+
+    font-family: var(--font-family);
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.feature_catagory_button_info {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+
+    background-color: green;
+}

@@ -2,7 +2,7 @@
 import './App.css';
 import RecipeList from './RecipeList';
 import {NavBar, Brand, CTA} from './components';
-import {Blog, Features, Possibility,Header,Footer,Categories} from './containers';
+import {Blog, FeaturedFrontPage, Possibility,Header,Footer,Categories} from './containers';
 
 function App() {
   return (
@@ -14,18 +14,19 @@ function App() {
       </div>
       <Brand />
 
+      <Blog/>
+      
+
+      <FeaturedFrontPage />
       <div className=''>
         <Categories>
 
         </Categories>
       </div>
-      
-
-      <Features />
       <Possibility />
       <CTA> 
       </CTA>
-      <Blog/>
+      
 
       <div className='footer_bg'>
         <Footer/>

@@ -1,9 +1,11 @@
 .footer {
-    grid-template-areas:"settings links"
-                        "test footer";
+
     display: grid;
     grid-template-columns: repeat(4, 2fr);
     text-size-adjust: auto
+
+    /*padding: 2rem 6rem;*/
+
 }
 
 .footer_settings{
