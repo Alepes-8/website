@@ -1,0 +1,15 @@
+
+    .search_page{
+
+    
+    }
+
+    .search_page_search {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        text-size-adjust: auto
+    }
+
+    .search_page_result {
+
+    }
