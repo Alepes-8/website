@@ -6,6 +6,7 @@ import {Blog, Features, Possibility,/*Header,*/Footer,Categories} from './contai
 import {Routes, Route} from 'react-router-dom';
 import { StartPage, RecipePage, SearchPage } from './pages';
 
+
 function App() {
   return (
     <div className="App">
