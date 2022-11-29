@@ -4,7 +4,7 @@ import './App.css';
 import {NavBar, Brand, CTA} from './components';
 import {Blog, Features, Possibility,/*Header,*/Footer,Categories} from './containers';
 import {Routes, Route} from 'react-router-dom';
-import { StartPage, RecipePage, SearchPage, LoginPage } from './pages';
+import { StartPage, RecipePage, SearchPage, LoginPage, UsersRecipePage, UserPage } from './pages';
 
 
 function App() {
@@ -22,6 +22,12 @@ function App() {
         <Route path="/SearchPage" element={<SearchPage/>}/> 
 
         <Route path="/LoginPage" element={<LoginPage/>}/>
+
+        <Route path="/LoginPage" element={<LoginPage/>}/>
+
+        <Route path="/UserPage" element={<UserPage/>}/>
+
+        <Route path="/UsersRecipePage" element={<UsersRecipePage/>}/>
       </Routes>
 
       

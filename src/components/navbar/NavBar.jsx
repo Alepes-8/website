@@ -11,6 +11,8 @@ const Menu = () =>(
     <p> <a href="/"> Home</a></p>
     <p> <a href="/RecipePage"> Recipes</a></p>
     <p> <a href="/SearchPage"> Search</a></p>
+    <p> <a href="/UserPage"> UserPage</a></p>
+    <p> <a href="/UsersRecipePage"> UsersRecipePage</a></p>
   </>
 )
 
