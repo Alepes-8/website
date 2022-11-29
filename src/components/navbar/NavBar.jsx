@@ -26,7 +26,7 @@ const NavBar = () => {
 
       </div>
       <div className="gpt3__navbar-sign">
-        <p>Login</p>
+        <p><a href="/LoginPage">Login</a></p>
       </div>
       <div className="gpt3__navbar-menu">
         {toggleMenu
