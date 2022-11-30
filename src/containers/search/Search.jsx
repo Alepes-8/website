@@ -1,5 +1,30 @@
 import React from 'react';
 import './search.css';
+import {SearchResults} from '../../components';
+import temp from '../../assets/temp.png';
+
+
+class ResultingParts extends React.Component {
+  render() {
+    return (
+      <div className='Search_Results'>
+        <button>
+        
+            <div className='left'>
+              <div className='Search_Results_Image'><img src={this.props.Image} alt="logo"/> </div>
+            </div>
+            
+              <div className='Search_Results_Title'> {this.props.Title}  </div>
+              <div className='Search_Results_Info'> {this.props.Desciption}</div>
+            
+        
+        </button>
+        
+    </div>
+    );
+  }
+}
+
 
 const search = () => {
   return (
@@ -22,7 +47,12 @@ const search = () => {
         <div className='search_page_result'>
           
           <div className='results_seaction'>
-            <p> results</p>
+            <ResultingParts Image={temp} Title="hejsan" Desciption="Test"/> 
+            <ResultingParts Image={temp} Title="hejsan" Desciption="Test"/> 
+            <ResultingParts Image={temp} Title="hejsan" Desciption="Test sssssssssss sddasdhkhslkd ashdlfhaslkjdhf lkahsdlfkj asiud"/> 
+
+
+           
           </div>
         </div>
       </div>
