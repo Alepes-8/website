@@ -1,3 +1,4 @@
+
 *{
   box-sizing: border-box;
   padding: 0;
@@ -14,25 +15,7 @@ a {
 }
 
 .gradient_bg{
-
-  /* ff 3.6+ */
-  background:-moz-linear-gradient(139deg, rgba(31, 0, 255, 1) 5%, rgba(0, 188, 212, 1) 100%, rgba(238, 130, 238, 1) 100%); 
-
-  /* safari 5.1+,chrome 10+ */
-  background:-webkit-linear-gradient(139deg, rgba(31, 0, 255, 1) 5%, rgba(0, 188, 212, 1) 100%, rgba(238, 130, 238, 1) 100%);
-
-  /* opera 11.10+ */
-  background:-o-linear-gradient(139deg, rgba(31, 0, 255, 1) 5%, rgba(0, 188, 212, 1) 100%, rgba(238, 130, 238, 1) 100%);
-
-  /* ie 6-9 */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#EE82EE', endColorstr='#1F00FF', GradientType=1 );
-
-  /* ie 10+ */
-  background:-ms-linear-gradient(139deg, rgba(31, 0, 255, 1) 5%, rgba(0, 188, 212, 1) 100%, rgba(238, 130, 238, 1) 100%);
-
-  /* global 94%+ browsers support */
-  background:linear-gradient(139deg, rgba(31, 0, 255, 1) 5%, rgba(0, 188, 212, 1) 100%, rgba(238, 130, 238, 1) 100%);
-
+  background-image: linear-gradient(79deg, #02063f, #0905c5 48%, #000000);
 }
 
 .gradient_text{
