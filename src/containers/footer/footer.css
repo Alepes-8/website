@@ -1,5 +1,5 @@
 .footer {
-
+    background-image: linear-gradient(79deg, #02063f, #0905c5 48%, #000000);
     display: grid;
     grid-template-columns: repeat(4, 2fr);
     text-size-adjust: auto
