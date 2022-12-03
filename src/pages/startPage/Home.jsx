@@ -1,21 +1,35 @@
-import './Home.css';
+import './home.css';
 import React from 'react';
-import { HiArrowNarrowRight } from 'react-icons/hi';
-import {Categories,FeaturedFrontPage} from '../../containers';
+import temp from '../../assets/testporkleg.png';
+import {Categories} from '../../containers';
+
 
 const Home = () => {
   return (
-    <div className="SearchPage">
-      
-      <h1>
-      <FeaturedFrontPage />
-      <div className='categories'>
-          <Categories/>
+    <div className="featured">
+            <div className='recipe_alternatives'>
+                <button className='recipe_alternative_button'>
+                    <p> Title </p>
+                    <img src={temp} alt="Logo" />
+                </button>
+                <button className='recipe_alternative_button'>
+                    <p>  Christian Porklegssssssssssssssssssssssssss </p>
+                    <img src={temp} alt="Logo" />
+                </button>
+                <button className='recipe_alternative_button'>
+                    <p> Title </p>
+                    <img src={temp} alt="Logo" />
+                </button>
+                <button className='recipe_alternative_button'>
+                    <p> Title </p>
+                    <img src={temp} alt="Logo" />
+                </button>   
+            </div>
+            <div>
+                <Categories/>
+            </div>
         </div>
-      </h1>
-
-      
-    </div>
+   
   );
 };
 
