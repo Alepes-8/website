@@ -1,166 +1,103 @@
-.RecipePage{
-    font-family: var(font-family);
+.TestRecipePage{
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
+
     gap: 20px;
     min-height: 100vh;
-    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+
+    font-family: var(font-family);
     background-image: var(--color-background);
 }
 
-.Recipe_Title {
+.TestRecipePage h1 {
+    text-align: center;
+    max-width: 80%;
+    font-size: 70px;
+}
+
+.TestRecipePage img{
+
+    border-radius: 8px;
+
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 50%;
+    min-width: 600px;
+
+    box-shadow: 0 0 20px 1px rgba(0, 43, 235, 0.5);
+
+}
+
+.recipe_content{
+    display: flex;
+    align-items: center;
+    flex-direction:row;
+    gap:30vh;
+}
+
+
+.ingredience {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.ingredience table {
+    border-collapse: collapse;
+    max-width: 500px;
+    width: 100%;
+    margin: 2rem auto;
+
+    background-color: white;
+}
+
+.ingredience table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.processing{
+    display: flex;
+    align-items: center;
+    flex-direction:column;
+    max-width: 300px;
+}
+
+.Description{
+    display: flex;
+    align-items: center;
+    flex-direction:column;
+}
+
+.container{
+    width: 50%;
+  }
     
-}
-.Recipe_Title h1 {
-    font-family: var(font-family);
-    text-align: center;
-}
-
-.Recipe_Image{
-    text-align: center;
-}
-
-.Recipe_Image img{
-    width: 800px;
-    height: 400px;
-}
-
-.Recipe_Content_Holder{
-    padding: 2rem 10rem;
-
-    text-align: center;
-
-}
-
-.Recipe_Content {
+  .text{
+    display: inline;
+    width: 100%;
+  }
     
-    padding: 2rem 10rem;
+  .read-or-hide{
+    color: rgb(192,192,192);
+    cursor: pointer;
+  }
 
-    background-color: rgb(17, 0, 255);
-    text-align: center;
+  .recipe_comment{
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+  }
 
-
-    display: grid;
-    grid-template-columns: repeat(2, 2fr);
-    text-size-adjust: auto
-}
-
-
-.Recipe_Content_Igredients{
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 0;
-    grid-row-end: 1;
-
-    display: grid;
-    grid-template-columns: repeat(2, 2fr);
-    text-size-adjust: auto
-}
-
-.Recipe_Content_Direction {
-    grid-column-start: 2;
-    grid-column-end: 4;
-    grid-row-start: 0;
-    grid-row-end: 1;
-    
-    background-color: rgb(60, 255, 0);
-    text-align: center;
-
-    display: grid;
-    grid-template-columns: repeat(2, 2fr);
-    text-size-adjust: auto
-}
- 
-.Recipe_Content_Ingredients_Title{
-    grid-column-start: -4;
-    grid-column-end: 2;
-    grid-row-start: 0;
-    grid-row-end: 1;
-
-    background-color: rgb(60, 255, 0);
-    text-align: center;
-}
-
-.Recipe_Content_Ingredients_Serving{
-    grid-column-start: 2;
-    grid-column-end: 3;
-    grid-row-start: 0;
-    grid-row-end: 1;
-
-    background-color: rgb(183, 0, 255);
-    text-align: center;
-}
-
-.Recipe_Content_Ingredients_List{
-    grid-column-start: -4;
-    grid-column-end: 2;
-    grid-row-start: 1;
-    grid-row-end: 2;
-
-    background-color: rgb(255, 81, 0);
-    text-align: center;
-}
-
-.Recipe_Desciption{
-    padding: 2rem 10rem;
-
-    background-color: rgb(0, 4, 255);
-    text-align: center;
-}
-
-.Recipe_Desciption_Title{
-    
-    background-color: rgb(0, 255, 64);
-    text-align: center;
-    
-    font-family: var(--font-family);
-}
-
-.Recipe_Desciption_MainText{
-    background-color: rgb(255, 8, 0);
-    text-align: center;
-
-}
-
-.Recipe_Comment_Area{
-
-    padding: 2rem 10rem;
-
-    background-color: rgb(60, 255, 0);
-
-    text-align:center;
-}
-
-.Recipe_Coment{
-    padding: 2rem 10rem;
-
-    
-    background-color: rgb(0, 4, 255);
-    text-align: center;
-    
-    display: grid;
-    grid-template-columns: repeat(4, 4fr);
-    text-size-adjust: auto;
-}
-
-.Recipe_Comment_Input{
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: -4;
-    grid-row-end: 3;
-
-    background-color: rgb(255, 0, 34);
-    text-align: center;
-}
-
-.Recipe_Comment_Submitment{
-    grid-column-start: 3;
-    grid-column-end: 4;
-    grid-row-start: 0;
-    grid-row-end: 1;
-
-    background-color: rgb(153, 0, 255);
-    text-align: center;
-}
+  .recipe_comment textarea {
+    width: 350px;
+    height: 155px;
+    padding: 18px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    resize: none;
+  }
