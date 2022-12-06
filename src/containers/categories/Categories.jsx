@@ -26,13 +26,6 @@ function ButtonGroup(){
         
       ))}
 
-
-    {/*{categories.map((type, index) => (
-      <button key={index}>
-        {type}
-      </button>
-        
-    ))*/}
   </div>
   )
 }
