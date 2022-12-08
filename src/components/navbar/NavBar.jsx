@@ -5,9 +5,6 @@ import {RiMenu3Line, RiCloseLine} from 'react-icons/ri';
 import { RecipePage, SearchPage } from '../../pages';
 import  '../../useToken';
 
-//import App from '../../App';
-//import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-
 function deleteToken() {
   localStorage.removeItem('token')
 }
@@ -28,8 +25,6 @@ const Menu = ({loginStatus}) =>(
   </>
 )
 
-
-
 const LoginState = ({loginStatus}) =>(
   <>
     <p>
@@ -41,16 +36,10 @@ const LoginState = ({loginStatus}) =>(
   </>
 )
 
-
-
 const Loggout = () => {}
 
 const NavBar = ({loginStatus}) => {
   const [toggleMenu, setToggleMenu] = useState(false);
-
-  
-
-
 
   return (
     <div className="gpt3__navbar">
