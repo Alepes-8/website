@@ -3,21 +3,55 @@ import './navbar.css';
 import logo from '../../assets/logo.png';
 import {RiMenu3Line, RiCloseLine} from 'react-icons/ri';
 import { RecipePage, SearchPage } from '../../pages';
+import  '../../useToken';
+
 //import App from '../../App';
 //import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-const Menu = () =>(
+function deleteToken() {
+  localStorage.removeItem('token')
+}
+
+function refreshPage(){
+  window.location.reload(false);
+}
+
+const Menu = ({loginStatus}) =>(
   <>
     <p> <a href="/"> Home</a></p>
     <p> <a href="/RecipePage"> Recipes</a></p>
     <p> <a href="/SearchPage"> Search</a></p>
-    <p> <a href="/UserPage"> UserPage</a></p>
-    <p> <a href="/UsersRecipePage"> UsersRecipePage</a></p>
+    <div className="LogOutShow">
+    {loginStatus
+        ? <p><button className='logout' onClick={function(){ deleteToken(); refreshPage();}}> Logout</button></p> : <p></p>
+      }
+    </div>
   </>
 )
 
-const NavBar = () => {
+
+
+const LoginState = ({loginStatus}) =>(
+  <>
+    <p>
+      {loginStatus
+        ? <a href="/LoginPage">User</a>
+        : <a href="/LoginPage">Login</a>
+      }
+    </p>
+  </>
+)
+
+
+
+const Loggout = () => {}
+
+const NavBar = ({loginStatus}) => {
   const [toggleMenu, setToggleMenu] = useState(false);
+
+  
+
+
 
   return (
     <div className="gpt3__navbar">
@@ -28,7 +62,7 @@ const NavBar = () => {
 
       </div>
       <div className="gpt3__navbar-sign">
-        <p><a href="/LoginPage">Login</a></p>
+        <LoginState loginStatus={loginStatus}/>
       </div>
       <div className="gpt3__navbar-menu">
         {toggleMenu
@@ -37,11 +71,15 @@ const NavBar = () => {
         {toggleMenu && (
         <div className="gpt3__navbar-menu_container scale-up-center">
           <div className="gpt3__navbar-menu_container-links">
-            <Menu />
+            <Menu loginStatus={loginStatus} />
           </div>
           <div className="gpt3__navbar-menu_container-links-sign">
-            <p>Login</p>
+            <LoginState loginStatus={loginStatus}/>
+            {loginStatus
+              ? <p><button className='logout' onClick={<Loggout/>}> Logout</button></p> : <p></p>
+            }
           </div>
+          
         </div>
         )}
       </div>
