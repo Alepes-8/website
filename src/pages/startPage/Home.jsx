@@ -1,4 +1,4 @@
-import './home.css';
+import './Home.css';
 import React from 'react';
 import temp from '../../assets/testporkleg.png';
 import {Categories} from '../../containers';
