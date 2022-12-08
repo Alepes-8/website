@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import './authentication.css';
 
 
-const LoginPage = (props) => {
+const LoginPage = ({token, setToken}) => {
     const [errorMessages, setErrorMessages] = useState({});
     const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -26,35 +26,39 @@ const LoginPage = (props) => {
 
 
     /* here we submit the and handle the values which has been inputed.
-       In turn this will be where we probably contact the database*/
-       const handleSubmit = (event) => {
-        //Prevent page reload
-        event.preventDefault();
-    
-        var { email, pass } = document.forms[0];
-    
-        // Find user login info
-        const userData = database.find((user) => user.username === email.value);
-    
-        // Compare user info
-        if (userData) {
-          if (userData.password !== pass.value) {
-            // Invalid password
-            setErrorMessages({ name: "pass", message: errors.pass });
-          } else {
-            setIsSubmitted(true);
-          }
+      In turn this will be where we probably contact the database*/
+    const handleSubmit = (event) => {
+      //Prevent page reload
+      event.preventDefault();
+
+      var { email, pass } = document.forms[0];
+
+      // Find user login info
+      const userData = database.find((user) => user.username === email.value);
+
+      // Compare user info
+      if (userData) {
+        if (userData.password !== pass.value) {
+          // Invalid password
+          setErrorMessages({ name: "pass", message: errors.pass });
         } else {
-          // Username not found
-          setErrorMessages({ name: "email", message: errors.email });
+          setIsSubmitted(true);
+          setToken(userData);
         }
-      };
+      } else {
+        // Username not found
+        setErrorMessages({ name: "email", message: errors.email });
+      }
+    };
 
 
     const renderErrorMessage = (name) =>
     name === errorMessages.name && (
       <div className="error">{errorMessages.message}</div>
     );
+
+
+    
 
     return (
       <div className='login_page'>
@@ -69,7 +73,7 @@ const LoginPage = (props) => {
                   {renderErrorMessage("pass")}
                   <button type="submit">Login </button>
             </form>
-            <a href="/Register" classname ='link_button'>Don't have an account? Register</a>
+            <a href="/Register" className ='link_button'>Don't have an account? Register</a>
           </div>
         </div>
       </div>
