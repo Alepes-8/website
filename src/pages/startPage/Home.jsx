@@ -8,22 +8,32 @@ const Home = () => {
   return (
     <div className="featured">
             <div className='recipe_alternatives'>
-                <button className='recipe_alternative_button'>
-                    <p> Title </p>
-                    <img src={temp} alt="Logo" />
-                </button>
-                <button className='recipe_alternative_button'>
-                    <p>  Christian Porklegssssssssssssssssssssssssss </p>
-                    <img src={temp} alt="Logo" />
-                </button>
-                <button className='recipe_alternative_button'>
-                    <p> Title </p>
-                    <img src={temp} alt="Logo" />
-                </button>
-                <button className='recipe_alternative_button'>
-                    <p> Title </p>
-                    <img src={temp} alt="Logo" />
-                </button>   
+               
+                    <a href='/RecipePage'>
+                        <button className='recipe_alternative_button'>
+                            <p> Christian Pork Butt </p>
+                            <img src={temp} alt="Logo" />
+                        </button>
+                    </a>
+                    <a href='/RecipePage'>
+                        <button className='recipe_alternative_button'>
+                            <p> Title </p>
+                            <img src={temp} alt="Logo" />
+                        </button>
+                    </a>
+                    <a href='/RecipePage'>
+                        <button className='recipe_alternative_button'>
+                            <p> Title </p>
+                            <img src={temp} alt="Logo" />
+                        </button>
+                    </a>
+                    <a href='/RecipePage'>
+                        <button className='recipe_alternative_button'>
+                            <p> Title </p>
+                            <img src={temp} alt="Logo" />
+                        </button>
+                    </a> 
+                
             </div>
             <div>
                 <Categories/>
