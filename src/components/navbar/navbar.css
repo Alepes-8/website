@@ -79,6 +79,22 @@
     display: none;
 }
 
+.logout{
+    padding:10px;
+    border-radius:15px;
+    color:rgb(0, 0, 0);
+    background-color:rgb(255, 255, 255);
+
+    font-weight: 500;
+    font-size: 100%;
+    font-family: var(--font-family);
+    word-wrap: break-word;  
+}
+
+.LogOutShow{
+    display: block;
+}
+
 @media screen and (max-width: 1050px) {
     .gpt3__navbar-links_container {
         display: none;
@@ -110,5 +126,9 @@
 
     .gpt3__navbar-menu_container-links-sign {
         display: block;
+    }
+
+    .LogOutShow{
+        display: none;
     }
 }
