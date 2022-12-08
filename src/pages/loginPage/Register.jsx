@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import './authentication.css';
 
 
-const Register = (props) => {
+const Register = ({token, setToken}) => {
     const [errorMessages, setErrorMessages] = useState({});
     const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -28,26 +28,27 @@ const Register = (props) => {
     /* here we submit the and handle the values which has been inputed.
     In turn this will be where we probably contact the database*/
     const handleSubmit = (event) => {
-        //Prevent page reload
-        event.preventDefault();
+      //Prevent page reload
+      event.preventDefault();
 
-        var { email, pass } = document.forms[0];
+      var { email, pass } = document.forms[0];
 
-        // Find user login info
-        const userData = database.find((user) => user.username === email.value);
+      // Find user login info
+      const userData = database.find((user) => user.username === email.value);
 
-        // Compare user info
-        if (userData) {
+      // Compare user info
+      if (userData) {
         if (userData.password !== pass.value) {
-            // Invalid password
-            setErrorMessages({ name: "pass", message: errors.pass });
+          // Invalid password
+          setErrorMessages({ name: "pass", message: errors.pass });
         } else {
-            setIsSubmitted(true);
+          setIsSubmitted(true);
+          setToken(userData);
         }
-        } else {
-        // Username not found
+      } else {
+      // Username not found
         setErrorMessages({ name: "email", message: errors.email });
-        }
+      }
     };
 
     //if there is no message within the parts  
@@ -74,7 +75,7 @@ const Register = (props) => {
                     {renderErrorMessage("pass")}
                     <button type="submit">Login </button>
                 </form>
-                <a href="/LoginPage" classname ='link_button'>You have an account? Log in</a>
+                <a href="/LoginPage" className ='link_button'>You have an account? Log in</a>
             </div>
             </div>
         </div>
