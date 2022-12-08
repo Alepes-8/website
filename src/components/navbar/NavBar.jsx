@@ -75,5 +75,4 @@ const NavBar = ({loginStatus}) => {
   );
 };
 
-
 export default NavBar
