@@ -1,18 +1,25 @@
 
 import './App.css';
-//import RecipeList from './RecipeList';
-import {NavBar, Brand, CTA} from './components';
-import {Blog, Features, Possibility,/*Header,*/Footer,Categories} from './containers';
+import React from 'react'
 import {Routes, Route} from 'react-router-dom';
-import { StartPage, RecipePage, SearchPage, LoginPage, UsersRecipePage, UserPage, Register} from './pages';
+
+//import RecipeList from './RecipeList';
+import {NavBar} from './components';
+import {Footer} from './containers';
+import { StartPage, RecipePage, SearchPage, UsersRecipePage, UserPage} from './pages';
+import useToken from './useToken';
 
 
 function App() {
+  const {token, setToken } = useToken();
+  
   return (
     <div className="App">
       <div className='gradient_bg'>
-        <NavBar/>
-      </div>
+      {token
+        ? <NavBar loginStatus={true}/>  : <NavBar loginStatus={false} />
+      }
+      </div> 
 
       <Routes>
         <Route path="/" element={<StartPage/>}/>
@@ -21,11 +28,9 @@ function App() {
           
         <Route path="/SearchPage" element={<SearchPage/>}/> 
 
-        <Route path="/LoginPage" element={<LoginPage/>}/>
+        <Route path="/LoginPage" element={<UserPage token={token} setToken = {setToken} page={1}/>}/>
 
-        <Route path="/Register" element={<Register/>}/>
-
-        <Route path="/UserPage" element={<UserPage/>}/>
+        <Route path="/Register" element={<UserPage token={token} setToken = {setToken} page={2}/>}/>
 
         <Route path="/UsersRecipePage" element={<UsersRecipePage/>}/>
 
