@@ -1,0 +1,90 @@
+
+.recipe_alternatives{
+    margin-left: auto;
+    margin-right: auto;
+
+
+    display:grid;
+    grid-template-columns: 300px 300px;
+    grid-row: auto auto;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+}
+
+.preview_Recipe ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: 0;
+}
+
+.preview_Recipe a{
+    background-color: #fff;
+}
+
+.preview_Recipe li a {
+    height: 16.5rem;
+    width: 20rem;
+    border: 1px solid whitesmoke;
+    border-radius: 1rem;
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    overflow:hidden;
+    color: blue;
+}
+
+.preview_Recipe li a:hover{
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+.content{
+    padding: .5rem, 1rem;
+    position: relative;
+}
+
+.product-item-footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tags{
+    flex: 9;
+}
+
+.tags span{
+    border-radius: 2rem;
+    background-color: whitesmoke;
+    display: inline-block;
+    font-size: .7rem;
+    color:rgb(82, 79, 79);
+    margin-right: .3rem;
+}
+
+.cook-time{
+    font-size: .8rem;
+    flex: 3;
+    text-align: right;
+}
+
+
+@media screen and (max-width: 650px) {
+    .recipe_alternatives {
+        margin-left: auto;
+        margin-right: auto;
+        display:grid;
+        grid-template-columns:75vw ;
+    }   
+
+    .featured{
+
+        min-height: 200vh;
+        font-family: var(font-family);
+        background-image: var(--color-background);
+    }
+
+}
