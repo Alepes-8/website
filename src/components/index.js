@@ -4,3 +4,5 @@ export {default as CTA} from './cta/cta';
 export {default as Feature} from './feature/Feature';
 export {default as NavBar} from './navbar/NavBar';
 export {default as SearchResults} from './search/SearchResults';
+export {default as RecipeFeatured} from './feature/RecipeFeatured';
+
