@@ -35,18 +35,7 @@ function App() {
         <Route path="/AdminPage" element={<AdminPage/>}/> 
 
         <Route path="/UsersRecipePage" element={<UsersRecipePage/>}/>
-
-        
-
       </Routes>
-
-      
-      
-      {/*<Brand />
-      <Features />
-      <Possibility />
-      <CTA/> 
-      <Blog/>*/}
 
       <div className='footer_bg'>
         <Footer/>

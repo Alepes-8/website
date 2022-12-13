@@ -55,7 +55,6 @@ const UserPage = ({token, setToken, page}) => {
       <div className='BackgroundLikeButtons'>
         <div className='Saved_Recipes'>
           {RecipeData.map((item, index) => <RecipeFeatured recipe={item} />)}
-       
         </div>
       </div>
       {/*<div className='Saved_Recipes'>

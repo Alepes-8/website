@@ -8,17 +8,17 @@ const RecipeFeatured = ({recipe}) => {
         <li>
             <a href='/RecipePage'>
             <img src={temp} alt="logo"/>
-                <div class ="content"> 
-                    <div class="name"> 
+                <div className ="content"> 
+                    <div className="name"> 
                         <p> {recipe.title} </p>
                     </div>
-                    <div class="product-item-fooder">
-                        <div class="tags">
+                    <div className="product-item-fooder">
+                        <div className="tags">
                             <span> 
                             <p> {recipe.tag} </p>
                             </span>
                         </div>
-                        <div class="cook-time">
+                        <div className="cook-time">
                             <span>🕑</span>
                             {recipe.time}
                         </div>
