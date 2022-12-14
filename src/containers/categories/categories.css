@@ -15,6 +15,6 @@
     transition-duration: 250ms;
 }
 
-button:hover{
+.categories button:hover{
     background-color: #283593;
 }

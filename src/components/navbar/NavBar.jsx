@@ -17,6 +17,10 @@ const Menu = ({loginStatus}) =>(
   <>
     <p> <a href="/"> Home</a></p>
     <p> <a href="/SearchPage"> Search</a></p>
+    
+    {loginStatus
+        ? <p> <a href="/AdminPage"> AdminPage</a></p>: <p></p>
+    }
     <div className="LogOutShow">
     {loginStatus
         ? <p><button className='logout' onClick={function(){ deleteToken(); refreshPage();}}> Logout</button></p> : <p></p>
