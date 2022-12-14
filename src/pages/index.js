@@ -5,3 +5,7 @@ export {default as StartPage} from './startPage/Home';
 export {default as UserPage} from './userPage/UserPage';
 export {default as UsersRecipePage} from './usersRecipePage/UsersRecipePage';
 export {default as Register} from './loginPage/Register';
+export {default as AdminPage} from './adminPage/AdminPage'
+export {default as AdminManageUser} from './adminPage/AdminManageUser'
+export {default as AdminManageRecipes} from './adminPage/AdminManageRecipes'
+export {default as AdminManageComment} from './adminPage/AdminManageComment'

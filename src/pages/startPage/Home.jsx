@@ -1,39 +1,38 @@
 import './Home.css';
 import React from 'react';
-import temp from '../../assets/testporkleg.png';
 import {Categories} from '../../containers';
+import {RecipeFeatured} from '../../components';
+
+const RecipeData = [
+    {
+      title: "Rissoto",
+      tag: "A simple but wonderfull recipe for you friday date",
+      time: "30"
+    },
+    {
+        title: "Alaskan Hot wings",
+        tag: "Have you ever had a wing recipe with snow in it?",
+        time: "1h"
+      },
+      {
+        title: "Rissoto",
+        tag: "A simple but wonderfull recipe for you friday date",
+        time: "30"
+      },
+      {
+          title: "Alaskan Hot wings",
+          tag: "Have you ever had a wing recipe with snow in it?",
+          time: "1h"
+        },
+
+  ];
 
 
 const Home = () => {
   return (
     <div className="featured">
             <div className='recipe_alternatives'>
-               
-                    <a href='/RecipePage'>
-                        <button className='recipe_alternative_button'>
-                            <p> Christian Pork Butt </p>
-                            <img src={temp} alt="Logo" />
-                        </button>
-                    </a>
-                    <a href='/RecipePage'>
-                        <button className='recipe_alternative_button'>
-                            <p> Title </p>
-                            <img src={temp} alt="Logo" />
-                        </button>
-                    </a>
-                    <a href='/RecipePage'>
-                        <button className='recipe_alternative_button'>
-                            <p> Title </p>
-                            <img src={temp} alt="Logo" />
-                        </button>
-                    </a>
-                    <a href='/RecipePage'>
-                        <button className='recipe_alternative_button'>
-                            <p> Title </p>
-                            <img src={temp} alt="Logo" />
-                        </button>
-                    </a> 
-                
+                {RecipeData.map((item, index) => <RecipeFeatured recipe={item} />)}
             </div>
             <div>
                 <Categories/>
