@@ -8,9 +8,9 @@ const AdminPageContentSelection = ({page}) => {
   if(page === 0) {
     return <AdminManageUser  />
   }else if(page === 1) {
-    return <AdminManageRecipes  />
-  }else if(page === 2) {
     return <AdminManageComment  />
+  }else if(page === 2) {
+    return <AdminManageRecipes />
   }
 }
 
@@ -26,8 +26,6 @@ const AdminPage = () => {
                 <button onClick={() => setCount(2)}>Manage Recipes</button>
             </div>
             <div className='AdminPage_selection_results'>
-                
-
                 <AdminPageContentSelection page={count}/>
             </div>
         </div>

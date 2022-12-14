@@ -12,6 +12,11 @@ const RecipeFeatured = ({recipe}) => {
                     <div className="name"> 
                         <p> {recipe.title} </p>
                     </div>
+                    <div>
+                        <span className="favorite {{food.favorite?'':'not'}}">
+                            ❤
+                        </span>
+                    </div>
                     <div className="product-item-fooder">
                         <div className="tags">
                             <span> 
