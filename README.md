@@ -1,3 +1,15 @@
+# Setting Up the Project on your computer
+- Install nodeJS. Try the recomended version or newer. Should still work with anything above version 18.3.0
+- Clone the reposity onto your computer and run the three two commands. ( though this can couse issues due to the global beahvior of it. So for more info read "Possible problems")
+  - npm install react-scripts --save
+  - npm install react-router-dom --save
+- After that you should only need to run "npm run start" to start the code or run the batchfile "start"
+
+## If you have problems
+- If npm does not work, check the nodejs version and that it really is downloaded. [Possible help to the solution](https://linuxhint.com/npm-not-recognized-internal-external-command/)that can help .
+
+## Possible problems 
+  - "npm install react-scripts --save" can cause issues with other projects... you should NOT install react-scripts globally like this. https://github.com/facebook/create-react-app/issues/2436#issuecomment-306830791 for more information
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
