@@ -1,5 +1,8 @@
 import './userAddRecipes.css';
 import React, {useState} from 'react';
+import { async } from 'q';
+import slugify from 'react-slugify';
+
 /*{
     "name": "",
     "slug": "",
@@ -13,7 +16,6 @@ import React, {useState} from 'react';
 const UserAddRecipes = () => {
   
     const [name, setName] = useState("");
-    const [slug, setSlug] = useState("");
     const [description, setDescription] = useState("");
     const [portionSize, setPortionSize] = useState();
     const [creationDate, setCreationDate] = useState();
@@ -21,40 +23,54 @@ const UserAddRecipes = () => {
     const [ingredients, setIngredients] = useState("");
 
 
-    const AddRecipesInfo = async () => {
+    const AddRecipesInfo = async() => {
+      let newName =slugify(name)
+      let acceptingSlug = false;
+      console.log(newName);
+      do{
+        let response = await fetch(`recipes/${newName}`)
+        if(response.status === 404){
+          acceptingSlug = true;
+        }
+        else if(response.status === 200){
+          let extra = Math.random().toString(36).substring(2,2+2);
+          newName = newName + extra;
+        }
+      }while(!acceptingSlug);
 
-        fetch('recipes/', {
-          method:'POST',
-          headers:{
-            'Content-type':'application/json',
-          },
-          body:JSON.stringify({"name": "test",
-            "slug": "test3",
-            "description": "test",
-            "portionSize": 4,
-            "creationDate": "2022-12-15",
-            "categories": [
-                {
-                    "name": "test",
-                    "description": "test"
-                }
-            ],
-            "ingredients": [
-                {
-                    "name": "test",
-                    "description": "test"
-                }
-            ],
-            "author":"TomatoLover69",
-        })
-        }).then((response) => {
-          console.log(response)
-        }).catch(function(error){
-          console.log('ERROR:', error)
-        })
-  
-
+      
+      fetch('recipes/', {
+        method:'POST',
+        headers:{
+          'Content-type':'application/json',
+        },
+        body:JSON.stringify({"name": name,
+          "slug": newName,
+          "description": description ,
+          "portionSize": portionSize,
+          "creationDate": "2022-04-04",
+          "categories": [
+              {
+                  "name": "test",
+                  "description": "test"
+              }
+          ],
+          "ingredients": [
+              {
+                  "name": "test",
+                  "description": "test"
+              }
+          ],
+          "author":"TomatoLover69",
+      })
+      }).then((response) => {
+        console.log(response)
+      }).catch(function(error){
+        console.log('ERROR:', error)
+      })
     }
+
+ 
 
     return (
     <div className="UserSavedRecipes">
