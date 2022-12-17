@@ -45,7 +45,7 @@ const Home = () => {
   return (
     <div className="featured">
             <div className='recipe_alternatives'>
-                {recipes.map((recipe, index) => <RecipeFeatured recipe={recipe} key={index}/>)}
+                {recipes.map((recipe, index) => <RecipeFeatured recipe={recipe}/>)}
             </div>
             <div>
                 <Categories/>
