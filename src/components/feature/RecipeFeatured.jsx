@@ -10,7 +10,7 @@ const RecipeFeatured = ({recipe}) => {
             <img src={temp} alt="logo"/>
                 <div className ="content"> 
                     <div className="name"> 
-                        <p> {recipe.title} </p>
+                        <p> {recipe.name} </p>
                     </div>
                     <div>
                         <span className="favorite {{food.favorite?'':'not'}}">
@@ -20,12 +20,12 @@ const RecipeFeatured = ({recipe}) => {
                     <div className="product-item-fooder">
                         <div className="tags">
                             <span> 
-                            <p> {recipe.tag} </p>
+                            <p> {recipe.description} </p>
                             </span>
                         </div>
                         <div className="cook-time">
                             <span>🕑</span>
-                            {recipe.time}
+                            {recipe.portionSize}
                         </div>
                     </div>
                 </div>

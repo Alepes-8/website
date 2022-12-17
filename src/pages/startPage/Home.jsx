@@ -1,5 +1,5 @@
 import './Home.css';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {Categories} from '../../containers';
 import {RecipeFeatured} from '../../components';
 
@@ -29,10 +29,23 @@ const RecipeData = [
 
 
 const Home = () => {
+  let [recipes, setRecipes] = useState([])
+
+    useEffect(() => {
+        getRecipes()
+    }, [])
+
+    let getRecipes = async () => {
+        let response = await fetch("recipes/")
+        let data = await response.json()
+        //console.log('DATA: ', data)
+        setRecipes(data)
+    }
+
   return (
     <div className="featured">
             <div className='recipe_alternatives'>
-                {RecipeData.map((item, index) => <RecipeFeatured recipe={item} />)}
+                {recipes.map((recipe, index) => <RecipeFeatured recipe={recipe} key={index}/>)}
             </div>
             <div>
                 <Categories/>
