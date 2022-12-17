@@ -64,8 +64,8 @@ const processData = [
 
 //this decide what data to print in the table. Change value to change what to get
 const column = [
-    { heading: 'Ingredience', value: 'ingredient' },
-    { heading: 'Amount', value: 'amount' },
+    { heading: 'Ingredience', value: 'name' },
+    { heading: 'Amount', value: 'description' },
 ]
 
 const TableHeaderItem = ({item, column}) => <th>{item.heading}</th>
@@ -76,7 +76,7 @@ const TableRow = ({item}) => {
         <tr> 
             {column.map((columnItem, index) => 
                 {
-                    if(columnItem.value.includes('amount')){
+                    if(columnItem.value.includes('description')){
                         return <td>  {item[columnItem.value]} {item["format"]}</td>
                     }
                      
@@ -87,12 +87,12 @@ const TableRow = ({item}) => {
     );
 }
 
-const TableProcess = ({item}) => <th>{item.processDescription}</th>
+const TableProcess = ({item}) => <th>{item.name}</th>
 
 const SubmitComment = (event) =>{};
 
 
-const RecipePage = ({}) => {
+const RecipePage = () => {
 
     let {id} = useParams();
     let recipeId = id;
@@ -134,7 +134,7 @@ const RecipePage = ({}) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {ingredientsData.map((item, index) => <TableRow item={item} column={column}/>)}
+                        {recipes?.ingredients.map((item, index) => <TableRow item={item} column={column}/>)}
                     </tbody>
                 </table>
             </div>
@@ -142,7 +142,7 @@ const RecipePage = ({}) => {
             <div className='processing'> 
                 <h2>Processing</h2> 
                 <p>
-                    {processData.map((item, index) => <TableProcess item={item}/>)}
+                    {recipes?.categories.map((item, index) => <TableProcess item={item}/>)}
                 </p>
             </div>
         </div> 
