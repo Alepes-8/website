@@ -1,6 +1,7 @@
 import './recipePage.css';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import temp from '../../assets/testporkleg.png';
+import { useParams } from 'react-router-dom';
 
 
 const ReadMore = ({ children }) => {
@@ -91,7 +92,23 @@ const TableProcess = ({item}) => <th>{item.processDescription}</th>
 const SubmitComment = (event) =>{};
 
 
-const RecipePage = () => {
+const RecipePage = ({}) => {
+
+    let {id} = useParams();
+    let recipeId = id;
+    let [recipes, setRecipe] = useState(null);
+    
+    useEffect(() => {
+        getRecipe();
+    }, []);
+
+    let getRecipe = async () => {
+        let response = await fetch(`/recipes/${recipeId}/`);
+        let data = await response.json();
+        //console.log('DATA: ', data);
+        setRecipe(data);
+    }
+
     const [textAreaCount, setTextAreaCount] = React.useState(0);
 
     const recalculate = e => {
@@ -101,7 +118,7 @@ const RecipePage = () => {
   return (
     <div className="TestRecipePage">
       
-        <h1> Title</h1>
+        <h1> {recipes?.name} </h1>
         <img src={temp} alt="logo"/>
         <div className='content'>
 
@@ -135,16 +152,9 @@ const RecipePage = () => {
                 Description 
             </h1>
             <div className="container">
-                <ReadMore>
-                GeeksforGeeks: A Computer Science portal for geeks. 
-                It contains well written, well thought and well explained
-                computer science, programming articles and quizzes. 
-                It provides a variety of services for you to learn, so thrive
-                and also have fun! Free Tutorials, Millions of Articles, Live, 
-                Online and Classroom Courses ,Frequent Coding Competitions,
-                Webinars by Industry Experts, Internship opportunities, and Job
-                Opportunities. Knowledge is power!
-                </ReadMore>
+                <p>
+                {recipes?.description}
+                </p>
             </div>
         </div>
             <form className='recipe_comment' onSubmit = {SubmitComment}>

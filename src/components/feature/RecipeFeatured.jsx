@@ -1,12 +1,13 @@
-import React from 'react'
+import React from 'react';
 import './recipeFeatured.css';
 import temp from '../../assets/testporkleg.png';
+import {Link} from 'react-router-dom';
 
 const RecipeFeatured = ({recipe}) => {
     return( 
     <div className='preview_Recipe'>
         <li>
-            <a href='/RecipePage'>
+            <Link to={`/recipes/${recipe.slug}`}>
             <img src={temp} alt="logo"/>
                 <div className ="content"> 
                     <div className="name"> 
@@ -29,7 +30,7 @@ const RecipeFeatured = ({recipe}) => {
                         </div>
                     </div>
                 </div>
-            </a>
+            </Link>
         </li>
     </div>);
 }

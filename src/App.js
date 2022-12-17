@@ -24,7 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<StartPage/>}/>
         
-        <Route path="/RecipePage" element={<RecipePage/>}/>
+        <Route path="/recipes/:id" element={<RecipePage/>}/>
           
         <Route path="/SearchPage" element={<SearchPage/>}/> AdminPage
 
