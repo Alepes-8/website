@@ -3,6 +3,8 @@ export {default as RecipePage} from './recipePage/RecipePage';
 export {default as SearchPage} from './searchPage/SearchPage';
 export {default as StartPage} from './startPage/Home';
 export {default as UserPage} from './userPage/UserPage';
+export {default as UserSavedRecipes} from './userPage/UserSavedRecipes';
+export {default as UserAddRecipes} from './userPage/UserAddRecipes';
 export {default as UsersRecipePage} from './usersRecipePage/UsersRecipePage';
 export {default as Register} from './loginPage/Register';
 export {default as AdminPage} from './adminPage/AdminPage'

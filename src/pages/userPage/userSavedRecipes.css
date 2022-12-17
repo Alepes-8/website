@@ -1,0 +1,7 @@
+.Saved_Recipes{
+    display:grid;
+    grid-template-columns: 300px 300px;
+    grid-row: auto auto;
+    grid-column-gap: 30px;
+    grid-row-gap: 20px;
+}

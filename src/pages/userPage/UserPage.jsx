@@ -1,45 +1,22 @@
 import './userPage.css';
-import React from 'react';
+import React, { useState } from "react";
 import { HiArrowNarrowRight } from 'react-icons/hi';
 import tempUserImg from '../../assets/gru.png';
-import {RecipeFeatured} from '../../components';
 
-import {LoginPage, Register} from '../../pages';
+import {LoginPage, Register, UserAddRecipes, UserSavedRecipes} from '../../pages';
 
 
-const RecipeData = [
-  {
-    title: "Rissoto",
-    tag: "A simple but wonderfull recipe for you friday date",
-    time: "30"
-  },
-  {
-      title: "Alaskan Hot wings",
-      tag: "Have you ever had a wing recipe with snow in it?",
-      time: "1h"
-    },
-    {
-      title: "Rissoto",
-      tag: "A simple but wonderfull recipe for you friday date",
-      time: "30"
-    },
-    {
-        title: "Alaskan Hot wings",
-        tag: "Have you ever had a wing recipe with snow in it?",
-        time: "1h"
-      },
-];
-
-const SortFavorit = () => {
-  
-}
-
-const UnFavoritise = () => {
-  
+const UserPageContentSelection = ({page}) => {
+   
+    if(page === 0) {
+      return <UserSavedRecipes  />
+    }else if(page === 1) {
+      return <UserAddRecipes  />
+  }
 }
 
 const UserPage = ({token, setToken, page}) => {
-  
+  const [count, setCount] = useState(0);
 
   if(!token && page === 1) {
     return <LoginPage token ={token} setToken={setToken} />
@@ -50,19 +27,20 @@ const UserPage = ({token, setToken, page}) => {
   return (
     <div className="UserPage">
       <img src={tempUserImg} alt="Avatar" className="avatar"/>
-      <br></br>
-      <h1>Saved Recipes</h1>
-      <div className='BackgroundLikeButtons'>
-        <div className='Saved_Recipes'>
-          {RecipeData.map((item, index) => <RecipeFeatured recipe={item} />)}
-        </div>
+      <div className='AdminPage_Button_Navigation'>
+        <button onClick={() => setCount(0)}>Saved Recipes</button>
+        <button onClick={() => setCount(1)}>Add Recipes</button>
       </div>
-      {/*<div className='Saved_Recipes'>
-                  {RecipeData.map((item, index) => <RecipeBox recipe={item} />)}
-       
-      </div>*/}
+      <div className='User_selection_results'>
+        <UserPageContentSelection page={count}/>
+      </div>
+
     </div>
   );
 };
+
+
+
+
 
 export default UserPage;
