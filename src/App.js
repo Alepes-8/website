@@ -25,8 +25,8 @@ function App() {
         
         <Route path="/recipes/:id" element={<RecipePage/>}/>
           
-        <Route path="/EditRecipe" element={<EditRecipe/>}/>
-        
+        <Route path="/EditRecipe/:id" element={<EditRecipe/>}/>
+
         <Route path="/SearchPage" element={<SearchPage/>}/> AdminPage
 
         <Route path="/LoginPage" element={<UserPage token={token} setToken = {setToken} page={1}/>}/>
