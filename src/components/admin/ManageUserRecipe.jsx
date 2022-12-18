@@ -1,15 +1,35 @@
 import React from 'react'
 import './manageUserRecipe.css';
 
+
+
 const ManageUsersRecipe= ({recipe}) => {
+    let slug = recipe.slug
+
+    const DeleteRecipe = async () => {
+
+        await fetch(`recipes/${slug}/`,{
+            method: 'DELETE',
+        }).then((response) => {
+            console.log(response)
+            if(response.status == 204){
+                window.location.reload(false);
+            }
+        }).catch(function(error){
+            console.log('ERROR:', error)
+        })
+
+    }
+
     return( 
         <div className='User_Template'>
             
-            <button> delete</button>
-            <b>Title:</b> {recipe.title}
-            <b>DateCreated:</b> {recipe.dateAdded} 
+            <button onClick={DeleteRecipe}> delete</button>
+            <a href="/EditRecipe">edit</a>
+            <b>Title:</b> {recipe.name}
+            <b>Slug:</b> {slug}
+            <b>DateCreated:</b> {recipe.creationDate} 
                 
-            
         </div>
     );
 }
