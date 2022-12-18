@@ -14,7 +14,7 @@ import slugify from 'react-slugify';
 }*/
 
 const UserAddRecipes = () => {
-  
+    const [action, setAction] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [portionSize, setPortionSize] = useState();
@@ -24,6 +24,7 @@ const UserAddRecipes = () => {
 
 
     const AddRecipesInfo = async() => {
+      setAction("loading...");
       let newName =slugify(name)
       let acceptingSlug = false;
       console.log(newName);
@@ -64,8 +65,16 @@ const UserAddRecipes = () => {
           "author":"TomatoLover69",
       })
       }).then((response) => {
-        console.log(response)
+        if(response.status == 201){
+          setAction("Success");
+          window.location.reload(false);
+        }else{
+          setAction("something went Wrong");
+        }
+         
+        
       }).catch(function(error){
+        setAction(`${error}`);
         console.log('ERROR:', error)
       })
     }
@@ -140,6 +149,7 @@ const UserAddRecipes = () => {
           </div>
 
           <button onClick={AddRecipesInfo}> Add recipe</button>
+          <p>{action}</p>
     </div>
 
     );
