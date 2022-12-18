@@ -1,0 +1,25 @@
+.EditRecipePage {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    gap: 20px;
+    min-height: 100vh;
+
+    font-family: var(font-family);
+    background-image: var(--color-background);
+}
+
+.content {
+    display: flex;
+    align-items: left;
+    flex-direction: row;
+
+    gap: 50px;
+}
+
+.form-group{
+    display: flex;
+    align-items: left;
+    flex-direction: column;
+}
