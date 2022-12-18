@@ -25,6 +25,7 @@ const ManageUsersRecipe= ({recipe}) => {
         <div className='User_Template'>
             
             <button onClick={DeleteRecipe}> delete</button>
+            <a href="/EditRecipe">edit</a>
             <b>Title:</b> {recipe.name}
             <b>Slug:</b> {slug}
             <b>DateCreated:</b> {recipe.creationDate} 
