@@ -3,6 +3,7 @@
 - Clone the reposity onto your computer and run the three two commands. ( though this can couse issues due to the global beahvior of it. So for more info read "Possible problems")
   - npm install react-scripts --save
   - npm install react-router-dom --save
+  - npm install react-slugify
 - After that you should only need to run "npm run start" to start the code or run the batchfile "start"
 
 ## If you have problems
