@@ -1,5 +1,6 @@
 import React from 'react'
 import './manageUserRecipe.css';
+import {Link} from 'react-router-dom';
 
 
 
@@ -25,7 +26,8 @@ const ManageUsersRecipe= ({recipe}) => {
         <div className='User_Template'>
             
             <button onClick={DeleteRecipe}> delete</button>
-            <a href="/EditRecipe">edit</a>
+            <Link to={`/EditRecipe/${recipe.slug}`}>edit</Link>
+            
             <b>Title:</b> {recipe.name}
             <b>Slug:</b> {slug}
             <b>DateCreated:</b> {recipe.creationDate} 
