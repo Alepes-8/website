@@ -20,48 +20,6 @@ const ReadMore = ({ children }) => {
     );
   };
 
-  //Tempurary data simulating data aquired from a database
-const ingredientsData = [
-    {
-        recipeId: "1", 
-        ingredient: "apple",
-        amount: 150,
-        format: "gram"
-    },
-    {
-        recipeId: "1", 
-        ingredient: "suger",
-        amount: 3,
-        format: "dl",
-    },
-    {
-        recipeId: "1", 
-        ingredient: "cinnamon",
-        amount: 3,
-        format: "tbsp",
-    },
-    {
-        recipeId: "1", 
-        ingredient: "butter",
-        amount: 300,
-        format: "gram",
-    },
-    {
-        recipeId: "1", 
-        ingredient: "mjöl",
-        amount: 245,
-        format: "gram"
-    },
-]
-
-const processData = [
-    {
-        processDescription: "Melt the butter and mix it well with sugar and cinnamon. Cut apples into small slices and mix it with the butter mix. ",
-                            
-    }
-   
-]
-
 //this decide what data to print in the table. Change value to change what to get
 const column = [
     { heading: 'Ingredience', value: 'name' },
@@ -92,6 +50,8 @@ const TableProcess = ({item}) => <th>{item.name}</th>
 const SubmitComment = (event) =>{};
 
 
+
+
 const RecipePage = () => {
 
     let {id} = useParams();
@@ -102,7 +62,7 @@ const RecipePage = () => {
         getRecipe();
     }, []);
 
-    let getRecipe = async () => {
+    const getRecipe = async() => {
         let response = await fetch(`/recipes/${recipeId}/`);
         let data = await response.json();
         //console.log('DATA: ', data);
@@ -120,9 +80,7 @@ const RecipePage = () => {
       
         <h1> {recipes?.name} </h1>
         <img src={temp} alt="logo"/>
-        <div className='content'>
-
-        </div>
+  
 
         <div className='recipe_content'>
             <div className='ingredience'> 
