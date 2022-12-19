@@ -1,5 +1,5 @@
 import './userAddRecipes.css';
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import { async } from 'q';
 import slugify from 'react-slugify';
 
@@ -22,7 +22,13 @@ const UserAddRecipes = () => {
     const [categories, setCategories] = useState("");
     const [ingredients, setIngredients] = useState("");
 
-
+    
+    useEffect(() => {
+      let newDate = new Date()
+      let today = `${ newDate.getFullYear()}-${newDate.getMonth()+1}-${ newDate.getDate()}`
+      setCreationDate(today)
+    }, []);
+  
     const AddRecipesInfo = async() => {
       setAction("loading...");
       let newName =slugify(name)
@@ -49,7 +55,7 @@ const UserAddRecipes = () => {
           "slug": newName,
           "description": description ,
           "portionSize": portionSize,
-          "creationDate": "2022-04-04",
+          "creationDate": creationDate,
           "categories": [
               {
                   "name": "test",
@@ -65,21 +71,35 @@ const UserAddRecipes = () => {
           "author":"TomatoLover69",
       })
       }).then((response) => {
-        if(response.status == 201){
+        if(response.status === 201){
           setAction("Success");
           window.location.reload(false);
         }else{
-          setAction("something went Wrong");
+          setAction("something went wrong, try again");
         }
          
-        
       }).catch(function(error){
         setAction(`${error}`);
         console.log('ERROR:', error)
       })
     }
 
- 
+    const CheckContent = () => {
+      setAction("checking value");
+      if(name ===""){
+        setAction("Missing a recipe name");
+        return;
+      }
+      if(description ===""){
+        setAction("Missing a description");
+        return;
+      }
+      if(!portionSize){
+        setAction("Missing a portionSize, or is a letter");
+        return;
+      }
+      AddRecipesInfo();
+    }
 
     return (
     <div className="UserSavedRecipes">
@@ -91,7 +111,7 @@ const UserAddRecipes = () => {
               placeholder="Enter Your Name"
               name="name"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value) }
             />
           </div>
 
@@ -118,16 +138,6 @@ const UserAddRecipes = () => {
           </div>
           <div className="form-group">
             <input
-              type="date"
-              className="form-control form-control-lg"
-              placeholder="Enter creationDate"
-              name="creationDate"
-              value={creationDate}
-              onChange={(e) => setCreationDate(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <input
               type="text"
               className="form-control form-control-lg"
               placeholder="Enter categories"
@@ -148,7 +158,7 @@ const UserAddRecipes = () => {
             />
           </div>
 
-          <button onClick={AddRecipesInfo}> Add recipe</button>
+          <button onClick={CheckContent}> Add recipe</button>
           <p>{action}</p>
     </div>
 

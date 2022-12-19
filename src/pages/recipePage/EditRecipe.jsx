@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState ,useEffect} from "react";
 import './editRecipe.css';
-import { useParams } from 'react-router-dom';
-import temp from '../../assets/testporkleg.png';
 import RecipePage from "./RecipePage";
+import slugify from 'react-slugify';
+import { useParams } from 'react-router-dom';
+
 
 
 const EditRecipe = () => {
     let {id} = useParams();
     let recipeId = id;
+
     let [recipes, setRecipe] = useState(null);
 
     const [action, setAction] = useState("");
@@ -17,6 +19,8 @@ const EditRecipe = () => {
     const [creationDate, setCreationDate] = useState();
     const [categories, setCategories] = useState("");
     const [ingredients, setIngredients] = useState("");
+
+    
 
     useEffect(() => {
         getRecipe();
@@ -28,22 +32,94 @@ const EditRecipe = () => {
         //console.log('DATA: ', data);
         setRecipe(data);
     }
+      
+    const CheckContent = () => {
+        setAction("checking value");
+        {/*if(name === ""){
+            setName(recipes.name);
+        }
+        if(description ===""){
+          setDescription(recipes.description);
+        }
+        if(!portionSize){
+          setPortionSize(recipes.portionSize);
+        }*/}
+        
+       
+        ChangeRecipeInfo()
+      }
 
+    const ChangeRecipeInfo = async() => {
+        setAction("loading...");
+        let newName =slugify(name)
+        let acceptingSlug = false;
+        console.log(newName);
+        do{
+            let response = await fetch(`recipes/${newName}`)
+            if(response.status === 404){
+            acceptingSlug = true;
+            }
+            else if(response.status === 200){
+            let extra = Math.random().toString(36).substring(2,2+2);
+            newName = newName + extra;
+            }
+        }while(!acceptingSlug);
+
+       
+
+        fetch(`/recipes/${recipeId}/`, {
+          method:'PUT',
+          headers:{
+            'Content-type':'application/json',
+          },
+          body:JSON.stringify({"name": name,
+          "slug": newName,
+          "description": recipes.description ,
+          "portionSize": recipes.portionSize,
+          "creationDate": recipes.creationDate,
+          "categories": [
+              {
+                  "name": "test",
+                  "description": "test"
+              }
+          ],
+          "ingredients": [
+              {
+                  "name": "test",
+                  "description": "test"
+              }
+          ],
+          "author":"TomatoLover69",
+        })
+        }).then((response) => {
+            if(response.status === 200){
+                setAction("Changed");
+                //make sure to reload the page with the new slug for the preview
+                window.history.replaceState(null, `recipeId`, `${newName}`);
+                window.location.reload(false);
+            }else{
+                setAction("something went wrong. Error: ", response.status)
+            }
+          
+        }).catch(function(error){
+          setAction(`${error}`);
+          console.log('ERROR:', error)
+        })
+      }      
+      
   return (
     <div className='EditRecipePage'>
         <div className="Editcontent">
             <div className="UserSavedRecipes">
-                <h1>Edit Recipes</h1>
-                
+                <h1>AddRecipes</h1>
                 <div className="form-group">
-                    <p>NewName</p>
                     <input
                     type="text"
                     className="form-control form-control-lg"
                     placeholder="Enter Your Name"
                     name="name"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => setName(e.target.value) }
                     />
                 </div>
 
@@ -70,16 +146,6 @@ const EditRecipe = () => {
                 </div>
                 <div className="form-group">
                     <input
-                    type="date"
-                    className="form-control form-control-lg"
-                    placeholder="Enter creationDate"
-                    name="creationDate"
-                    value={creationDate}
-                    onChange={(e) => setCreationDate(e.target.value)}
-                    />
-                </div>
-                <div className="form-group">
-                    <input
                     type="text"
                     className="form-control form-control-lg"
                     placeholder="Enter categories"
@@ -100,7 +166,7 @@ const EditRecipe = () => {
                     />
                 </div>
 
-                <button>Edit Recipe</button>
+                <button onClick={CheckContent}> Add recipe</button>
                 <p>{action}</p>
             </div>
             <div>
