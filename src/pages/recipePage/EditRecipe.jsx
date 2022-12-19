@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import './editRecipe.css';
 import RecipePage from "./RecipePage";
 import slugify from 'react-slugify';
 import { useParams } from 'react-router-dom';
-import { useNavigate } from "react-router-dom";
 
 
 
 const EditRecipe = () => {
+    let {id} = useParams();
+    let recipeId = id;
+
+    let [recipes, setRecipe] = useState(null);
+
     const [action, setAction] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -16,8 +20,34 @@ const EditRecipe = () => {
     const [categories, setCategories] = useState("");
     const [ingredients, setIngredients] = useState("");
 
-    let {id} = useParams();
-    let recipeId = id;
+    
+
+    useEffect(() => {
+        getRecipe();
+    }, []);
+
+    const getRecipe = async() => {
+        let response = await fetch(`/recipes/${recipeId}/`);
+        let data = await response.json();
+        //console.log('DATA: ', data);
+        setRecipe(data);
+    }
+      
+    const CheckContent = () => {
+        setAction("checking value");
+        {/*if(name === ""){
+            setName(recipes.name);
+        }
+        if(description ===""){
+          setDescription(recipes.description);
+        }
+        if(!portionSize){
+          setPortionSize(recipes.portionSize);
+        }*/}
+        
+       
+        ChangeRecipeInfo()
+      }
 
     const ChangeRecipeInfo = async() => {
         setAction("loading...");
@@ -44,9 +74,9 @@ const EditRecipe = () => {
           },
           body:JSON.stringify({"name": name,
           "slug": newName,
-          "description": description ,
-          "portionSize": portionSize,
-          "creationDate": "2022-04-04",
+          "description": recipes.description ,
+          "portionSize": recipes.portionSize,
+          "creationDate": recipes.creationDate,
           "categories": [
               {
                   "name": "test",
@@ -75,27 +105,21 @@ const EditRecipe = () => {
           setAction(`${error}`);
           console.log('ERROR:', error)
         })
-
-       
-        
-      }
-  
-
+      }      
+      
   return (
     <div className='EditRecipePage'>
         <div className="Editcontent">
             <div className="UserSavedRecipes">
-                <h1>Edit Recipes</h1>
-                
+                <h1>AddRecipes</h1>
                 <div className="form-group">
-                    <p>NewName</p>
                     <input
                     type="text"
                     className="form-control form-control-lg"
                     placeholder="Enter Your Name"
                     name="name"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => setName(e.target.value) }
                     />
                 </div>
 
@@ -122,16 +146,6 @@ const EditRecipe = () => {
                 </div>
                 <div className="form-group">
                     <input
-                    type="date"
-                    className="form-control form-control-lg"
-                    placeholder="Enter creationDate"
-                    name="creationDate"
-                    value={creationDate}
-                    onChange={(e) => setCreationDate(e.target.value)}
-                    />
-                </div>
-                <div className="form-group">
-                    <input
                     type="text"
                     className="form-control form-control-lg"
                     placeholder="Enter categories"
@@ -152,7 +166,7 @@ const EditRecipe = () => {
                     />
                 </div>
 
-                <button onClick={ChangeRecipeInfo}>Edit Recipe</button>
+                <button onClick={CheckContent}> Add recipe</button>
                 <p>{action}</p>
             </div>
             <div>
