@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
 import './navbar.css';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/swedishChef.gif';
 import {RiMenu3Line, RiCloseLine} from 'react-icons/ri';
 import { RecipePage, SearchPage } from '../../pages';
 import  '../../useToken';
+import { Link } from 'react-router-dom';
 
 function deleteToken() {
   localStorage.removeItem('token')
@@ -49,7 +50,10 @@ const NavBar = ({loginStatus}) => {
     <div className="gpt3__navbar">
       <div className="gpt3__navbar-links">
         <div className="gpt3__navbar-links_logo">
-          <img src={logo} alt="logo"/>
+          <Link to="/">
+            <img src={logo} alt="logo" />
+
+          </Link>
         </div>
 
       </div>
