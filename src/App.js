@@ -6,7 +6,7 @@ import {Routes, Route} from 'react-router-dom';
 //import RecipeList from './RecipeList';
 import {NavBar} from './components';
 import {Footer} from './containers';
-import { StartPage, RecipePage, SearchPage, UsersRecipePage, UserPage, AdminPage, EditRecipe} from './pages';
+import { StartPage, RecipePage, SearchPage, UsersRecipePage, UserPage, AdminPage, EditRecipe, SuperAdmin} from './pages';
 import useToken from './useToken';
 
 function App() {
@@ -27,7 +27,10 @@ function App() {
           
         <Route path="/EditRecipe/:id" element={<EditRecipe/>}/>
 
-        <Route path="/SearchPage" element={<SearchPage/>}/> AdminPage
+        <Route path="/SuperAdminPage" element={<SuperAdmin/>}/> 
+
+        
+        <Route path="/SearchPage" element={<SearchPage/>}/> 
 
         <Route path="/LoginPage" element={<UserPage token={token} setToken = {setToken} page={1}/>}/>
 
