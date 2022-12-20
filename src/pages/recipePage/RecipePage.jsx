@@ -76,10 +76,10 @@ const RecipePage = () => {
       setTextAreaCount(e.target.value.length);
     };
   return (
-    <div className="TestRecipePage">
+    <div className="baseBackground">
       
-        <h1> {recipes?.name} </h1>
-        <img src={temp} alt="logo"/>
+        <h1 className='recipeh1'> {recipes?.name} </h1>
+        <img src={temp} alt="logo" className='recipeImg'/>
   
 
         <div className='recipe_content'>
@@ -106,7 +106,7 @@ const RecipePage = () => {
         </div> 
 
         <div className='Description'>
-            <h1>
+            <h1 className='recipeh1'>
                 Description 
             </h1>
             <div className="container">

@@ -61,7 +61,7 @@ const LoginPage = ({token, setToken}) => {
     
 
     return (
-      <div className='login_page'>
+      <div className='baseBackground'>
         <div className='auth_form_container'>
           <div className='auth_form_style'>
             <form className='login_form' onSubmit = {handleSubmit}>

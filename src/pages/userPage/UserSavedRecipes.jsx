@@ -28,7 +28,7 @@ const RecipeData = [
 const UserSavedRecipes = () => {
   
   return (
-    <div className="UserSavedRecipes">
+    <div>
         <div className='Saved_Recipes'>
           {RecipeData.map((item, index) => <RecipeFeatured recipe={item} />)}
         </div>

@@ -1,15 +1,3 @@
-.featured{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-    min-height: 100vh;
-
-    font-family: var(font-family);
-    background-image: var(--color-background);
-    
-}
-
 .recipe_alternative_button{
    
     background-color:#333;

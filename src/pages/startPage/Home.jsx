@@ -44,7 +44,7 @@ const Home = () => {
     }
 
   return (
-    <div className="featured">
+    <div className="baseBackground">
             <h1>How a real chef cooks</h1>
 
                         
