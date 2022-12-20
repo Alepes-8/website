@@ -50,7 +50,7 @@ const Home = () => {
                         
               <iframe className='video'
                       sandbox='allow-same-origin allow-forms allow-popups allow-scripts allow-presentation'
-                      src={`https://youtube.com/embed/${youtubeID}?autoplay=0&showinfo=0&controls=0&modestbranding=1&origin=1`}>
+                      src={`https://youtube.com/embed/${youtubeID}?autoplay=0&showinfo=0&controls=1&modestbranding=1&origin=1`}>
               </iframe>
               
             <div className='recipe_alternatives'>
