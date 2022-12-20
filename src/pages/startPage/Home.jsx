@@ -30,6 +30,7 @@ const RecipeData = [
 
 const Home = () => {
   let [recipes, setRecipes] = useState([])
+  const [youtubeID] = useState('2Qj8PhxSnhg')
 
     useEffect(() => {
         getRecipes()
@@ -44,12 +45,25 @@ const Home = () => {
 
   return (
     <div className="featured">
+            <h1>How a real chef cooks</h1>
+
+                        
+              <iframe className='video'
+                      width="600" 
+                      height="300"
+                      title='Youtube player'
+                      sandbox='allow-same-origin allow-forms allow-popups allow-scripts allow-presentation'
+                      src={`https://youtube.com/embed/${youtubeID}?autoplay=0`}>
+              </iframe>
+              
             <div className='recipe_alternatives'>
                 {recipes.map((recipe, index) => <RecipeFeatured recipe={recipe}/>)}
             </div>
             <div>
                 <Categories/>
             </div>
+              
+              
         </div>
    
   );
