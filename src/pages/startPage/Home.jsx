@@ -49,11 +49,8 @@ const Home = () => {
 
                         
               <iframe className='video'
-                      width="600" 
-                      height="300"
-                      title='Youtube player'
                       sandbox='allow-same-origin allow-forms allow-popups allow-scripts allow-presentation'
-                      src={`https://youtube.com/embed/${youtubeID}?autoplay=0`}>
+                      src={`https://youtube.com/embed/${youtubeID}?autoplay=0&showinfo=0&controls=0&modestbranding=1&origin=1`}>
               </iframe>
               
             <div className='recipe_alternatives'>
