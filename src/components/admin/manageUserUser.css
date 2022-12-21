@@ -29,3 +29,17 @@
 
 
 }
+
+.toggle_Box{
+
+    border: 3px solid rgb(0, 0, 0);
+    box-shadow: 0 0 20px 1px rgba(23, 9, 219, 0.3);
+    height: 19px;
+    width: 19px;
+
+}
+
+.toggle_Box input {
+position: fixed;
+margin-top: 0px;
+}
