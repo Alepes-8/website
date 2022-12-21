@@ -1,7 +1,5 @@
 import React from 'react'
 import './manageUserUser.css';
-import { Toggle } from './Toggle'
-
 
 const ManageUsersUser = ({user}) => {
    const ChangeAdminStatus = () => {
