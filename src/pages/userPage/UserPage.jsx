@@ -1,40 +1,91 @@
 import './userPage.css';
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { HiArrowNarrowRight } from 'react-icons/hi';
 import tempUserImg from '../../assets/gru.png';
 
-import {LoginPage, Register, UserAddRecipes, UserSavedRecipes, Settings} from '../../pages';
+import {LoginPage, Register, UserAddRecipes, UserSavedRecipes, Settings, AdminManageRecipes, AdminManageComment, AdminManageUser} from '../../pages';
 
 
-const UserPageContentSelection = ({page}) => {
-   
-    if(page === 0) {
-      return <UserSavedRecipes  />
-    }else if(page === 1) {
-      return <UserAddRecipes  />
-    }else if(page === 2) {
-      return <Settings  />
-    }
-}
 
 const UserPage = ({token, setToken, page}) => {
   const [count, setCount] = useState(0);
+  let [recipes, setRecipes] = useState([])
+  let [comment, setComment] = useState([])
+  let [users, setUsers] = useState([])
 
+
+  const UserPageContentSelection = ({page}) => {
+   
+    if(page === 0) {
+      return <UserSavedRecipes recipes ={recipes} />
+    }else if(page === 1) {
+      return(
+      <div className='User_selection_results'>
+        <UserAddRecipes  />
+      </div>);
+    }else if(page === 3) {
+      return <AdminManageRecipes  recipes = {recipes}/>
+    }else if(page === 4) {
+      return <AdminManageComment  />
+    }else if(page === 5) {
+      return <AdminManageUser  />
+    }else if(page === 2) {
+      return (
+      <div className='User_selection_results'>
+        <Settings  />
+      </div>);
+    }
+}
+
+  useEffect(() => {
+    getRecipes()
+  }, [])
+
+  let getRecipes = async () => {
+    let response = await fetch("recipes/")
+    let data = await response.json()
+    //console.log('DATA: ', data)
+    setRecipes(data)
+  }
+  
   if(!token && page === 1) {
     return <LoginPage token ={token} setToken={setToken} />
   }else if(!token && page === 2) {
     return <Register token ={token} setToken={setToken} />
   }
 
-  return (
-    <div className="UserPage">
-      <img src={tempUserImg} alt="Avatar" className="avatar"/>
+
+  const NavigationButtons =()=>{
+    return(
       <div className='AdminPage_Button_Navigation'>
-        <button onClick={() => setCount(0)}>Saved Recipes</button>
+        <button onClick={() => setCount(0)}>My Recipes</button>
         <button onClick={() => setCount(1)}>Add Recipes</button>
-        <button onClick={() => setCount(2)}>Settings</button>
+        {true
+        ? <AdminNavigation/>: <button onClick={() => setCount(2)}>Settings</button>
+    }
+        
+        
+
+
       </div>
-      <div className='User_selection_results'>
+    );
+  }
+
+  const AdminNavigation = () => {
+    return(        
+    <div>
+      <button onClick={() => setCount(3)}>Manage Recipes</button>
+    <button onClick={() => setCount(4)}>Manage Comments</button>
+    <button onClick={() => setCount(5)}>Manage Users</button>
+    <button onClick={() => setCount(2)}>Settings</button>
+    </div>);
+  }
+
+  return (
+    <div className='AdminPage'>
+      
+      <NavigationButtons/>
+      <div className='AdminPage_selection_results'>
         <UserPageContentSelection page={count}/>
       </div>
 
