@@ -2,7 +2,8 @@ import './recipePage.css';
 import React, { useState, useEffect } from "react";
 import temp from '../../assets/testporkleg.png';
 import { useParams } from 'react-router-dom';
-
+import useToken from '../../useToken';
+import { CommentFeatured } from '../../components';
 
 const ReadMore = ({ children }) => {
     const text = children;
@@ -57,16 +58,23 @@ const RecipePage = () => {
     let {id} = useParams();
     let recipeId = id;
     let [recipes, setRecipe] = useState(null);
+    let [comments, setComments] = useState(null);
+    const {token, setToken } = useToken();
+
     
     useEffect(() => {
         getRecipe();
     }, []);
 
     const getRecipe = async() => {
-        let response = await fetch(`/recipes/${recipeId}/`);
-        let data = await response.json();
-        //console.log('DATA: ', data);
-        setRecipe(data);
+        let recipeResponse = await fetch(`/recipes/${recipeId}/`);
+        let recipeData = await recipeResponse.json();
+        setRecipe(recipeData);
+
+        
+        let commentResponse = await fetch(`/comment/`);
+        let commentData = await commentResponse.json();
+        setRecipe(commentData);        
     }
 
     const [textAreaCount, setTextAreaCount] = React.useState(0);
@@ -114,14 +122,23 @@ const RecipePage = () => {
                 {recipes?.description}
                 </p>
             </div>
-        </div>
-            <form className='recipe_comment' onSubmit = {SubmitComment}>
-                <div>
-                <p> {`${textAreaCount}/250`} </p>
-                <textarea name="comments" id="comments" placeholder='Comment...' maxLength="250" onChange={recalculate}/>
-                </div>
-                <button type="submit"> Submit </button>
-            </form>
+            </div>
+        {token 
+        ? 
+        
+        <form className='recipe_comment' onSubmit = {SubmitComment}>
+            <div>
+            <p> {`${textAreaCount}/250`} </p>
+            <textarea name="comments" id="comments" placeholder='Comment...' maxLength="250" onChange={recalculate}/>
+            </div>
+            <button type="submit"> Submit </button>
+        </form>
+        
+            : <p>Login to comment</p>
+
+        }
+
+        <div> {/*{comments.map((item, index) => <CommentFeatured comment={item}/>)}*/}</div>
         </div>
   );
 };

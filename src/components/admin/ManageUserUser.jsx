@@ -28,9 +28,6 @@ const ManageUsersUser = ({privilege, user}) => {
                 </div>: <p></p>
             }
                
-            
-           
-            
         </div>
     );
 }
