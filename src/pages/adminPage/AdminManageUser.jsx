@@ -19,7 +19,7 @@ const DataUser = [
 const AdminManageUser = ({ privilege, dataUsers}) => {
   return (
     <div>
-        {DataUser.map((item, index) => <ManageUserUser privilege={privilege} user={item} />)}
+        {dataUsers.map((item, index) => <ManageUserUser privilege={privilege} user={item} />)}
         
     </div>
   )
