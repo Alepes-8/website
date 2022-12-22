@@ -2,14 +2,18 @@ import React from 'react'
 import './manageUserUser.css';
 
 const ManageUsersUser = ({privilege, user}) => {
-   const ChangeAdminStatus = () => {
+    const ChangeAdminStatus = () => {
+        alert("no ChangeAdminStatus functionality made yet");
+    }
 
+   const DeleteUser = () => {
+    alert("no DeleteUser functionality made yet");
    }
     
     return( 
         <div className='User_Template'>
             
-            <button> delete</button>
+            <button onClick={DeleteUser}> delete</button>
             <div className='placement'>
               
             </div>
