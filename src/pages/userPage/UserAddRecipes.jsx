@@ -51,24 +51,20 @@ const UserAddRecipes = () => {
         headers:{
           'Content-type':'application/json',
         },
-        body:JSON.stringify({"name": name,
+        body:JSON.stringify(   {
+          "name": name,
           "slug": newName,
           "description": description ,
           "portionSize": portionSize,
           "creationDate": creationDate,
           "categories": [
               {
-                  "name": "test",
-                  "description": "test"
+                  "name": "vegan",
+                  "description": "no meat"
               }
           ],
-          "ingredients": [
-              {
-                  "name": "test",
-                  "description": "test"
-              }
-          ],
-          "author":"TomatoLover69",
+          "ingredients": [],
+          "author": "admin"
       })
       }).then((response) => {
         if(response.status === 201){
