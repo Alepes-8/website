@@ -1,0 +1,31 @@
+.recipe_Inputs{
+    display: flex;
+    align-items: top;
+    flex-direction: row;
+  
+    gap: 10px;
+
+}
+
+.Cat_Ing_Align_CSS{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Cat_Ing_Align_CSS button{
+    background-color: #3f51b5;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    outline: 0;
+    text-transform: uppercase;
+    margin: 3px 5px;
+    cursor: pointer;
+    box-shadow: 0px 2px 2px lightgray;
+    transition-duration: 250ms;
+}
+
+.Cat_Ing_Align_CSS button:hover{
+    background-color: #283593;
+}
