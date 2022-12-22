@@ -3,19 +3,23 @@ import './adminManageUser.css';
 import {ManageUserUser} from '../../components'
 
 
+
 const DataUser = [
-    {
-        ID: 0,
-        UserName: "Alex",
-    },
-    
-  ];
+  {
+    username: "user1",
+    password: "pass1", 
+    admin: false,
+    supAdmin:false
+  },
+  
+];
 
 
-const AdminManageUser = () => {
+
+const AdminManageUser = ({ privilege, dataUsers}) => {
   return (
     <div>
-        {DataUser.map((item, index) => <ManageUserUser user={item} />)}
+        {DataUser.map((item, index) => <ManageUserUser privilege={privilege} user={item} />)}
         
     </div>
   )
