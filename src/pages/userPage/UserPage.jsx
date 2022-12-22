@@ -28,7 +28,7 @@ const UserPage = ({token, setToken, page}) => {
     }else if(page === 4) {
       return <AdminManageComment  />
     }else if(page === 5) {
-      return <AdminManageUser  />
+      return <AdminManageUser  dataUsers={users}/>
     }else if(page === 2) {
       return (
       <div className='User_selection_results'>
@@ -38,7 +38,8 @@ const UserPage = ({token, setToken, page}) => {
 }
 
   useEffect(() => {
-    getRecipes()
+    getRecipes();
+    //getUsers();
   }, [])
 
   let getRecipes = async () => {
@@ -48,6 +49,14 @@ const UserPage = ({token, setToken, page}) => {
     setRecipes(data)
   }
   
+  /*
+  let getUsers = async() => {
+    let response = await fetch("users/")
+    let data = await response.json()
+    //console.log('DATA: ', data)
+    setUsers(data)
+  }*/
+
   if(!token && page === 1) {
     return <LoginPage token ={token} setToken={setToken} />
   }else if(!token && page === 2) {
@@ -59,8 +68,7 @@ const UserPage = ({token, setToken, page}) => {
     return(
       <div className='AdminPage_Button_Navigation'>
         <button onClick={() => setCount(0)}>My Recipes</button>
-        <button onClick={() => setCount(1)}>Add Recipes</button>
-        {true
+        {token.admin || token.supAdmin
         ? <AdminNavigation/>: <button onClick={() => setCount(2)}>Settings</button>
     }
         
@@ -74,10 +82,11 @@ const UserPage = ({token, setToken, page}) => {
   const AdminNavigation = () => {
     return(        
     <div>
+      <button onClick={() => setCount(1)}>Add Recipes</button>
       <button onClick={() => setCount(3)}>Manage Recipes</button>
-    <button onClick={() => setCount(4)}>Manage Comments</button>
-    <button onClick={() => setCount(5)}>Manage Users</button>
-    <button onClick={() => setCount(2)}>Settings</button>
+      <button onClick={() => setCount(4)}>Manage Comments</button>
+      <button onClick={() => setCount(5)}>Manage Users</button>
+      <button onClick={() => setCount(2)}>Settings</button>
     </div>);
   }
 
@@ -88,8 +97,9 @@ const UserPage = ({token, setToken, page}) => {
       <div className='AdminPage_selection_results'>
         <UserPageContentSelection page={count}/>
       </div>
-
+      
     </div>
+   
   );
 };
 
