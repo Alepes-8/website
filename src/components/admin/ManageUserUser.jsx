@@ -1,7 +1,7 @@
 import React from 'react'
 import './manageUserUser.css';
 
-const ManageUsersUser = ({user}) => {
+const ManageUsersUser = ({privilege, user}) => {
    const ChangeAdminStatus = () => {
 
    }
@@ -14,12 +14,16 @@ const ManageUsersUser = ({user}) => {
               
             </div>
            
-            <b>ID:</b> {user.ID}
-            <b>UserName:</b> {user.UserName} 
-            <div className='toggle_Box'>
-                <input type="checkbox" defaultChecked={true} onClick={ChangeAdminStatus} />
-            </div>
+            <b>UserName:</b> {user.username} 
+            {privilege
+                ? <div><div className='toggle_Box'>
+                    <input type="checkbox" defaultChecked={user.admin} onClick={ChangeAdminStatus} />
+                    
+                </div>
                 <strong>{"Admin"}</strong>
+                </div>: <p></p>
+            }
+               
             
            
             

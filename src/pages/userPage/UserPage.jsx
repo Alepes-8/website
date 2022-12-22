@@ -28,7 +28,7 @@ const UserPage = ({token, setToken, page}) => {
     }else if(page === 4) {
       return <AdminManageComment  />
     }else if(page === 5) {
-      return <AdminManageUser  dataUsers={users}/>
+      return <AdminManageUser  privilege={token.supAdmin} dataUsers={users}/>
     }else if(page === 2) {
       return (
       <div className='User_selection_results'>
