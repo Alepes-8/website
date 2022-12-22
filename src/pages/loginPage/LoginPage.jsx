@@ -10,11 +10,21 @@ const LoginPage = ({token, setToken}) => {
     const database = [
       {
         username: "user1",
-        password: "pass1"
+        password: "pass1", 
+        admin: false,
+        supAdmin:false
       },
       {
-        username: "user2",
-        password: "pass2"
+        username: "admin",
+        password: "admin",
+        admin: true,
+        supAdmin:false
+      },
+      {
+        username: "sup",
+        password: "sup",
+        admin: false,
+        supAdmin:true
       }
     ];
 
