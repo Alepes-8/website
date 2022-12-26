@@ -40,6 +40,7 @@ const LoginPage = ({token, setToken}) => {
         supAdmin:user[0].is_superuser
       };
       setToken(userData);
+      return;
     }
 
     return (
@@ -70,7 +71,6 @@ const LoginPage = ({token, setToken}) => {
                 onChange={(e) => {setPassword(e.target.value)}}
               />
             </div>
-            {errorMessages};
             <button onClick={(e) => handleLogin()}>Login </button>
             <a href="/Register" className ='link_button'>Don't have an account? Register</a>
           </div>
