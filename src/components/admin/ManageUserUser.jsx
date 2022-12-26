@@ -18,7 +18,7 @@ const ManageUsersUser = ({privilege, user}) => {
               
             </div>
            
-            <b>UserName:</b> {user.username} 
+            <b>UserName:</b> {user.email} 
             {privilege
                 ? <div><div className='toggle_Box'>
                     <input type="checkbox" defaultChecked={user.admin} onClick={ChangeAdminStatus} />

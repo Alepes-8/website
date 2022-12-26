@@ -39,7 +39,7 @@ const UserPage = ({token, setToken, page}) => {
 
   useEffect(() => {
     getRecipes();
-    //getUsers();
+    getUsers();
   }, [])
 
   let getRecipes = async () => {
@@ -52,6 +52,7 @@ const UserPage = ({token, setToken, page}) => {
   
   let getUsers = async() => {
     let response = await fetch("users/")
+    console.log(response);
     let data = await response.json()
     //console.log('DATA: ', data)
     setUsers(data)
@@ -87,7 +88,6 @@ const UserPage = ({token, setToken, page}) => {
       <button onClick={() => setCount(4)}>Manage Comments</button>
       <button onClick={() => setCount(5)}>Manage Users</button>
       <button onClick={() => setCount(2)}>Settings</button>
-      <button onClick={console.log(users)}>testign</button>
     </div>);
   }
 
