@@ -9,83 +9,38 @@ const LoginPage = ({token, setToken}) => {
     const [password, setPassword] = useState("");
 
     // User Login info, temp database
-    const database = [
-      {
-        username: "user1",
-        password: "pass1", 
-        admin: false,
-        supAdmin:false
-      },
-      {
-        username: "admin",
-        password: "admin",
-        admin: true,
-        supAdmin:false
-      },
-      {
-        username: "sup",
-        password: "sup",
-        admin: false,
-        supAdmin:true
-      }
-    ];
-
-
-    const errors = {
-      email: "invalid email",
-      pass: "invalid password"
-    };
-
-    const renderErrorMessage = (name) =>
-    name === errorMessages.name && (
-      <div className="error">{errorMessages.message}</div>
-    );
-
 
     const handleLogin = async() => {
-    
+        
       //future implementation when the server works as it should
-      /* 
-      fetch(`/users/${userEmail}`) //(need testing of the address. May just return the whole user list)
-      .then((response) => {
-        if(response.status == 404){
-          setErrorMessages({ name: "email", message: "email does not exist" });
-          return;
-        }
-        let data =  response.json()
-        if(data.password !== password){
-          setErrorMessages({ name: "pass", message: "incorect password" });
-        }else{
-          let userData = { 
-            username: userName,
-            password: password, 
-            admin: false,
-            supAdmin:false
-          };
-          setToken(userData);
-        }
-      })
-      */
       
+      let response = await fetch("/users/")
+      let data = await response.json()
+      console.log(data);
+      let user = data.filter((element) => {if(element.email === userEmail){
+        return element;
+      }})
+      console.log(user);
+      console.log(user);
 
+      if(user.length !== 1){
+        setErrorMessages("email not found");
+        return;
+      }
+      console.log(user[0], password)
 
-     // Find user login info
-     const userData = database.find((user) => user.username === userEmail);
-
-     // Compare user info
-     if (userData) {
-       if (userData.password !== password) {
-         // Invalid password
-         setErrorMessages({ name: "pass", message: errors.pass });
-       } else {
-         setToken(userData);
-       }
-     } else {
-       // Username not found
-       setErrorMessages({ name: "email", message: errors.email });
-     }
+      if(user[0].password !== password){
+        setErrorMessages("incorrect password");
+        return;
+      }
+      let userData = { 
+        email: userEmail,
+        password: password, 
+        admin: user[0].is_staff,
+        supAdmin:user[0].is_superuser
+      };
+      setToken(userData);
     }
-    
 
     return (
       <div className='baseBackground'>
@@ -115,6 +70,7 @@ const LoginPage = ({token, setToken}) => {
                 onChange={(e) => {setPassword(e.target.value)}}
               />
             </div>
+            {errorMessages};
             <button onClick={(e) => handleLogin()}>Login </button>
             <a href="/Register" className ='link_button'>Don't have an account? Register</a>
           </div>
