@@ -12,6 +12,7 @@ const UserPage = ({token, setToken, page}) => {
   let [recipes, setRecipes] = useState([])
   let [comment, setComment] = useState([])
   let [users, setUsers] = useState([])
+  let [myRecipes, setMyRecipes] = useState()
 
 
   const UserPageContentSelection = ({page}) => {
@@ -38,8 +39,10 @@ const UserPage = ({token, setToken, page}) => {
 }
 
   useEffect(() => {
-    getRecipes();
-    getUsers();
+    if(token){
+      getRecipes();
+      getUsers();
+    }
   }, [])
 
   let getRecipes = async () => {
@@ -52,10 +55,13 @@ const UserPage = ({token, setToken, page}) => {
   
   let getUsers = async() => {
     let response = await fetch("users/")
-    console.log(response);
     let data = await response.json()
     //console.log('DATA: ', data)
-    setUsers(data)
+    let user = data.filter((element) => {if(element.email === token.email){
+      return element;
+    }})
+    setMyRecipes(user[0].savedRecipes) //only my recipes
+    setUsers(data) //all users
   }
 
   if(!token && page === 1) {
