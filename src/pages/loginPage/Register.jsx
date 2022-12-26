@@ -62,7 +62,7 @@ const Register = ({token, setToken}) => {
         console.log(response)
         if(response.status === 201){
           let userData = { 
-            username: userName,
+            email: userEmail,
             password: password, 
             admin: false,
             supAdmin:false
