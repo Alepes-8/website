@@ -40,7 +40,7 @@ const Register = ({token, setToken}) => {
 
     const handleRegister = async() => {
   
-      /*
+      
       //alt 1 for the solution
       //Here we try to create it and if the server say no then either username or 
       //email is already in use. Then just give a not clear answer.
@@ -50,16 +50,26 @@ const Register = ({token, setToken}) => {
           'Content-type':'application/json',
         },
         body:JSON.stringify(   {
-          "username": userName,
+          "is_superuser": false,
+          "is_staff": false,
           "email": userEmail,
-          "password": password ,
-          
+          "password": password,
+          "groups": [],
+          "savedRecipes": [],
+          "createdRecipes": []
       })
       }).then((response) => {
+        console.log(response)
         if(response.status === 201){
-         
+          let userData = { 
+            username: userName,
+            password: password, 
+            admin: false,
+            supAdmin:false
+          };
+          setToken(userData);
         }else if(response.status === 200){
-          setErrorMessages("Either email, or username already in use");
+          setErrorMessages("email already in use");
           return;
         }
         else if(response.status == 500){
@@ -75,15 +85,10 @@ const Register = ({token, setToken}) => {
         console.log('ERROR:', error)
         return;
       })
-      let userData = { 
-        username: userName,
-        password: password, 
-        admin: false,
-        supAdmin:false
-      };
-      setToken(userData);
+      
 
 
+      /*
       //alt2 for register
       // here we check if username exist then check if the email exist if username is free.
       fetch(`/users/${userName}`).then((response) => {
@@ -132,7 +137,7 @@ const Register = ({token, setToken}) => {
       setToken(userData);
       */
 
-
+/*
      // Find user login info
      const userData = database.find((user) => user.username === userEmail);
 
@@ -148,6 +153,7 @@ const Register = ({token, setToken}) => {
        // Username not found
        setErrorMessages("Email Is incorect");
       }
+  */
     }
     
 
