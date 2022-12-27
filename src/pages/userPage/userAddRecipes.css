@@ -28,4 +28,7 @@
 
 .Cat_Ing_Align_CSS button:hover{
     background-color: #283593;
+    opacity: 1;
+    transform: translateY(5px);
 }
+
