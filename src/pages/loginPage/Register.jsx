@@ -4,12 +4,23 @@ import './authentication.css';
 const Register = ({setToken}) => {
     const [errorMessages, setErrorMessages] = useState("");
 
-    const [userEmail, setUserEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [regUserEmail, setRegUserEmail] = useState("");
+    const [regPassword, setRegPassword] = useState("");
+    const [controlPass, setControlPass] = useState("");
 
     const handleRegister = async() => {
-  
-      
+      setErrorMessages("creating")
+      //check the validation of an email input
+      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if ( !re.test(regUserEmail) ) {
+        setErrorMessages("email is bad")
+        return;
+      }
+
+      if(regPassword !== controlPass){
+        setErrorMessages("password does not match")
+        return;
+      }
       //alt 1 for the solution
       //Here we try to create it and if the server say no then either username or 
       //email is already in use. Then just give a not clear answer.
@@ -21,8 +32,8 @@ const Register = ({setToken}) => {
         body:JSON.stringify(   {
           "is_superuser": false,
           "is_staff": false,
-          "email": userEmail,
-          "password": password,
+          "email": regUserEmail,
+          "password": regPassword,
           "groups": [],
           "savedRecipes": [],
           "createdRecipes": []
@@ -31,8 +42,8 @@ const Register = ({setToken}) => {
         console.log(response)
         if(response.status === 201){
           let userData = { 
-            email: userEmail,
-            password: password, 
+            email: regUserEmail,
+            password: regPassword, 
             admin: false,
             supAdmin:false
           };
@@ -69,23 +80,36 @@ const Register = ({setToken}) => {
                     type="text"
                     className="form-control form-control-lg"
                     placeholder="Exemple@gmail.com"
-                    name="email"
-                    value={userEmail}
-                    onChange={(e) => {setUserEmail(e.target.value)}}
+                    name="regEmail"
+                    value={regUserEmail}
+                    onChange={(e) => {setRegUserEmail(e.target.value)}}
                   />
                 </div>
                
                 <div className="login_form">
-                  <label htmlFor="password">Password</label>
+                  <label htmlFor="password">password</label>
                   <input
                     type="password"
                     className="form-control form-control-lg"
                     placeholder="**********"
-                    name="pass"
-                    value={password}
-                    onChange={(e) => {setPassword(e.target.value)}}
+                    name="regPass"
+                    value={regPassword}
+                    onChange={(e) => {setRegPassword(e.target.value)}}
                   />
                 </div>
+
+                <div className="login_form">
+                  <label htmlFor="password">repeat password</label>
+                  <input
+                    type="password"
+                    className="form-control form-control-lg"
+                    placeholder="**********"
+                    name="regControlPass"
+                    value={controlPass}
+                    onChange={(e) => {setControlPass(e.target.value)}}
+                  />
+                </div>
+                <p>{errorMessages}</p>
                 <button onClick={(e) => handleRegister()}>Login </button>
                 
                 <a href="/LoginPage" className ='link_button'>You have an account? Log in</a>
