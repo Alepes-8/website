@@ -13,18 +13,6 @@ const Settings = () => {
 
     const CheckContent = () => {
         setAction("checking value");
-        /*if(name === ""){
-            setAction("missingName");
-            return;
-        }
-        if(email ===""){
-            setAction("email");
-            return;
-        }
-        if(settingsPassword === ""){
-            setAction("password");
-            return;
-        }*/
 
         //check the validation of an email input
         let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -76,18 +64,7 @@ const Settings = () => {
   return (
     <div className="UserSavedRecipes">
         <h1>Change Settings</h1>
-        <div className="form-group">
-            <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Username"
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value) }
-            />
-          </div>
-
-          
+       
           <div className="form-group">
             <input
               type="email"
@@ -103,7 +80,7 @@ const Settings = () => {
             <input
               type="settingsPassword"
               className="form-control form-control-lg"
-              placeholder="Enter description"
+              placeholder="new password"
               name="settingsPassword"
               value={settingsPassword}
               onChange={(e) => setSettingsPassword(e.target.value)}
