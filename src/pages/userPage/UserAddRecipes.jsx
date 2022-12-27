@@ -2,50 +2,15 @@ import './userAddRecipes.css';
 import React, {useState,useEffect} from 'react';
 import { async } from 'q';
 import slugify from 'react-slugify';
-
-const testCatDate =[
-  {"name": "fish"},
-  {"name": "cow"},
-  {"name": "cheese"},
-  {"name": "beer"},
-  {"name": "deer"},
-  {"name": "cat"},
-  {"name": "apple"},
-  {"name": "cider"},
-  {"name": "bread"},
-  {"name": "corn"},
-  {"name": "milk"},
-  {"name": "vegan"},
-  {"name": "mold"},
-  {"name": "finger"},
-  {"name": "bear"},
-  {"name": "god"},
-];
-
-const testIngDate =[
-  {"name": "fish"},
-  {"name": "cow"},
-  {"name": "cheese"},
-  {"name": "beer"},
-  {"name": "deer"},
-  {"name": "cat"},
-  {"name": "apple"},
-  {"name": "cider"},
-  {"name": "bread"},
-  {"name": "corn"},
-  {"name": "milk"},
-  {"name": "vegan"},
-  {"name": "mold"},
-  {"name": "finger"},
-  {"name": "bear"},
-  {"name": "god"},
-];
+import useToken from '../../useToken';
 
 
 
 
 
-const UserAddRecipes = () => {
+const UserAddRecipes = ({catData, ingData}) => {
+    const {token, setToken } = useToken();
+
     const [action, setAction] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -53,37 +18,29 @@ const UserAddRecipes = () => {
     const [creationDate, setCreationDate] = useState();
 
 
+
     const [categories, setCategories] = useState([]);
-    const [catagoriesData, setCatagoriesData] = useState("");
+    const [catagorieDescs, setCategoriesDescs] = useState([]);
+    const [catSearchTerm, setCatSearchTerm] = useState('');
+    const [catSearchDesc, setCatSearchDesc] = useState('');
 
     const [ingredients, setIngredients] = useState([]);
-    const [ingredientsData, setIngredientsData] = useState("");
-
-
-
+    const [ingredientsDesc, setIngredientsDesc] = useState([]);
+    const [ingAmount, setIngAmount] = useState([]);
     const [ingSearchTerm, setIngSearchTerm] = useState('');
-    const [ingSearchsDesc, setIngredientsDesc] = useState('');
+    const [ingSearchDesc, setIngSearchDesc] = useState('');
+    const [ingSearchAmount, setIngSearchAmount] = useState('');
 
-    const [catSearchTerm, setCatSearchTerm] = useState('');
-    const [catSearchsDesc, setCategoriesDesc] = useState('');
 
     
     useEffect(() => {
       let newDate = new Date()
       let today = `${ newDate.getFullYear()}-${newDate.getMonth()+1}-${ newDate.getDate()}`
       setCreationDate(today)
-      
-      //getCatagorieData()
-
     }, [])
-/*
-    let getCatagorieData = async () => {
-        let response = await fetch("/categories/")
-        let data = await response.json()
-        //console.log('DATA: ', data)
-        setCatagoriesData(data)
-    }
-  */  
+
+
+
     const CheckContent = () => {
       setAction("checking value");
       if(name ===""){
@@ -102,7 +59,7 @@ const UserAddRecipes = () => {
     }
 
     const CreateRecipe = async() => {
-      setAction("loading...");
+
       let newName =slugify(name)
       let acceptingSlug = false;
       console.log(newName);
@@ -116,7 +73,6 @@ const UserAddRecipes = () => {
           newName = newName + extra;
         }
       }while(!acceptingSlug);
-
       
       fetch('recipes/', {
         method:'POST',
@@ -124,20 +80,25 @@ const UserAddRecipes = () => {
           'Content-type':'application/json',
         },
         body:JSON.stringify(   {
-          "name": name,
-          "slug": newName,
-          "description": description ,
-          "portionSize": portionSize,
-          "creationDate": creationDate,
-          "categories": [],
-          "ingredients": [],
-          "author": "admin"
-      })
+
+          
+            "name": name,
+            "slug": newName,
+            "description": description,
+            "portionSize": portionSize,
+            "creationDate": creationDate,
+            "categories": [],
+            "ingredients": [],
+            "author": token.email,
+          
+        })
       }).then((response) => {
+        console.log(response);
         if(response.status === 201){
           
         }else{
           setAction("something went wrong, try again");
+          
           return;
         }
       }).catch(function(error){
@@ -146,14 +107,45 @@ const UserAddRecipes = () => {
         return;
       })
 
+    
+      /*
       
+      await RemoveMatchingItems(ingredients, ingData).map((item) => {
+        let index = ingredients.indexOf(item);
+        fetch("/ingredients/", {
+        method:'POST',
+        headers:{
+          'Content-type':'application/json',
+        },
+        body:JSON.stringify(   {
+          "name": item,
+          "description": ingredientsDesc[index] 
+        })})        
+      })
 
+      await RemoveMatchingItems(categories, catData).filter((item) => {
+        let index = categories.indexOf(item);        
+        fetch("/categories/", {
+        method:'POST',
+        headers:{
+          'Content-type':'application/json',
+        },
+        body:JSON.stringify(   {
+          "name": item,
+          "description": categories[index] 
+        })})        
+      })
+      CreateIngredients();
 
       setAction("success");
+    */
+      // ingAmount[index]
+
     }
 
-    const CreateIngredients =async()=>{
-    
+
+    const CreateIngredients =async(ing, index)=>{
+      
     }
 
     const CreateCategories =async()=>{
@@ -162,19 +154,32 @@ const UserAddRecipes = () => {
 
 
  
-    function AddItems(term, group, set){
+    function AddItems(term, desc, group, groupDesc, set, setDesc, extra, groupExtra, setExtra){
       if(term==""){
         return;
+      }
+      if(desc === ""){
+        desc = "N/A";
       }
       let found = group.filter((val) => {if(val==term){
         return val;
       }})
       if(found == 0 ){
         set([...group, term]);
+        setDesc([...groupDesc, desc]);
+        if(setExtra === setIngAmount){
+          if(extra === ""){
+            extra = "N/A";
+          }
+          setExtra([...groupExtra,extra])
+        }
       }
     }
 
-    const ListItems = ({data, word, group, set}) =>{
+    const ListItems = ({data, word, group, groupDesc, set, setDesc, extra, groupExtra, setExtra}) =>{
+      if(!data){
+        return;
+      }
       return(
 
         data.filter((val) => 
@@ -184,8 +189,17 @@ const UserAddRecipes = () => {
             }else if(val.name.toLowerCase().includes(word.toLowerCase())){
               return val
             }
-          }).map((item, index) => {if(index <= 9){
-                  return(<div className='Cat_Ing_Align_CSS'  ><button onClick={(e) => AddItems(item.name, group, set)}>{item.name}</button></div>);
+          }).map((item, index) => {if(index <= 9){           
+                  return(
+                    <div className='Cat_Ing_Align_CSS'  >
+                      <button onClick={(e) => {
+                        AddItems(item.name, item.description, group, groupDesc, set, setDesc, extra, groupExtra, setExtra); 
+                        }} title={item.description}>
+                        {item.name}
+                        
+                      </button>
+                    </div>
+                  );
                 }else if(index == 10){
                   return(<div><p>...</p></div>);
                 }
@@ -195,6 +209,29 @@ const UserAddRecipes = () => {
       
     }
 
+    function InputTemplate (inType, inHolder, inName, inValue, inSet) {
+      return (
+        <div className="form-group">
+          <input
+            type = {inType}
+            className="form-control form-control-lg"
+            placeholder={inHolder}
+            name={inName}
+            value={inValue}
+            onChange={(e) => inSet(e.target.value) }
+          />
+        </div>
+        
+      );
+
+    }
+
+    function DeleteItemByIndex(index, list){
+      list(prev => 
+        prev.filter((dec, descIndex) => descIndex !== index
+      ));
+    }
+
     return (
     <div className="UserSavedRecipes">
         
@@ -202,99 +239,109 @@ const UserAddRecipes = () => {
           
           
           <div>
-            <button onClick={(e) => AddItems(ingSearchTerm, ingredients, setIngredients)}> Add Ingredints</button>
+            <button onClick={(e) => AddItems(ingSearchTerm, ingSearchDesc, ingredients, ingredientsDesc, setIngredients, setIngredientsDesc, ingSearchAmount, ingAmount, setIngAmount)}> Add Ingredints</button>
+
             {ingredients.map((item, index) => {
               return(
-                <div className='Cat_Ing_Align_CSS' > <p> <button onClick={(e)=>setIngredients(prev => prev.filter(fruit => fruit !== item ))}>{item}</button> </p></div>
+                <div className='Cat_Ing_Align_CSS'> <p> 
+                  {/* Ingredient button. 
+                      SetCatagorie is the to delete info from categories and respective description
+                      The title is there to show description of category */}
+                  <button 
+                    onClick={(e)=>
+                      setIngredients((prev) => prev.filter((ing, itemIndex) => {
+                        if(ing !== item ){
+                          return ing;
+                        }else{
+                          DeleteItemByIndex(itemIndex, setIngredientsDesc);
+                          DeleteItemByIndex(itemIndex, setIngAmount);
+                        }
+                      }))
+                    } 
+                    
+                    title={ingredientsDesc[index]}>{item} {ingAmount[index]}
+                  </button> </p>
+                </div>
               )})}
+
           </div>
 
           <div>
-              <div className="form-group">
-                <input
-                  type="text"
-                  className="form-control form-control-lg"
-                  placeholder="Enter categories"
-                  name="categories"
-                  value={ingSearchTerm}
-                  onChange={(e) => {setIngSearchTerm(e.target.value)}}
-                />
-              </div>
-              <ListItems data={testIngDate} word ={ingSearchTerm} group={ingredients} set={setIngredients}/>
-              
+              {InputTemplate("text" ,"Enter ingredient","ingredient",ingSearchTerm,setIngSearchTerm)}
+              {InputTemplate("text" ,"Enter description","ingdescription",ingSearchDesc,setIngSearchDesc)}
+              {InputTemplate("text" ,"Enter amount","ingredientAmount",ingSearchAmount,setIngSearchAmount)}
+
+              <ListItems data={ingData} word ={ingSearchTerm} group={ingredients} groupDesc={ingredientsDesc} 
+                        set={setIngredients} setDesc={setIngredientsDesc} extra={ingSearchAmount} groupExtra={ingAmount} 
+                        setExtra={setIngAmount}/>
             </div>
 
           <div>
             <h1>AddRecipes</h1>
 
-            <div className="form-group">
-              <input
-                type="text"
-                className="form-control form-control-lg"
-                placeholder="Enter Your Name"
-                name="name"
-                value={name}
-                onChange={(e) => setName(e.target.value) }
-              />
-            </div>
-
-            <div className="form-group">
-              <input
-                type="text"
-                className="form-control form-control-lg"
-                placeholder="Enter description"
-                name="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </div>
-
-            <div className="form-group">
-              <input
-                type="number"
-                className="form-control form-control-lg"
-                placeholder="Enter portionSize"
-                name="portionSize"
-                value={portionSize}
-                onChange={(e) => setPortionSize(e.target.value)}
-              />
-            </div>
+            {InputTemplate("text" ,"Enter Your Name","name",name,setName)}
+            {InputTemplate("text" ,"Enter description","description",description,setDescription)}
+            {InputTemplate("number" ,"Enter portionSize","portionSize",portionSize,setPortionSize)}
+            
 
             <button onClick={CheckContent}> Add recipe</button>
             <p>{action}</p>
           </div>
-
           <div>
-            <div className="form-group">
-              <input
-                type="text"
-                className="form-control form-control-lg"
-                placeholder="Enter categories"
-                name="categories"
-                value={catSearchTerm}
-                onChange={(e) => {setCatSearchTerm(e.target.value)}}
-              />
-            </div>
-            <ListItems data={testCatDate} word ={catSearchTerm} group={categories} set={setCategories}/>
+            <div>
+              {InputTemplate("text" ,"Enter Categorie","categories",catSearchTerm,setCatSearchTerm)}
+              {InputTemplate("text" ,"Enter description","categories",catSearchDesc,setCatSearchDesc)}
+            </div>  
+            <ListItems data={catData} word ={catSearchTerm} group={categories} groupDesc ={catagorieDescs} set={setCategories} setDesc={setCategoriesDescs}/>
           </div>
 
           <div>
-            <button onClick={(e) => AddItems(catSearchTerm, categories, setCategories)}> Add categories</button>
+            <button onClick={(e) => AddItems(catSearchTerm, catSearchDesc, categories, catagorieDescs, setCategories, setCategoriesDescs)}> Add categories</button>
             {categories.map((item, index) => {
               return(
-                <div className='Cat_Ing_Align_CSS' > <p> <button onClick={(e)=>setCategories(prev => prev.filter(fruit => fruit !== item ))}>{item}</button> </p></div>
+                <div className='Cat_Ing_Align_CSS'> <p> 
+                  {/* Ingredient button. 
+                      SetCatagorie is the to delete info from categories and respective description
+                      The title is there to show description of category */}
+                  <button 
+                    onClick={(e)=>
+                      setCategories((prev) => prev.filter((cat, itemIndex) => {
+                        if(cat !== item ){
+                          return cat;
+                        }else{
+                          DeleteItemByIndex(itemIndex, setCategoriesDescs);
+                        }
+                      }))
+                    } 
+                    title={catagorieDescs[index]}>{item}
+                  </button> </p>
+                </div>
               )})}
           </div>
 
         </div>
         
           
-          
+        
     </div>
 
     );
 };
 
-
+//time complexity n^2 and can get better if we sort by letter perhaps
+function RemoveMatchingItems(data1, data2){
+  let create = data1.filter((val, index) => 
+  {
+    let rep = data2.filter((element)=> {
+      if(element.name.toLowerCase() === val.toLowerCase()){
+        return element
+      }
+    })
+    if(rep.length == 0){
+      return val;
+    }
+  })
+  return(create);
+}
 
 export default UserAddRecipes;
