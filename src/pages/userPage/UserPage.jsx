@@ -14,6 +14,9 @@ const UserPage = ({token, setToken, page}) => {
   let [users, setUsers] = useState([])
   let [myRecipes, setMyRecipes] = useState()
 
+  const [ingData, setIngData] = useState();
+  const [catData, setCatData] = useState();
+
 
   const UserPageContentSelection = ({page}) => {
    
@@ -22,7 +25,7 @@ const UserPage = ({token, setToken, page}) => {
     }else if(page === 1) {
       return(
       <div className='User_selection_results'>
-        <UserAddRecipes  />
+        <UserAddRecipes ingData={ingData} catData={catData}  />
       </div>);
     }else if(page === 3) {
       return <AdminManageRecipes  recipes = {recipes}/>
@@ -36,14 +39,31 @@ const UserPage = ({token, setToken, page}) => {
         <Settings  />
       </div>);
     }
-}
+  }
+
+
 
   useEffect(() => {
     if(token){
       getRecipes();
       getUsers();
+      getCat();
+      getIng();
     }
   }, [])
+
+  let getIng = async () => {
+    let response = await fetch("/ingredients/")
+    let data = await response.json()
+    setIngData(data)
+  }
+
+  let getCat = async () => {
+    let response = await fetch("/categories/")
+    let data = await response.json()
+    setCatData(data)
+  }
+
 
   let getRecipes = async () => {
     let response = await fetch("recipes/")
