@@ -33,24 +33,9 @@ const EditRecipe = () => {
         setRecipe(data);
     }
       
-    const CheckContent = () => {
-        setAction("checking value");
-        {/*if(name === ""){
-            setName(recipes.name);
-        }
-        if(description ===""){
-          setDescription(recipes.description);
-        }
-        if(!portionSize){
-          setPortionSize(recipes.portionSize);
-        }*/}
-        
-       
-        ChangeRecipeInfo()
-      }
-
     const ChangeRecipeInfo = async() => {
         setAction("loading...");
+        /*
         let newName =slugify(name)
         let acceptingSlug = false;
         console.log(newName);
@@ -64,63 +49,39 @@ const EditRecipe = () => {
             newName = newName + extra;
             }
         }while(!acceptingSlug);
+*/  
+        let userName = recipe.name;
+        let userDesc = recipe.description;
+        let UserPort = recipe.portionSize;
+        if(name !== ""){
+          userName = name;
+        }
+        if(description !== ""){
+          userDesc = description;
+        }
+        if(portionSize !== ""){
+          UserPort = portionSize;
+        }
 
-       
-
-        //TODO change according to the new setup and add recipe code which is still to do as well
-        fetch(`/recipes/${recipe.id}/`, {
-          method:'PUT',
-          headers:{
-            'Content-type':'application/json',
-          },
-          body:JSON.stringify({"name": name,
-          "slug": newName,
-          "description": recipe.description ,
-          "portionSize": recipe.portionSize,
-          "creationDate": recipe.creationDate,
-          "categories": [
-              {
-                  "name": "test",
-                  "description": "test"
-              }
-          ],
-          "ingredients": [
-              {
-                  "name": "test",
-                  "description": "test"
-              }
-          ],
-          "author":"TomatoLover69",
+      fetch(`http://127.0.0.1:8000/recipes/${recipe.id}/`, {
+        method:'POST',
+        headers:{
+          'Content-type':'application/json',
+        },
+        body:JSON.stringify(   {
+            "id": 5,
+            "name": userName,
+            "description": userDesc,
+            "portionSize": UserPort,
+            "creationDate": recipe.creationDate,
+            "categories": [{"name": "tomato", "description": "5st" },{ "name": "tomato", "description": "5st" }],
+            "ingredients": [],
+            "author": "admin@gmail.com",
         })
-        }).then((response) => {
-            if(response.status === 200){
-                setAction("Changed");
-                window.location.reload(false);
-            }else{
-                setAction("something went wrong. Error: ", response.status)
-            }
-          
-        }).catch(function(error){
-          setAction(`${error}`);
-          console.log('ERROR:', error)
-        })
-      }      
+      }).then((response) => {console.log(response)});
+     
 
-      function InputTemplate (inType, inHolder, inName, inValue, inSet) {
-        return (
-          <div className="form-group">
-            <input
-              type = {inType}
-              className="form-control form-control-lg"
-              placeholder={inHolder}
-              name={inName}
-              value={inValue}
-              onChange={(e) => inSet(e.target.value) }
-            />
-          </div> 
-        );
-      }
-  
+      }        
       
   return (
     <div className='EditRecipePage'>
@@ -140,7 +101,7 @@ const EditRecipe = () => {
 
             
 
-                <button onClick={CheckContent}> Add recipe</button>
+                <button onClick={ChangeRecipeInfo}> Add recipe</button>
                 <p>{action}</p>
             </div>
             <div>
@@ -153,4 +114,18 @@ const EditRecipe = () => {
   )
 }
 
+function InputTemplate (inType, inHolder, inName, inValue, inSet) {
+  return (
+    <div className="form-group">
+      <input
+        type = {inType}
+        className="form-control form-control-lg"
+        placeholder={inHolder}
+        name={inName}
+        value={inValue}
+        onChange={(e) => inSet(e.target.value) }
+      />
+    </div> 
+  );
+}
 export default EditRecipe
