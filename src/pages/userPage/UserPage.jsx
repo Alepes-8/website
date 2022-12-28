@@ -10,9 +10,9 @@ import {LoginPage, Register, UserAddRecipes, UserSavedRecipes, Settings, AdminMa
 const UserPage = ({token, setToken, page}) => {
   const [count, setCount] = useState(0);
   let [recipes, setRecipes] = useState([])
-  let [slugs, setSlugs] = useState()//TODO
+  let [slugs, setSlugs] = useState()
+  let [comments, SetComments] = useState()//TODO
 
-  let [comment, setComment] = useState([])
   let [users, setUsers] = useState([])
   let [myRecipes, setMyRecipes] = useState()
 
@@ -30,10 +30,10 @@ const UserPage = ({token, setToken, page}) => {
         <UserAddRecipes ingData={ingData} catData={catData}  />
       </div>);
     }else if(page === 3) {
-      
-      return <AdminManageRecipes  recipes={recipes} slugs={slugs}/>//TODO
+      return <AdminManageRecipes  recipes={recipes} slugs={slugs}/>
     }else if(page === 4) {
-      return <AdminManageComment  />
+      {console.log("com",comments)}
+      return <AdminManageComment  comments={comments}/>
     }else if(page === 5) {
       return <AdminManageUser  privilege={token.supAdmin} dataUsers={users}/>
     }else if(page === 2) {
@@ -54,26 +54,30 @@ const UserPage = ({token, setToken, page}) => {
       getIng();
       getSlug();
 
-      //getComments();
+      getComments();
     }
   }, [])
+
+  
 
   let getSlug =async() => {//TODO
     let response = await fetch("/recipeSlugs/")
     let data = await response.json()
-    console.log("slug", data);
+    console.log("recipeSlugs", data);
     setSlugs(data)
   }
 
   let getIng = async () => {
     let response = await fetch("/ingredients/")
     let data = await response.json()
+    console.log("ingredients", data);
     setIngData(data)
   }
 
   let getCat = async () => {
     let response = await fetch("/categories/")
     let data = await response.json()
+    console.log("categories", data);
     setCatData(data)
   }
 
@@ -81,27 +85,42 @@ const UserPage = ({token, setToken, page}) => {
   let getRecipes = async () => {
     let response = await fetch("recipes/")
     let data = await response.json()
-    //console.log('DATA: ', data)
+    console.log("recipes", data);
     setRecipes(data)
   }
 
-  /*let getComments = async () => {
-    let response = await fetch("recipes/")
+  let getComments = async () => {
+    let response = await fetch("comments/")
     let data = await response.json()
-    //console.log('DATA: ', data)
-    setRecipes(data)
-  }*/
+    console.log("comments", data);
+    SetComments(data)
+  }
   
   
   let getUsers = async() => {
-    let response = await fetch("users/")
+/*
+    fetch('http://127.0.0.1:8000/api-user-login/', {
+        method:'POST',
+        headers:{
+          'Accept': 'application/json',
+
+          'Content-type':'application/json',
+        },
+        body:JSON.stringify(   {
+            "email": "admin@test.com",
+            "password": "token.password",
+        })
+      }).then((response) => {console.log("test athentication", response)});
+
+    let response = await fetch("api-user-login/")
     let data = await response.json()
     //console.log('DATA: ', data)
+    console.log("userdata" , data)
     let user = data.filter((element) => {if(element.email === token.email){
       return element;
     }})
     setMyRecipes(user[0].savedRecipes) //only my recipes
-    setUsers(data) //all users
+    setUsers(data) //all users*/
   }
 
   if(!token && page === 1) {
