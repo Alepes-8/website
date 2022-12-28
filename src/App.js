@@ -6,7 +6,7 @@ import {Routes, Route} from 'react-router-dom';
 //import RecipeList from './RecipeList';
 import {NavBar} from './components';
 import {Footer} from './containers';
-import { StartPage, RecipePage, UsersRecipePage, UserPage, AdminPage, EditRecipe, SuperAdmin} from './pages';
+import { StartPage, RecipePage, UsersRecipePage, UserPage, AdminPage, EditRecipe} from './pages';
 import useToken from './useToken';
 
 function App() {
@@ -26,8 +26,6 @@ function App() {
         <Route path="/recipes/:id" element={<RecipePage/>}/>
           
         <Route path="/EditRecipe/:id" element={<EditRecipe/>}/>
-
-        <Route path="/SuperAdminPage" element={<SuperAdmin/>}/> 
 
         <Route path="/LoginPage" element={<UserPage token={token} setToken = {setToken} page={1}/>}/>
 
