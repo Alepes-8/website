@@ -69,12 +69,14 @@ const RecipePage = () => {
     const getRecipe = async() => {
         let recipeResponse = await fetch(`/recipes/${recipeId}/`);
         let recipeData = await recipeResponse.json();
+        console.log("recipepage RecipeData: ", recipeData, recipeData.ingredients);
+
         setRecipe(recipeData);
 
         
-        let commentResponse = await fetch(`/comment/`);
+        let commentResponse = await fetch(`/comments/`);
         let commentData = await commentResponse.json();
-        setRecipe(commentData);        
+        setComments(commentData);        
     }
 
     const [textAreaCount, setTextAreaCount] = React.useState(0);
