@@ -8,20 +8,24 @@ const AdminManageRecipes = ({recipes,slugs}) => {
     if(!slugs || !recipes){
         return;
     }
+    let index = -1;
     
-    
+
     return (
         <div>
-            {recipes.map((item, index) => 
-                <ManageUserRecipe recipe={item} 
+            {recipes.map((item) => 
+                    
+                    <ManageUserRecipe recipes ={recipes} recipe={item} 
                     slugData={slugs.filter((element) => {
                         if(element.recipe.id === item.id){
                             return element;
                         }
                     })
-                        
-                    }/
+                    }index={index +=1}/
                 >
+                
+            
+               
             )}
             
         </div>

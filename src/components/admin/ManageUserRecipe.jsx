@@ -1,18 +1,25 @@
 import React from 'react'
 import './manageUserRecipe.css';
 import {Link} from 'react-router-dom';
+import { useState } from 'react';
 
 
 
-const ManageUsersRecipe= ({recipe, slugData}) => {
-    console.log("my slugdata", slugData)
+  
+const ManageUsersRecipe= ({recipes, recipe, index ,slugData}) => {
     let id = recipe.id; // can be pk or id, need to check the database
+    const [status, setStatus] = useState("flex");
 
+    if(Object.keys(recipe).length === 0){
+        return;
+    }
 
-    const DeleteRecipe = async () => {
+    const DeleteRecipe = async () => {        
+        
+
 
         //delete the recipe
-        await fetch(`recipes/${id}/`,{
+      await fetch(`recipes/${id}/`,{
             method: 'DELETE',
         }).then((response) => {
             console.log(response)
@@ -28,54 +35,13 @@ const ManageUsersRecipe= ({recipe, slugData}) => {
             console.log('ERROR:', error)
             return;
         })
-
-        //delete the catagori connection
-
-        await fetch(`slug/${slugData.slug}/`,{
-            method: 'DELETE',
-        }).then((response) => {
-            console.log(response)
-            if(response.status !== 204){
-                 alert("the slug was not deleted wasn't deleted ");
-            }
-            
-        }).catch(function(error){
-            console.log('ERROR:', error)
-            return;
-        })
-
-        await fetch(`ingredeient-amount/${id}/`,{
-            method: 'DELETE',
-        }).then((response) => {
-            console.log(response)
-            if(response.status !== 204){
-                 alert("some ingredients wasn't deleted ");
-            }
-            
-        }).catch(function(error){
-            console.log('ERROR:', error)
-            return;
-        })
-
-        //delete the ingredient connection
-        await fetch(`catagori-connection/${id}/`,{
-            method: 'DELETE',
-        }).then((response) => {
-            console.log(response)
-            if(response.status == 204){
-                alert("some catagories wasn't deleted");
-                
-            }
-        }).catch(function(error){
-            console.log('ERROR:', error)
-            return;
-        })
-
-        window.location.reload(false);
+        
+        setStatus("none")
+        recipes[index] = {};
     }
 
     return( 
-        <div className='User_Template'>
+        <tr style={{display: `${status}`}} className='User_Template'>
             
             <button onClick={DeleteRecipe}> delete</button>
             <b>Slug:</b> <p><Link to={`/EditRecipe/${recipe.id}`}>edit</Link></p>
@@ -89,7 +55,7 @@ const ManageUsersRecipe= ({recipe, slugData}) => {
             <b>DateCreated:</b> {recipe.creationDate} 
             
                 
-        </div>
+        </tr>
     );
 }
       
