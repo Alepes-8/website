@@ -10,14 +10,12 @@ const ManageUsersRecipe= ({recipes, recipe, index ,slugData}) => {
     let id = recipe.id; // can be pk or id, need to check the database
     const [status, setStatus] = useState("flex");
 
+    //make sure to return if the recipe has been deleted
     if(Object.keys(recipe).length === 0){
         return;
     }
 
     const DeleteRecipe = async () => {        
-        
-
-
         //delete the recipe
       await fetch(`recipes/${id}/`,{
             method: 'DELETE',
@@ -35,7 +33,7 @@ const ManageUsersRecipe= ({recipes, recipe, index ,slugData}) => {
             console.log('ERROR:', error)
             return;
         })
-        
+        //Delete the recipe bar from Manage recipe page
         setStatus("none")
         recipes[index] = {};
     }
@@ -46,15 +44,12 @@ const ManageUsersRecipe= ({recipes, recipe, index ,slugData}) => {
             <button onClick={DeleteRecipe}> delete</button>
             <b>Slug:</b> <p><Link to={`/EditRecipe/${recipe.id}`}>edit</Link></p>
           
-            
-            
             <b>Title:</b> {recipe.name}
             <b>Slug:</b>{slugData.length != 1
                 ?<p className='Error'>Error</p>: <p>{slugData[0].slug}</p>
             }
             <b>DateCreated:</b> {recipe.creationDate} 
             
-                
         </tr>
     );
 }
