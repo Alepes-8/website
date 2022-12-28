@@ -7,8 +7,8 @@ import { useParams } from 'react-router-dom';
 
 
 const EditRecipe = () => {
-    let {slug} = useParams();
-    let recipeSlug = slug;
+    let {id} = useParams();
+    let recipeID = id;
 
     let [recipe, setRecipe] = useState(null);
 
@@ -23,20 +23,14 @@ const EditRecipe = () => {
     
 
     useEffect(() => {
-        getRecipe();
+      getRecipe();
     }, []);
 
     //TODO make sure this works as it should
     const getRecipe = async() => {
-        let responseSlugDAta = await fetch(`/slug/${recipeSlug}/`);
-        let SlugData = await responseSlugDAta.json();
-        console.log('EditRecipes SlugData: ', SlugData);
-        
-
-        let responseRecipe = await fetch(`/recipes/${SlugData.id}/`);
-        let recipeData = await responseRecipe.json();
-        console.log('EditRecipe recipeData: ', recipeData);
-        setRecipe(recipeData);
+        let response = await fetch(`/recipes/${recipeID}/`);
+        let data = await response.json();
+        setRecipe(data);
     }
       
     const CheckContent = () => {
@@ -101,8 +95,6 @@ const EditRecipe = () => {
         }).then((response) => {
             if(response.status === 200){
                 setAction("Changed");
-                //make sure to reload the page with the new slug for the preview
-                window.history.replaceState(null, `recipeId`, `${newName}`);
                 window.location.reload(false);
             }else{
                 setAction("something went wrong. Error: ", response.status)

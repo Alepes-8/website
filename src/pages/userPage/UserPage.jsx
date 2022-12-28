@@ -10,7 +10,7 @@ import {LoginPage, Register, UserAddRecipes, UserSavedRecipes, Settings, AdminMa
 const UserPage = ({token, setToken, page}) => {
   const [count, setCount] = useState(0);
   let [recipes, setRecipes] = useState([])
-  let [slugs, setSlugs] = useState([])//TODO
+  let [slugs, setSlugs] = useState()//TODO
 
   let [comment, setComment] = useState([])
   let [users, setUsers] = useState([])
@@ -30,6 +30,7 @@ const UserPage = ({token, setToken, page}) => {
         <UserAddRecipes ingData={ingData} catData={catData}  />
       </div>);
     }else if(page === 3) {
+      
       return <AdminManageRecipes  recipes={recipes} slugs={slugs}/>//TODO
     }else if(page === 4) {
       return <AdminManageComment  />
@@ -58,8 +59,9 @@ const UserPage = ({token, setToken, page}) => {
   }, [])
 
   let getSlug =async() => {//TODO
-    let response = await fetch("/slug/")
+    let response = await fetch("/recipeSlugs/")
     let data = await response.json()
+    console.log("slug", data);
     setSlugs(data)
   }
 

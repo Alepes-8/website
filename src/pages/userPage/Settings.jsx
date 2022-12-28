@@ -64,17 +64,6 @@ const Settings = () => {
   return (
     <div className="UserSavedRecipes">
         <h1>Change Settings</h1>
-       
-          <div className="form-group">
-            <input
-              type="email"
-              className="form-control form-control-lg"
-              placeholder="Email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
 
           <div className="form-group">
             <input

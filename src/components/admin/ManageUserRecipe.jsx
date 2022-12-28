@@ -5,7 +5,8 @@ import {Link} from 'react-router-dom';
 
 
 const ManageUsersRecipe= ({recipe, slugData}) => {
-    let id = recipe.ID; // can be pk or id, need to check the database
+    console.log("my slugdata", slugData)
+    let id = recipe.id; // can be pk or id, need to check the database
 
 
     const DeleteRecipe = async () => {
@@ -77,14 +78,13 @@ const ManageUsersRecipe= ({recipe, slugData}) => {
         <div className='User_Template'>
             
             <button onClick={DeleteRecipe}> delete</button>
-            <b>Slug:</b>{slugData.id !== id
-                ?<p>Edit(Error)</p>: <p><Link to={`/EditRecipe/${recipe.slug}`}>edit</Link></p>
-            }
+            <b>Slug:</b> <p><Link to={`/EditRecipe/${recipe.id}`}>edit</Link></p>
+          
             
             
             <b>Title:</b> {recipe.name}
-            <b>Slug:</b>{slugData.id !== id
-                ?<p>Error</p>: <p>{slugData.slug}</p>
+            <b>Slug:</b>{slugData.length != 1
+                ?<p className='Error'>Error</p>: <p>{slugData[0].slug}</p>
             }
             <b>DateCreated:</b> {recipe.creationDate} 
             
