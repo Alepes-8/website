@@ -4,10 +4,6 @@ import { async } from 'q';
 import slugify from 'react-slugify';
 import useToken from '../../useToken';
 
-
-
-
-
 const UserAddRecipes = ({catData, ingData}) => {
     const {token, setToken } = useToken();
 
@@ -39,7 +35,7 @@ const UserAddRecipes = ({catData, ingData}) => {
       setCreationDate(today)
     }, [])
 
-
+ 
 
     const CheckContent = () => {
       setAction("checking value");
@@ -58,6 +54,8 @@ const UserAddRecipes = ({catData, ingData}) => {
       CreateRecipe();
     }
 
+
+
     //TODO Creating the recipe is not a problem. But todo is to create the 
     // ingredient
     // ingredient amount
@@ -65,18 +63,7 @@ const UserAddRecipes = ({catData, ingData}) => {
     // catagories
     // catagory amount
     const CreateRecipe = async() => {
-      fetch("/ingredients-amount/", {
-        method:'POST',
-        headers:{
-          'Content-type':'application/json',
-        },
-        body:JSON.stringify(   {
-          "pk": 1,
-          "ingredient": "tomato",
-          "amount": "6"
-        })}).then((response)=>{console.log(response)});       
-      
-/*
+     
       let newName =slugify(name)
       let acceptingSlug = false;
       console.log(newName);
@@ -91,40 +78,24 @@ const UserAddRecipes = ({catData, ingData}) => {
         }
       }while(!acceptingSlug);
       
-      fetch('recipes/', {
+      fetch('http://127.0.0.1:8000/recipes/', {
         method:'POST',
         headers:{
           'Content-type':'application/json',
         },
         body:JSON.stringify(   {
-
-          
+            "id": 5,
             "name": name,
-            "slug": newName,
             "description": description,
             "portionSize": portionSize,
             "creationDate": creationDate,
-            "categories": [],
+            "categories": [{"name": "tomato", "description": "5st" },{ "name": "tomato", "description": "5st" }],
             "ingredients": [],
             "author": token.email,
-          
         })
-      }).then((response) => {
-        console.log(response);
-        if(response.status === 201){
-          
-        }else{
-          setAction("something went wrong, try again");
-          
-          return;
-        }
-      }).catch(function(error){
-        setAction(`${error}`);
-        console.log('ERROR:', error)
-        return;
-      })
-
-      */
+      }).then((response) => {console.log(response)});
+     
+      
       /*
       
       await RemoveMatchingItems(ingredients, ingData).map((item) => {
