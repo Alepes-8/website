@@ -29,19 +29,29 @@ const RecipeData = [
 
 
 const Home = () => {
-  let [recipes, setRecipes] = useState([])
+  let [recipes, setRecipes] = useState([]);
+  let [slugs, setSlugs] = useState([])
+
   const [youtubeID] = useState('2Qj8PhxSnhg')
 
     useEffect(() => {
-        getRecipes()
+        getRecipes();
+        getSlug();
     }, [])
 
     let getRecipes = async () => {
         let response = await fetch("/recipes/")
         let data = await response.json()
-        //console.log('DATA: ', data)
+        console.log('DATA: ', data)
         setRecipes(data)
     }
+    
+    let getSlug = async () => {
+      let response = await fetch("/recipeSlugs/")
+      let data = await response.json()
+      console.log('DATA: ', data)
+      setSlugs(data)
+  }
 
   return (
     <div className="baseBackground">

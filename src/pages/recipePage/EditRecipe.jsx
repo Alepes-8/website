@@ -7,10 +7,10 @@ import { useParams } from 'react-router-dom';
 
 
 const EditRecipe = () => {
-    let {id} = useParams();
-    let recipeId = id;
+    let {slug} = useParams();
+    let recipeSlug = slug;
 
-    let [recipes, setRecipe] = useState(null);
+    let [recipe, setRecipe] = useState(null);
 
     const [action, setAction] = useState("");
     const [name, setName] = useState("");
@@ -26,11 +26,17 @@ const EditRecipe = () => {
         getRecipe();
     }, []);
 
+    //TODO make sure this works as it should
     const getRecipe = async() => {
-        let response = await fetch(`/recipes/${recipeId}/`);
-        let data = await response.json();
-        //console.log('DATA: ', data);
-        setRecipe(data);
+        let responseSlugDAta = await fetch(`/slug/${recipeSlug}/`);
+        let SlugData = await responseSlugDAta.json();
+        console.log('EditRecipes SlugData: ', SlugData);
+        
+
+        let responseRecipe = await fetch(`/recipes/${SlugData.id}/`);
+        let recipeData = await responseRecipe.json();
+        console.log('EditRecipe recipeData: ', recipeData);
+        setRecipe(recipeData);
     }
       
     const CheckContent = () => {
@@ -67,16 +73,17 @@ const EditRecipe = () => {
 
        
 
-        fetch(`/recipes/${recipeId}/`, {
+        //TODO change according to the new setup and add recipe code which is still to do as well
+        fetch(`/recipes/${recipe.id}/`, {
           method:'PUT',
           headers:{
             'Content-type':'application/json',
           },
           body:JSON.stringify({"name": name,
           "slug": newName,
-          "description": recipes.description ,
-          "portionSize": recipes.portionSize,
-          "creationDate": recipes.creationDate,
+          "description": recipe.description ,
+          "portionSize": recipe.portionSize,
+          "creationDate": recipe.creationDate,
           "categories": [
               {
                   "name": "test",
@@ -106,65 +113,40 @@ const EditRecipe = () => {
           console.log('ERROR:', error)
         })
       }      
+
+      function InputTemplate (inType, inHolder, inName, inValue, inSet) {
+        return (
+          <div className="form-group">
+            <input
+              type = {inType}
+              className="form-control form-control-lg"
+              placeholder={inHolder}
+              name={inName}
+              value={inValue}
+              onChange={(e) => inSet(e.target.value) }
+            />
+          </div> 
+        );
+      }
+  
       
   return (
     <div className='EditRecipePage'>
         <div className="Editcontent">
             <div className="UserSavedRecipes">
                 <h1>AddRecipes</h1>
-                <div className="form-group">
-                    <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Enter Your Name"
-                    name="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value) }
-                    />
-                </div>
+                {InputTemplate("text" ,"Enter Name","name",name,setName)}
+                
+                {InputTemplate("text" ,"Enter description","description",description,setDescription)}
 
-                <div className="form-group">
-                    <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Enter description"
-                    name="description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    />
-                </div>
+                {InputTemplate("number" ,"Enter portionSize","portionSize",portionSize,setPortionSize)}
 
-                <div className="form-group">
-                    <input
-                    type="number"
-                    className="form-control form-control-lg"
-                    placeholder="Enter portionSize"
-                    name="portionSize"
-                    value={portionSize}
-                    onChange={(e) => setPortionSize(e.target.value)}
-                    />
-                </div>
-                <div className="form-group">
-                    <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Enter categories"
-                    name="categories"
-                    value={categories}
-                    onChange={(e) => setCategories(e.target.value)}
-                    />
-                </div>
 
-                <div className="form-group">
-                    <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Enter ingredients"
-                    name="ingredients"
-                    value={ingredients}
-                    onChange={(e) => setIngredients(e.target.value)}
-                    />
-                </div>
+                {InputTemplate("text" ,"Enter categories","categories",categories,setCategories)}
+
+                {InputTemplate("text" ,"Enter ingredients","ingredients",ingredients,setIngredients)}
+
+            
 
                 <button onClick={CheckContent}> Add recipe</button>
                 <p>{action}</p>

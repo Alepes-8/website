@@ -10,6 +10,8 @@ import {LoginPage, Register, UserAddRecipes, UserSavedRecipes, Settings, AdminMa
 const UserPage = ({token, setToken, page}) => {
   const [count, setCount] = useState(0);
   let [recipes, setRecipes] = useState([])
+  let [slugs, setSlugs] = useState([])//TODO
+
   let [comment, setComment] = useState([])
   let [users, setUsers] = useState([])
   let [myRecipes, setMyRecipes] = useState()
@@ -28,7 +30,7 @@ const UserPage = ({token, setToken, page}) => {
         <UserAddRecipes ingData={ingData} catData={catData}  />
       </div>);
     }else if(page === 3) {
-      return <AdminManageRecipes  recipes = {recipes}/>
+      return <AdminManageRecipes  recipes={recipes} slugs={slugs}/>//TODO
     }else if(page === 4) {
       return <AdminManageComment  />
     }else if(page === 5) {
@@ -49,8 +51,17 @@ const UserPage = ({token, setToken, page}) => {
       getUsers();
       getCat();
       getIng();
+      getSlug();
+
+      //getComments();
     }
   }, [])
+
+  let getSlug =async() => {//TODO
+    let response = await fetch("/slug/")
+    let data = await response.json()
+    setSlugs(data)
+  }
 
   let getIng = async () => {
     let response = await fetch("/ingredients/")
@@ -71,6 +82,13 @@ const UserPage = ({token, setToken, page}) => {
     //console.log('DATA: ', data)
     setRecipes(data)
   }
+
+  /*let getComments = async () => {
+    let response = await fetch("recipes/")
+    let data = await response.json()
+    //console.log('DATA: ', data)
+    setRecipes(data)
+  }*/
   
   
   let getUsers = async() => {

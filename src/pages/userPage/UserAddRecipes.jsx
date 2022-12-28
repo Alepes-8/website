@@ -58,8 +58,25 @@ const UserAddRecipes = ({catData, ingData}) => {
       CreateRecipe();
     }
 
+    //TODO Creating the recipe is not a problem. But todo is to create the 
+    // ingredient
+    // ingredient amount
+    // slug
+    // catagories
+    // catagory amount
     const CreateRecipe = async() => {
-
+      fetch("/ingredients-amount/", {
+        method:'POST',
+        headers:{
+          'Content-type':'application/json',
+        },
+        body:JSON.stringify(   {
+          "pk": 1,
+          "ingredient": "tomato",
+          "amount": "6"
+        })}).then((response)=>{console.log(response)});       
+      
+/*
       let newName =slugify(name)
       let acceptingSlug = false;
       console.log(newName);
@@ -107,7 +124,7 @@ const UserAddRecipes = ({catData, ingData}) => {
         return;
       })
 
-    
+      */
       /*
       
       await RemoveMatchingItems(ingredients, ingData).map((item) => {
@@ -142,17 +159,6 @@ const UserAddRecipes = ({catData, ingData}) => {
       // ingAmount[index]
 
     }
-
-
-    const CreateIngredients =async(ing, index)=>{
-      
-    }
-
-    const CreateCategories =async()=>{
-
-    }
-
-
  
     function AddItems(term, desc, group, groupDesc, set, setDesc, extra, groupExtra, setExtra){
       if(term==""){
