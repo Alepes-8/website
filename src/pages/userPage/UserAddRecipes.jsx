@@ -28,6 +28,7 @@ const UserAddRecipes = ({catData, ingData}) => {
     const [ingSearchDesc, setIngSearchDesc] = useState('');
     const [ingSearchAmount, setIngSearchAmount] = useState('');
 
+    const [auth, setAuth] = useState();
 
     
     useEffect(() => {
@@ -66,7 +67,21 @@ const UserAddRecipes = ({catData, ingData}) => {
     //5274179a8e21a1fbdc36c1061bd2968a623cfc8d
     const CreateRecipe = async() => {
 
-      
+      const response = await axios.get("/recipes/5/");
+      console.log("test recipes", response.data)
+
+      const res = await axios.put('/recipes/5/', {
+        "id": 5,
+        "name": "hejsan",
+        "description": "testing",
+        "portionSize": 3,
+        "creationDate": creationDate,
+        "categories": [{"name": "tomato", "description": "5st" },{ "name": "tomato", "description": "5st" }],
+        "ingredients": [],
+        "author": token.email,
+      });
+      console.log(res)
+     /* 
       const userData = {
         username: "admin@admin.com",
         password: "admin"
@@ -74,11 +89,19 @@ const UserAddRecipes = ({catData, ingData}) => {
       axios.post("/api-user-login/", userData, )
       .then(response => {
        console.log(response.data.token)
+       setAuth(response.data.token);
       })
       
-      
+      const config = {
+        headers: { Authorization: `Bearer ${auth}` }
+    };
+    
+      axios.post( 
+        '/users/',
+        config
+      ).then(console.log).catch(console.log);
 
-
+*/
      /*
       let newName =slugify(name)
       let acceptingSlug = false;
