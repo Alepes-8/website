@@ -48,7 +48,7 @@ const TableRow = ({item}) => {
 
 const TableProcess = ({item}) => <th>{item.name}</th>
 
-const SubmitComment = (event) =>{};
+
 
 const RecipePage = () => {
 
@@ -56,12 +56,28 @@ const RecipePage = () => {
     let recipeId = id;
     let [recipes, setRecipe] = useState(null);
     let [comments, setComments] = useState(null);
+    let [comment, setComment] = useState();
     const {token, setToken } = useToken();
 
     
     useEffect(() => {
         getRecipe();
+        getComments();
     }, []);
+
+    const SubmitComment = () =>{
+        fetch('comments/', {
+            method:'POST',
+            headers:{
+              'Content-type':'application/json',
+            },
+            body:JSON.stringify(   {
+                "recipe": null,
+                "user": null,
+                "text": comment
+            })
+          }).then((response) => {console.log(response)});
+    };
 
     const getRecipe = async() => {
         let recipeResponse = await fetch(`/recipes/${recipeId}/`);
@@ -69,19 +85,26 @@ const RecipePage = () => {
         console.log("recipepage RecipeData: ", recipeData, recipeData.ingredients);
 
         setRecipe(recipeData);
+    }
 
-        
+    const getComments = async() => {
         let commentResponse = await fetch(`/comments/`);
         let commentData = await commentResponse.json();
         console.log("commentData recipePage",commentData)
-        setComments(commentData);        
+        setComments(commentData);     
+    
     }
+    
+
+
 
     const [textAreaCount, setTextAreaCount] = React.useState(0);
 
+
     const recalculate = e => {
-      console.log("event value:", e);
       setTextAreaCount(e.target.value.length);
+      setComment(e.target.value);
+
     };
   return (
     <div className="baseBackground">
@@ -126,25 +149,28 @@ const RecipePage = () => {
         {token 
         ? 
         
-        <form className='recipe_comment' onSubmit = {SubmitComment}>
-            <div>
-            <p> {`${textAreaCount}/250`} </p>
-            <textarea name="comments" id="comments" placeholder='Comment...' maxLength="250" onChange={recalculate}/>
-            </div>
-            <button type="submit"> Submit </button>
-        </form>
+
+                <div className='recipe_comment'>
+                        <div>
+                        <p> {`${textAreaCount}/250`} </p>
+                        <textarea name="comments" id="comments" placeholder='Comment...' maxLength="250"  onChange={recalculate}/>
+                        </div>
+                        <button type="submit" onClick={SubmitComment}> Submit </button>
+                    </div>
         
             : <p>Login to comment</p>
 
-        }
+        }        
+        
 
-        <div> {comments !== null
+        <div> 
+            {comments !== null
             ?comments.filter(element => element.recipe.toString() ===  recipeId).map((item) => <CommentTemplate com={item}/>) 
             : <p></p>
             }
            
-            </div>
         </div>
+    </div>
   );
   
 };
@@ -156,7 +182,7 @@ const CommentTemplate = ({com}) => {
         <diV>
             {comments
             ? <button onClick={() => setComments(false)} > Hide Comment</button>
-            : <button onClick={() => setComments(true)} > Show Comment by  com.user</button>}
+            : <button onClick={() => setComments(true)} > Show Comment by { com.user}</button>}
             {comments && (
             <div>
                 {com.text}
