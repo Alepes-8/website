@@ -3,6 +3,7 @@ import React, {useState,useEffect} from 'react';
 import { async } from 'q';
 import slugify from 'react-slugify';
 import useToken from '../../useToken';
+import axios from 'axios';
 
 const UserAddRecipes = ({catData, ingData}) => {
     const {token, setToken } = useToken();
@@ -62,8 +63,23 @@ const UserAddRecipes = ({catData, ingData}) => {
     // slug
     // catagories
     // catagory amount
+    //5274179a8e21a1fbdc36c1061bd2968a623cfc8d
     const CreateRecipe = async() => {
-     
+
+      
+      const userData = {
+        username: "admin@admin.com",
+        password: "admin"
+      };
+      axios.post("/api-user-login/", userData, )
+      .then(response => {
+       console.log(response.data.token)
+      })
+      
+      
+
+
+     /*
       let newName =slugify(name)
       let acceptingSlug = false;
       console.log(newName);
@@ -94,7 +110,7 @@ const UserAddRecipes = ({catData, ingData}) => {
             "author": token.email,
         })
       }).then((response) => {console.log(response)});
-     
+     */
       
       /*
       
