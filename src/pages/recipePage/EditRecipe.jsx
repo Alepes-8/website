@@ -3,8 +3,11 @@ import './editRecipe.css';
 import RecipePage from "./RecipePage";
 import slugify from 'react-slugify';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-
+function timeout(number) {
+  return new Promise( res => setTimeout(res, number) );
+}
 
 const EditRecipe = () => {
     let {id} = useParams();
@@ -19,11 +22,13 @@ const EditRecipe = () => {
     const [creationDate, setCreationDate] = useState();
     const [categories, setCategories] = useState("");
     const [ingredients, setIngredients] = useState("");
+    const [testing, setTesting] = useState("");
 
     
 
     useEffect(() => {
       getRecipe();
+      setTesting(<RecipePage/>);
     }, []);
 
     //TODO make sure this works as it should
@@ -36,6 +41,19 @@ const EditRecipe = () => {
     //TODO Seems to be a problem with changing recipes with romans changes
     const ChangeRecipeInfo = async() => {
         setAction("loading...");
+        let userName = recipe.name;
+        let userDesc = recipe.description;
+        let UserPort = recipe.portionSize;
+        if(name !== ""){
+          userName = name;
+        }
+        if(description !== ""){
+          userDesc = description;
+        }
+        if(portionSize !== ""){
+          UserPort = portionSize;
+        }
+
         /*
         let newName =slugify(name)
         let acceptingSlug = false;
@@ -51,37 +69,25 @@ const EditRecipe = () => {
             }
         }while(!acceptingSlug);
 */  
-        let userName = recipe.name;
-        let userDesc = recipe.description;
-        let UserPort = recipe.portionSize;
-        if(name !== ""){
-          userName = name;
-        }
-        if(description !== ""){
-          userDesc = description;
-        }
-        if(portionSize !== ""){
-          UserPort = portionSize;
-        }
+       
 
-      fetch(`http://127.0.0.1:8000/recipes/${recipe.id}/`, {
-        method:'POST',
-        headers:{
-          'Content-type':'application/json',
-        },
-        body:JSON.stringify(   {
-            "id": 5,
-            "name": userName,
-            "description": userDesc,
-            "portionSize": UserPort,
-            "creationDate": recipe.creationDate,
-            "categories": [{"name": "tomato", "description": "5st" },{ "name": "tomato", "description": "5st" }],
-            "ingredients": [],
-            "author": "admin@gmail.com",
-        })
-      }).then((response) => {console.log(response)});
-     
+        //
+        const res = await axios.put(`/recipes/${recipe.id}/`, {
+          "id": recipe.id,
+          "name": userName,
+          "description": userDesc,
+          "portionSize": recipe.portionSize,
+          "creationDate": recipe.creationDate,
+          "categories": [{"name": "tomato", "description": "5st" },{ "name": "tomato", "description": "5st" }],
+          "ingredients": [],
+          "author": null,
+        });
+        console.log(res);
 
+        setRecipe(res.data);
+        setTesting(null)
+        await timeout(1000);
+        setTesting(<RecipePage/>);
       }        
       
   return (
@@ -106,7 +112,7 @@ const EditRecipe = () => {
                 <p>{action}</p>
             </div>
             <div>
-                <RecipePage/>
+                {testing}
             
             </div>
         </div>
