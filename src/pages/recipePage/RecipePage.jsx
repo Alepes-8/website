@@ -50,9 +50,6 @@ const TableProcess = ({item}) => <th>{item.name}</th>
 
 const SubmitComment = (event) =>{};
 
-
-
-
 const RecipePage = () => {
 
     let {id} = useParams();
@@ -76,6 +73,7 @@ const RecipePage = () => {
         
         let commentResponse = await fetch(`/comments/`);
         let commentData = await commentResponse.json();
+        console.log("commentData recipePage",commentData)
         setComments(commentData);        
     }
 
@@ -140,9 +138,36 @@ const RecipePage = () => {
 
         }
 
-        <div> {/*{comments.map((item, index) => <CommentFeatured comment={item}/>)}*/}</div>
+        <div> {comments !== null
+            ?comments.filter(element => element.recipe.toString() ===  recipeId).map((item) => <CommentTemplate com={item}/>) 
+            : <p></p>
+            }
+           
+            </div>
         </div>
   );
+  
 };
+
+const CommentTemplate = ({com}) => {
+    let [comments, setComments] = useState(false);
+
+    return(
+        <diV>
+            {comments
+            ? <button onClick={() => setComments(false)} > Hide Comment</button>
+            : <button onClick={() => setComments(true)} > Show Comment by  com.user</button>}
+            {comments && (
+            <div>
+                {com.text}
+            </div>
+            )}
+        </diV>
+        
+
+
+    );
+}
+
 
 export default RecipePage;
