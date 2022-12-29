@@ -23,7 +23,7 @@ const ReadMore = ({ children }) => {
 //this decide what data to print in the table. Change value to change what to get
 const column = [
     { heading: 'Ingredience', value: 'name' },
-    { heading: 'Amount', value: '2' },
+    { heading: 'Amount', value: 'amount' },
 ]
 
 const TableHeaderItem = ({item, column}) => <th>{item.heading}</th>
@@ -34,7 +34,7 @@ const TableRow = ({item, servings}) => {
         <tr> 
             {column.map((columnItem, index) => 
                 {
-                    if(columnItem.heading.includes('Amount')){//It works but try to solve it in a better way if time allows
+                    if(columnItem.heading.includes('amount')){//It works but try to solve it in a better way if time allows
                         return <td>  {columnItem.value * servings} {item["format"]}</td>
                     }
                      
@@ -80,7 +80,7 @@ const RecipePage = () => {
     }, []);
 
     const getRecipe = async() => {
-        let response = await fetch(`/recipes/${recipeId}/`);
+        let response = await fetch(`/recipeSlugs/${recipeId}/`);
         let data = await response.json();
         //console.log('DATA: ', data);
         setRecipe(data);
@@ -102,7 +102,7 @@ const RecipePage = () => {
   return (
     <div className="TestRecipePage">
       
-        <h1> {recipes?.name} </h1>
+        <h1> {recipes?.recipe.name} </h1>
         <img src={temp} alt="logo"/>
   
 
@@ -116,7 +116,7 @@ const RecipePage = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {recipes?.ingredients.map((item, index) => <TableRow item={item} column={column} servings={servings}/>)}
+                        {recipes?.recipe.ingredients.map((item, index) => <TableRow item={item} column={column} servings={servings}/>)}
                     </tbody>
                 </table>
                 
@@ -126,9 +126,9 @@ const RecipePage = () => {
 
 
             <div className='processing'> 
-                <h2>Processing</h2> 
+                <h2>Categories</h2> 
                 <p>
-                    {recipes?.categories.map((item, index) => <TableProcess item={item}/>)}
+                    {recipes?.recipe.categories.map((item, index) => <TableProcess item={item}/>)}
                 </p>
             </div>
         </div> 
@@ -139,7 +139,7 @@ const RecipePage = () => {
             </h1>
             <div className="container">
                 <p>
-                {recipes?.description}
+                {recipes?.recipe.description}
                 </p>
             </div>
         </div>
