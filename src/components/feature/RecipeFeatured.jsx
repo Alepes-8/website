@@ -7,11 +7,11 @@ const RecipeFeatured = ({recipe}) => {
     return( 
     <div className='preview_Recipe'>
         <li>
-            <Link to={`/recipes/${recipe.slug}`}>
+            <Link to={`/recipeSlugs/${recipe.slug}`}>
             <img src={temp} alt="logo"/>
                 <div className ="content"> 
                     <div className="name"> 
-                        <p> {recipe.name} </p>
+                        <p> {recipe.recipe.name} </p>
                     </div>
                     <div>
                         <span className="favorite {{food.favorite?'':'not'}}">
@@ -21,12 +21,12 @@ const RecipeFeatured = ({recipe}) => {
                     <div className="product-item-fooder">
                         <div className="tags">
                             <span> 
-                            <p> {recipe.description} </p>
+                            <p> {recipe.recipe.description} </p>
                             </span>
                         </div>
                         <div className="cook-time">
                             <span>🕑</span>
-                            {recipe.portionSize}
+                            {recipe.recipe.portionSize}
                         </div>
                     </div>
                 </div>
