@@ -2,33 +2,15 @@ import React from 'react'
 import './adminManageComment.css';
 import {ManageUserComment} from '../../components'
 
-const AdminManageComment = () => {
+const AdminManageComment = ({comments}) => {
     
-
-    const CommentingData = [
-        {
-            id: 0,
-            writer: 'Alex'
-            
-        },
-        {
-            title: 1,
-            writer: 'Alex'
-        },
-        {
-            title: 2,
-            writer: 'Oliver'
-        },
-        {
-            title: 3,
-            writer: 'Oskar'
-        },
-
-    ];
-
+    if(!comments){
+        return;
+    }
+    let index = -1;
   return (
      <div>
-        {CommentingData.map((item, index) => <ManageUserComment comment={item} />)}
+        {comments.map((item) => <ManageUserComment comments ={comments} comment={item} index ={index+=1}/>)}
         
     </div>
   )

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './adminPage.css';
-import { AdminManageUser, AdminManageRecipes, AdminManageComment} from '../../pages';
+import { AdminManageRecipes, AdminManageComment} from '../../pages';
 
 
 const AdminPageContentSelection = ({page}) => {
@@ -24,12 +24,11 @@ let getRecipes = async () => {
   
 
 if(page === 0) {
-  return <AdminManageUser  />
+  return <AdminManageRecipes  recipes = {recipes}/>
 }else if(page === 1) {
   return <AdminManageComment  />
-}else if(page === 2) {
-  return <AdminManageRecipes  recipes = {recipes}/>
 }
+
 }
 const AdminPage = () => {
     const [count, setCount] = useState(0);
@@ -37,9 +36,8 @@ const AdminPage = () => {
     return (
         <div className='AdminPage'>
             <div className='AdminPage_Button_Navigation'>
-                <button onClick={() => setCount(0)}>Manage Users</button>
+                <button onClick={() => setCount(0)}>Manage Recipes</button>
                 <button onClick={() => setCount(1)}>Manage Comments</button>
-                <button onClick={() => setCount(2)}>Manage Recipes</button>
             </div>
             <div className='AdminPage_selection_results'>
                 <AdminPageContentSelection page={count}/>

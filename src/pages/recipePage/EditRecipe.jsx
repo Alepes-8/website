@@ -3,14 +3,17 @@ import './editRecipe.css';
 import RecipePage from "./RecipePage";
 import slugify from 'react-slugify';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-
+function timeout(number) {
+  return new Promise( res => setTimeout(res, number) );
+}
 
 const EditRecipe = () => {
     let {id} = useParams();
-    let recipeId = id;
+    let recipeID = id;
 
-    let [recipes, setRecipe] = useState(null);
+    let [recipe, setRecipe] = useState(null);
 
     const [action, setAction] = useState("");
     const [name, setName] = useState("");
@@ -19,38 +22,39 @@ const EditRecipe = () => {
     const [creationDate, setCreationDate] = useState();
     const [categories, setCategories] = useState("");
     const [ingredients, setIngredients] = useState("");
+    const [testing, setTesting] = useState("");
 
     
 
     useEffect(() => {
-        getRecipe();
+      getRecipe();
+      setTesting(<RecipePage/>);
     }, []);
 
+    //TODO make sure this works as it should
     const getRecipe = async() => {
-        let response = await fetch(`/recipes/${recipeId}/`);
+        let response = await fetch(`/recipes/${recipeID}/`);
         let data = await response.json();
-        //console.log('DATA: ', data);
         setRecipe(data);
     }
       
-    const CheckContent = () => {
-        setAction("checking value");
-        {/*if(name === ""){
-            setName(recipes.name);
-        }
-        if(description ===""){
-          setDescription(recipes.description);
-        }
-        if(!portionSize){
-          setPortionSize(recipes.portionSize);
-        }*/}
-        
-       
-        ChangeRecipeInfo()
-      }
-
+    //TODO Seems to be a problem with changing recipes with romans changes
     const ChangeRecipeInfo = async() => {
         setAction("loading...");
+        let userName = recipe.name;
+        let userDesc = recipe.description;
+        let UserPort = recipe.portionSize;
+        if(name !== ""){
+          userName = name;
+        }
+        if(description !== ""){
+          userDesc = description;
+        }
+        if(portionSize !== ""){
+          UserPort = portionSize;
+        }
+
+        /*
         let newName =slugify(name)
         let acceptingSlug = false;
         console.log(newName);
@@ -64,113 +68,51 @@ const EditRecipe = () => {
             newName = newName + extra;
             }
         }while(!acceptingSlug);
-
+*/  
        
 
-        fetch(`/recipes/${recipeId}/`, {
-          method:'PUT',
-          headers:{
-            'Content-type':'application/json',
-          },
-          body:JSON.stringify({"name": name,
-          "slug": newName,
-          "description": recipes.description ,
-          "portionSize": recipes.portionSize,
-          "creationDate": recipes.creationDate,
-          "categories": [
-              {
-                  "name": "test",
-                  "description": "test"
-              }
-          ],
-          "ingredients": [
-              {
-                  "name": "test",
-                  "description": "test"
-              }
-          ],
-          "author":"TomatoLover69",
-        })
-        }).then((response) => {
-            if(response.status === 200){
-                setAction("Changed");
-                //make sure to reload the page with the new slug for the preview
-                window.history.replaceState(null, `recipeId`, `${newName}`);
-                window.location.reload(false);
-            }else{
-                setAction("something went wrong. Error: ", response.status)
-            }
-          
-        }).catch(function(error){
-          setAction(`${error}`);
-          console.log('ERROR:', error)
-        })
-      }      
+        //
+        const res = await axios.put(`/recipes/${recipe.id}/`, {
+          "id": recipe.id,
+          "name": userName,
+          "description": userDesc,
+          "portionSize": recipe.portionSize,
+          "creationDate": recipe.creationDate,
+          "categories": [{"name": "tomato", "description": "5st" },{ "name": "tomato", "description": "5st" }],
+          "ingredients": [],
+          "author": null,
+        });
+        console.log(res);
+
+        setRecipe(res.data);
+        setTesting(null)
+        await timeout(1000);
+        setTesting(<RecipePage/>);
+      }        
       
   return (
     <div className='EditRecipePage'>
         <div className="Editcontent">
             <div className="UserSavedRecipes">
                 <h1>AddRecipes</h1>
-                <div className="form-group">
-                    <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Enter Your Name"
-                    name="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value) }
-                    />
-                </div>
+                {InputTemplate("text" ,"Enter Name","name",name,setName)}
+                
+                {InputTemplate("text" ,"Enter description","description",description,setDescription)}
 
-                <div className="form-group">
-                    <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Enter description"
-                    name="description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    />
-                </div>
+                {InputTemplate("number" ,"Enter portionSize","portionSize",portionSize,setPortionSize)}
 
-                <div className="form-group">
-                    <input
-                    type="number"
-                    className="form-control form-control-lg"
-                    placeholder="Enter portionSize"
-                    name="portionSize"
-                    value={portionSize}
-                    onChange={(e) => setPortionSize(e.target.value)}
-                    />
-                </div>
-                <div className="form-group">
-                    <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Enter categories"
-                    name="categories"
-                    value={categories}
-                    onChange={(e) => setCategories(e.target.value)}
-                    />
-                </div>
 
-                <div className="form-group">
-                    <input
-                    type="text"
-                    className="form-control form-control-lg"
-                    placeholder="Enter ingredients"
-                    name="ingredients"
-                    value={ingredients}
-                    onChange={(e) => setIngredients(e.target.value)}
-                    />
-                </div>
+                {InputTemplate("text" ,"Enter categories","categories",categories,setCategories)}
 
-                <button onClick={CheckContent}> Add recipe</button>
+                {InputTemplate("text" ,"Enter ingredients","ingredients",ingredients,setIngredients)}
+
+            
+
+                <button onClick={ChangeRecipeInfo}> Add recipe</button>
                 <p>{action}</p>
             </div>
             <div>
-                <RecipePage/>
+                {testing}
             
             </div>
         </div>
@@ -179,4 +121,18 @@ const EditRecipe = () => {
   )
 }
 
+function InputTemplate (inType, inHolder, inName, inValue, inSet) {
+  return (
+    <div className="form-group">
+      <input
+        type = {inType}
+        className="form-control form-control-lg"
+        placeholder={inHolder}
+        name={inName}
+        value={inValue}
+        onChange={(e) => inSet(e.target.value) }
+      />
+    </div> 
+  );
+}
 export default EditRecipe

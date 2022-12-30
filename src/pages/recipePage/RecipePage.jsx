@@ -2,7 +2,8 @@ import './recipePage.css';
 import React, { useState, useEffect } from "react";
 import temp from '../../assets/testporkleg.png';
 import { useParams } from 'react-router-dom';
-
+import useToken from '../../useToken';
+import { CommentFeatured } from '../../components';
 
 const ReadMore = ({ children }) => {
     const text = children;
@@ -54,6 +55,7 @@ const TableRow = ({item, servings}) => {
 
 const TableProcess = ({item}) => <th>{item.name}</th>
 
+
 const SubmitComment = (event) =>{};
 
 //Items for the drop down menu
@@ -77,27 +79,62 @@ const options = [
     );
    };
 
+
 const RecipePage = () => {
     let {id} = useParams();
     let recipeId = id;
     let [recipes, setRecipe] = useState(null);
+    let [comments, setComments] = useState(null);
+    let [comment, setComment] = useState();
+    const {token, setToken } = useToken();
+
     
     useEffect(() => {
         getRecipe();
+        getComments();
     }, []);
 
+    const SubmitComment = () =>{
+        fetch('comments/', {
+            method:'POST',
+            headers:{
+              'Content-type':'application/json',
+            },
+            body:JSON.stringify(   {
+                "recipe": null,
+                "user": null,
+                "text": comment
+            })
+          }).then((response) => {console.log(response)});
+    };
+
     const getRecipe = async() => {
+
         let response = await fetch(`/recipeSlugs/${recipeId}/`);
         let data = await response.json();
         //console.log('DATA: ', data);
         setRecipe(data);
+
     }
+
+    const getComments = async() => {
+        let commentResponse = await fetch(`/comments/`);
+        let commentData = await commentResponse.json();
+        console.log("commentData recipePage",commentData)
+        setComments(commentData);     
+    
+    }
+    
+
+
 
     const [textAreaCount, setTextAreaCount] = React.useState(0);
 
+
     const recalculate = e => {
-      console.log("event value:", e);
       setTextAreaCount(e.target.value.length);
+      setComment(e.target.value);
+
     };
 
     const [servings, setServings] = useState('1');
@@ -107,10 +144,12 @@ const RecipePage = () => {
     };
 
   return (
-    <div className="TestRecipePage">
+    <div className="baseBackground">
       
-        <h1> {recipes?.recipe.name} </h1>
-        <img src={recipes?.recipe.picture} alt="logo"/>
+
+        <h1 className='recipeh1'> {recipes?.recipe.name} </h1>
+        <img src={recipes?.recipe.picture} alt="logo" className='recipeImg'/>
+
   
 
         <div className='recipe_content'>
@@ -141,7 +180,7 @@ const RecipePage = () => {
         </div> 
 
         <div className='Description'>
-            <h1>
+            <h1 className='recipeh1'>
                 Description 
             </h1>
             <div className="container">
@@ -149,16 +188,55 @@ const RecipePage = () => {
                 {recipes?.recipe.description}
                 </p>
             </div>
+            </div>
+        {token 
+        ? 
+        
+
+                <div className='recipe_comment'>
+                        <div>
+                        <p> {`${textAreaCount}/250`} </p>
+                        <textarea name="comments" id="comments" placeholder='Comment...' maxLength="250"  onChange={recalculate}/>
+                        </div>
+                        <button type="submit" onClick={SubmitComment}> Submit </button>
+                    </div>
+        
+            : <p>Login to comment</p>
+
+        }        
+        
+
+        <div> 
+            {comments !== null
+            ?comments.filter(element => element.recipe.toString() ===  recipeId).map((item) => <CommentTemplate com={item}/>) 
+            : <p></p>
+            }
+           
         </div>
-            <form className='recipe_comment' onSubmit = {SubmitComment}>
-                <div>
-                <p> {`${textAreaCount}/250`} </p>
-                <textarea name="comments" id="comments" placeholder='Comment...' maxLength="250" onChange={recalculate}/>
-                </div>
-                <button type="submit"> Submit </button>
-            </form>
-        </div>
+    </div>
   );
+  
 };
+
+const CommentTemplate = ({com}) => {
+    let [comments, setComments] = useState(false);
+
+    return(
+        <diV>
+            {comments
+            ? <button onClick={() => setComments(false)} > Hide Comment</button>
+            : <button onClick={() => setComments(true)} > Show Comment by { com.user}</button>}
+            {comments && (
+            <div>
+                {com.text}
+            </div>
+            )}
+        </diV>
+        
+
+
+    );
+}
+
 
 export default RecipePage;

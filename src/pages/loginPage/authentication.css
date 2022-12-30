@@ -1,13 +1,3 @@
-.login_page,.register_page{
-  align-items: center;
-  display: flex;
-  min-height: 100vh;
-  align-items: center;
-  justify-content: center;
-  color:white;
-  background-image: linear-gradient(79deg, #034dd6, #6fc690 48%, #064c9c);
-}
-
 .auth_form_style, .login_form, .register_form{
   display: flex;
   flex-direction: column;

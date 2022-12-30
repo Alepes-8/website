@@ -7,8 +7,10 @@ const RecipeFeatured = ({recipe}) => {
     return( 
     <div className='preview_Recipe'>
         <li>
+
             <Link to={`/recipeSlugs/${recipe.slug}`}>
-            <img src={temp} alt="logo"/>
+            <img src={recipe.picture} alt="logo"/>
+
                 <div className ="content"> 
                     <div className="name"> 
                         <p> {recipe.recipe.name} </p>

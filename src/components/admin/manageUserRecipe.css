@@ -16,6 +16,10 @@
     background-color: brown;
 }
 
+.Error{
+    color: red;
+    font-weight: bolder;
+}
 
 @media screen and (max-width: 650px) {
     .User_Template {

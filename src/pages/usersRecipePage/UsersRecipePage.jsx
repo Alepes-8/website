@@ -5,7 +5,7 @@ import { HiArrowNarrowRight } from 'react-icons/hi';
 
 const UsersRecipePage = () => {
   return (
-    <div className="UsersRecipePage">
+    <div className="baseBackground">
       
         <p> UsersRecipePage</p>
 

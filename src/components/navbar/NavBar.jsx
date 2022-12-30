@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import './navbar.css';
 import logo from '../../assets/swedishChef.gif';
 import {RiMenu3Line, RiCloseLine} from 'react-icons/ri';
-import { RecipePage, SearchPage } from '../../pages';
+import { RecipePage } from '../../pages';
 import  '../../useToken';
 import { Link } from 'react-router-dom';
 
@@ -17,11 +17,7 @@ function refreshPage(){
 const Menu = ({loginStatus}) =>(
   <>
     <p> <a href="/"> Home</a></p>
-    <p> <a href="/SearchPage"> Search</a></p>
     
-    {loginStatus
-        ? <p> <a href="/AdminPage"> AdminPage</a></p>: <p></p>
-    }
     <div className="LogOutShow">
     {loginStatus
         ? <p><button className='logout' onClick={function(){ deleteToken(); refreshPage();}}> Logout</button></p> : <p></p>

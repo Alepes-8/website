@@ -1,10 +1,10 @@
 export {default as Article} from './article/Article';
 export {default as Brand} from './brand/Brand';
 export {default as CTA} from './cta/cta';
-export {default as Feature} from './feature/Feature';
 export {default as NavBar} from './navbar/NavBar';
 export {default as SearchResults} from './search/SearchResults';
 export {default as RecipeFeatured} from './feature/RecipeFeatured';
 export {default as ManageUserUser} from './admin/ManageUserUser';
 export {default as ManageUserRecipe} from './admin/ManageUserRecipe';
 export {default as ManageUserComment} from './admin/ManageUserComment';
+export {default as CommentFeatured} from './feature/CommentFeatured';
