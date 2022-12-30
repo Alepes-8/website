@@ -34,11 +34,18 @@ const TableRow = ({item, servings}) => {
         <tr> 
             {column.map((columnItem, index) => 
                 {
-                    if(columnItem.heading.includes('amount')){//It works but try to solve it in a better way if time allows
-                        return <td>  {columnItem.value * servings} {item["format"]}</td>
+                    if(columnItem.value.includes('amount')){
+                      var amount = item.amount
+                      var removeSpace = amount.replace(" ", ""); //removes all whitespaces in the string
+                      removeSpace = removeSpace.match(/(\d+|[^\d]+)/g).join(' '); //creates a single space between the number and letters
+                      const splitString = removeSpace.split(" "); //splits the string at the whitespace, [number, letters]
+                      //console.log(splitString)
+                      var newAmount = splitString[0] * servings + splitString[1] //chnges the amount depending on servings menu
+                      
+                        return <td>  {newAmount} </td>
                     }
                      
-                    return <td> {item[columnItem.value]}</td>
+                    return <td> {item.ingredient.name}</td>
                 }
                 )}            
         </tr>
@@ -103,7 +110,7 @@ const RecipePage = () => {
     <div className="TestRecipePage">
       
         <h1> {recipes?.recipe.name} </h1>
-        <img src={temp} alt="logo"/>
+        <img src={recipes?.recipe.picture} alt="logo"/>
   
 
         <div className='recipe_content'>
