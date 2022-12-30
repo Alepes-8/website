@@ -2,6 +2,8 @@ import React from 'react'
 import './manageUserRecipe.css';
 import {Link} from 'react-router-dom';
 import { useState } from 'react';
+import slugify from 'react-slugify';
+import axios from 'axios';
 
 
 
@@ -38,12 +40,44 @@ const ManageUsersRecipe= ({recipes, recipe, index ,slugData}) => {
         recipes[index] = {};
     }
 
+    //TODO Create a new slug
+    const CreateSlug = async () => {     
+        alert("testing create slug ") 
+        let newName =slugify(recipe.name)
+        let acceptingSlug = false;
+        console.log(newName);
+        do{
+            let response = await fetch(`/recipeSlugs/${newName}`)
+            if(response.status === 404){
+            acceptingSlug = true;
+            }
+            else if(response.status === 200){
+            let extra = Math.random().toString(36).substring(2,2+2);
+            newName = newName + extra;
+            }
+        }while(!acceptingSlug); 
+        console.log(newName)
+        const userData = {
+            "recipe":3,
+            "slug": "one-pot-spaghetti"
+        };
+
+        const headers = {
+            'Content-type':'application/json',
+        };
+
+        axios.post("/recipeSlugs/", userData, { headers })
+        .then(response => {
+        console.log(response)
+        })
+    }
+
     return( 
         <tr style={{display: `${status}`}} className='User_Template'>
             <button onClick={DeleteRecipe}> delete</button>
             {slugData[0]
                 ?<p><Link to={`/EditRecipe/${slugData[0].slug}/0`}>edit</Link></p>
-                :  <p><button onClick={DeleteRecipe}> create slug</button><Link to={`/EditRecipe/none/${recipe.id}`}>edit</Link></p>
+                :  <p><button onClick={CreateSlug}> create slug</button><Link to={`/EditRecipe/none/${recipe.id}`}>edit</Link></p>
             }
             <b>Title:</b> {recipe.name}
             <b>Slug:</b>{slugData.length != 1
