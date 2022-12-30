@@ -24,6 +24,11 @@
     background-color: #fff;
 }
 
+.preview_Recipe img{
+    width: 300px; 
+    height: 190px;
+}
+
 .preview_Recipe li a {
     height: 16.5rem;
     width: 20rem;

@@ -39,20 +39,18 @@ const TableRow = ({item, servings}) => {
                       var amount = item.amount
                       var removeSpace = amount.replace(" ", ""); //removes all whitespaces in the string
                       removeSpace = removeSpace.match(/(\d+|[^\d]+)/g).join(' '); //creates a single space between the number and letters
-                      const splitString = removeSpace.split(" "); //splits the string at the whitespace, [number, letters]
+                      var splitString = removeSpace.split(" "); //splits the string at the whitespace, [number, letters]
                       console.log(splitString)
                       var newAmount
 
+                      //changes the amount depending on servings menu
                       if(splitString[1] != null){
                         newAmount = splitString[0] * servings + splitString[1]
                       }
                       else{
                         newAmount = splitString[0] * servings
                       }
-                      
-                       //changes the amount depending on servings menu
-                      
-                        return <td>  {newAmount} </td>
+                      return <td>  {newAmount} </td>
                     }
                      
                     return <td> {item.ingredient.name}</td>
@@ -134,11 +132,7 @@ const RecipePage = () => {
     
     }
     
-
-
-
     const [textAreaCount, setTextAreaCount] = React.useState(0);
-
 
     const recalculate = e => {
       setTextAreaCount(e.target.value.length);
@@ -154,12 +148,9 @@ const RecipePage = () => {
 
   return (
     <div className="baseBackground">
-      
 
         <h1 className='recipeh1'> {recipes?.recipe.name} </h1>
         <img src={recipes?.recipe.picture} alt="logo" className='recipeImg'/>
-
-  
 
         <div className='recipe_content'>
             <div className='ingredience'> 
@@ -178,7 +169,6 @@ const RecipePage = () => {
                 <Dropdown label="Number of servings " options={options} value={servings} onChange={handleChange}/>
                 
             </div>
-
 
             <div className='processing'> 
                 <h2>Categories</h2> 
@@ -199,9 +189,7 @@ const RecipePage = () => {
             </div>
             </div>
         {token 
-        ? 
-        
-
+        ?         
                 <div className='recipe_comment'>
                         <div>
                         <p> {`${textAreaCount}/250`} </p>
@@ -211,10 +199,8 @@ const RecipePage = () => {
                     </div>
         
             : <p>Login to comment</p>
-
         }        
         
-
         <div> 
             {comments !== null
             ?comments.filter(element => element.recipe.toString() ===  recipeId).map((item) => <CommentTemplate com={item}/>) 
@@ -242,10 +228,7 @@ const CommentTemplate = ({com}) => {
             )}
         </diV>
         
-
-
     );
 }
-
 
 export default RecipePage;

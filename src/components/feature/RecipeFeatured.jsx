@@ -9,7 +9,7 @@ const RecipeFeatured = ({recipe}) => {
         <li>
 
             <Link to={`/recipeSlugs/${recipe.slug}`}>
-            <img src={recipe.recipe.picture} alt="logo" width="190" height="190"/>
+            <img src={recipe.recipe.picture} alt="logo"/>
 
                 <div className ="content"> 
                     <div className="name"> 
