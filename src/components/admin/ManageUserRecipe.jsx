@@ -80,7 +80,7 @@ const ManageUsersRecipe= ({recipes, recipe, index ,slugData}) => {
                 :  <p><button onClick={CreateSlug}> create slug</button><Link to={`/EditRecipe/none/${recipe.id}`}>edit</Link></p>
             }
             <b>Title:</b> {recipe.name}
-            <b>Slug:</b>{slugData.length != 1
+            <b>Slug:</b>{slugData.length !== 1
                 ?<p className='Error'>Error</p>: <p>{slugData[0].slug}</p>
             }
             <b>DateCreated:</b> {recipe.creationDate} 

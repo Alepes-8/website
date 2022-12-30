@@ -3,40 +3,13 @@ import React, { useState, useEffect } from 'react';
 import {Categories} from '../../containers';
 import {RecipeFeatured} from '../../components';
 
-const RecipeData = [
-    {
-      title: "Rissoto",
-      tag: "A simple but wonderfull recipe for you friday date",
-      time: "30"
-    },
-    {
-        title: "Alaskan Hot wings",
-        tag: "Have you ever had a wing recipe with snow in it?",
-        time: "1h"
-      },
-      {
-        title: "Rissoto",
-        tag: "A simple but wonderfull recipe for you friday date",
-        time: "30"
-      },
-      {
-          title: "Alaskan Hot wings",
-          tag: "Have you ever had a wing recipe with snow in it?",
-          time: "1h"
-        },
-
-  ];
-
-
 const Home = () => {
   let [recipes, setRecipes] = useState([]);
-  let [slugs, setSlugs] = useState([])
 
   const [youtubeID] = useState('2Qj8PhxSnhg')
 
     useEffect(() => {
         getRecipes();
-        getSlug();
     }, [])
 
     let getRecipes = async () => {
@@ -45,18 +18,10 @@ const Home = () => {
         console.log('DATA: ', data)
         setRecipes(data)
     }
-    
-    let getSlug = async () => {
-      let response = await fetch("/recipeSlugs/")
-      let data = await response.json()
-      console.log('DATA: ', data)
-      setSlugs(data)
-  }
 
   return (
     <div className="baseBackground">
             <h1>How a real chef cooks</h1>
-
                         
               <iframe className='video'
                       sandbox='allow-same-origin allow-forms allow-popups allow-scripts allow-presentation'

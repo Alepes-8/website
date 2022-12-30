@@ -1,11 +1,8 @@
 import './recipePage.css';
 import React, { useState, useEffect } from "react";
-import temp from '../../assets/testporkleg.png';
 import { useParams } from 'react-router-dom';
 import useToken from '../../useToken';
-import { CommentFeatured } from '../../components';
 import axios from 'axios';
-import { async } from 'q';
 
 /*
 const ReadMore = ({ children }) => {

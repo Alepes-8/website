@@ -1,7 +1,7 @@
 import React, { useState ,useEffect} from "react";
 import './editRecipe.css';
 import RecipePage from "./RecipePage";
-import slugify from 'react-slugify';
+//import slugify from 'react-slugify';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -37,21 +37,17 @@ const EditRecipe = () => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [portionSize, setPortionSize] = useState();
-    const [creationDate, setCreationDate] = useState();
     const [categories, setCategories] = useState("");
     const [ingredients, setIngredients] = useState("");
     const [testing, setTesting] = useState(null);
-    const [recipeId, setRecipeID] = useState();
 
     
 
     useEffect(() => {
       if(recipeState === "0"){
         setTesting(<RecipePage/>);
-        setRecipeID()
       }else{
         setTesting(null)
-        setRecipeID(recipeState);
       }
       getRecipe();
     }, []);

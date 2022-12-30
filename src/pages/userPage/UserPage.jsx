@@ -1,8 +1,5 @@
 import './userPage.css';
 import React, { useState , useEffect} from "react";
-import { HiArrowNarrowRight } from 'react-icons/hi';
-import tempUserImg from '../../assets/gru.png';
-
 import {LoginPage, Register, UserAddRecipes, UserSavedRecipes, Settings, AdminManageRecipes, AdminManageComment, AdminManageUser} from '../../pages';
 
 
