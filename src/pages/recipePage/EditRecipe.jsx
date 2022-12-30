@@ -9,9 +9,27 @@ function timeout(number) {
   return new Promise( res => setTimeout(res, number) );
 }
 
+function InputTemplate (inType, inHolder, inName, inValue, inSet) {
+  return (
+    <div className="form-group">
+      <input
+        type = {inType}
+        className="form-control form-control-lg"
+        placeholder={inHolder}
+        name={inName}
+        value={inValue}
+        onChange={(e) => inSet(e.target.value) }
+      />
+    </div> 
+  );
+}
+
 const EditRecipe = () => {
     let {id} = useParams();
-    let recipeID = id;
+    let {status} = useParams();
+
+    let recipeSlug = id;
+    let recipeState = status;
 
     let [recipe, setRecipe] = useState(null);
 
@@ -22,18 +40,23 @@ const EditRecipe = () => {
     const [creationDate, setCreationDate] = useState();
     const [categories, setCategories] = useState("");
     const [ingredients, setIngredients] = useState("");
-    const [testing, setTesting] = useState("");
+    const [testing, setTesting] = useState(null);
 
     
 
     useEffect(() => {
+      if(recipeState === "0"){
+        setTesting(<RecipePage/>);
+      }else{
+        setTesting(null)
+      }
+      console.log("editrecipe: ", recipeSlug, recipeState)
       getRecipe();
-      setTesting(<RecipePage/>);
     }, []);
 
     //TODO make sure this works as it should
     const getRecipe = async() => {
-        let response = await fetch(`/recipes/${recipeID}/`);
+        let response = await fetch(`/recipes/${recipeSlug}/`);
         let data = await response.json();
         setRecipe(data);
     }
@@ -85,9 +108,11 @@ const EditRecipe = () => {
         console.log(res);
 
         setRecipe(res.data);
-        setTesting(null)
-        await timeout(1000);
-        setTesting(<RecipePage/>);
+        if(recipeState === 0){
+          setTesting(null)
+          await timeout(1000);
+          setTesting(<RecipePage/>);
+        }
       }        
       
   return (
@@ -96,24 +121,15 @@ const EditRecipe = () => {
             <div className="UserSavedRecipes">
                 <h1>AddRecipes</h1>
                 {InputTemplate("text" ,"Enter Name","name",name,setName)}
-                
                 {InputTemplate("text" ,"Enter description","description",description,setDescription)}
-
                 {InputTemplate("number" ,"Enter portionSize","portionSize",portionSize,setPortionSize)}
-
-
                 {InputTemplate("text" ,"Enter categories","categories",categories,setCategories)}
-
                 {InputTemplate("text" ,"Enter ingredients","ingredients",ingredients,setIngredients)}
-
-            
-
                 <button onClick={ChangeRecipeInfo}> Add recipe</button>
                 <p>{action}</p>
             </div>
             <div>
                 {testing}
-            
             </div>
         </div>
         
@@ -121,18 +137,4 @@ const EditRecipe = () => {
   )
 }
 
-function InputTemplate (inType, inHolder, inName, inValue, inSet) {
-  return (
-    <div className="form-group">
-      <input
-        type = {inType}
-        className="form-control form-control-lg"
-        placeholder={inHolder}
-        name={inName}
-        value={inValue}
-        onChange={(e) => inSet(e.target.value) }
-      />
-    </div> 
-  );
-}
 export default EditRecipe
