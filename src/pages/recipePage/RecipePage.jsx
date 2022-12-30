@@ -187,8 +187,8 @@ const RecipePage = () => {
                 </p>
             </div>
             </div>
-        {token 
-        ?         
+              {token 
+                ?         
                 <div className='recipe_comment'>
                         <div>
                         <p> {`${textAreaCount}/250`} </p>
@@ -197,14 +197,14 @@ const RecipePage = () => {
                         <button type="submit" onClick={SubmitComment}> Submit </button>
                     </div>
         
-            : <p>Login to comment</p>
-        }        
+                : <p>Login to comment</p>
+              }        
         
-        <div> 
+            <div> 
           
             {comments !== null
-            ?comments.filter(element => recipes.recipe.id === element.recipe).map((item) => <CommentTemplate com={item}/>) 
-            : <p></p>
+              ?comments.filter(element => recipes.recipe.id === element.recipe).map((item) => <CommentTemplate com={item}/>) 
+              : <p></p>
             }
            
         </div>
