@@ -1,5 +1,6 @@
 import './manageUserComment.css';
 import React,{ useState } from 'react';
+import axios from 'axios';
 
 const ManageUserComment = ({comments, comment, index}) => {
     const [status, setStatus] = useState("flex");
@@ -12,26 +13,11 @@ const ManageUserComment = ({comments, comment, index}) => {
 
     //TODO missing unik variable in the table
     const DeleteComment = async() => {
-        /*await fetch(`comments/${id}/`,{
-            method: 'DELETE',
-        }).then((response) => {
-            console.log(response)
-            if(response.status !== 204){
-                if(response.status === 500){
-                    alert("Delete failed. Error on the server side. Error 500");
-                }else{
-                    alert("The recipe was not deleted as it should")
-                }
-                return;
-            }
-        }).catch(function(error){
-            console.log('ERROR:', error)
-            return;
-        })
-        //Delete the recipe bar from Manage recipe page
-        */
+       const rec = await axios.delete(`/comments/${comment.id}/`);
+       if(rec.status === 204){
         setStatus("none")
         comments[index] = {};
+       }        
     }
 
     return( 
