@@ -1,9 +1,9 @@
 import './userAddRecipes.css';
 import React, {useState,useEffect} from 'react';
-import { async } from 'q';
-import slugify from 'react-slugify';
 import useToken from '../../useToken';
 import axios from 'axios';
+
+const validFileTypes = ["image/jpg", "image/jpeg"]
 
 const UserAddRecipes = ({catData, ingData}) => {
     const {token, setToken } = useToken();
@@ -30,7 +30,19 @@ const UserAddRecipes = ({catData, ingData}) => {
 
     const [auth, setAuth] = useState();
 
+    const [imageFile, setImageFile] = useState();
+    const [formTest, setFormTest] = useState();
     
+    const [data, setData] = useState({
+      image_url: "",
+    });
+
+    const handleImageChange = (e) => {
+      let newData = { ...data };
+      newData["image_url"] = e.target.files[0];
+      setData(newData);
+    };
+
     useEffect(() => {
       let newDate = new Date()
       let today = `${ newDate.getFullYear()}-${newDate.getMonth()+1}-${ newDate.getDate()}`
@@ -66,21 +78,45 @@ const UserAddRecipes = ({catData, ingData}) => {
     // catagory amount
     //5274179a8e21a1fbdc36c1061bd2968a623cfc8d
     const CreateRecipe = async() => {
-
-      const response = await axios.get("/recipes/5/");
-      console.log("test recipes", response.data)
-
-      const res = await axios.put('/recipes/5/', {
-        "id": 5,
-        "name": "hejsan",
-        "description": "testing",
-        "portionSize": 3,
+      console.log(data.image_url)
+      
+      const userData = {
+        "name": name,
+        "description": description,
+        "portionSize": portionSize,
         "creationDate": creationDate,
-        "categories": [{"name": "tomato", "description": "5st" },{ "name": "tomato", "description": "5st" }],
+        "categories": [],
         "ingredients": [],
-        "author": token.email,
-      });
-      console.log(res)
+        "author": null,
+        "picture":  data.image_url,
+      };
+      console.log(userData);
+/*
+      const headers = {
+        "Content-Type": "multipart/form-data",
+      }
+
+      const res = await axios.post(`/recipes/`, userData, {headers})
+      console.log(res);
+  */ 
+/**console.log(imageFile)
+      let form_data = new FormData();
+      form_data.append("name", name);
+      form_data.append("description", description);
+      form_data.append("portionSize", portionSize);
+      form_data.append("creationDate", creationDate);
+      form_data.append("categories", []);
+      form_data.append("ingredients", []);
+      form_data.append("author", null);
+      form_data.append("picture", null);
+      console.log(form_data)
+
+      const headers = {
+        "Content-Type": "multipart/form-data",
+      }
+
+      const res = await axios.post(`/recipes/`, form_data, {headers})
+      console.log(res); */
      /* 
       const userData = {
         username: "admin@admin.com",
@@ -117,22 +153,23 @@ const UserAddRecipes = ({catData, ingData}) => {
         }
       }while(!acceptingSlug);
       
-      fetch('http://127.0.0.1:8000/recipes/', {
-        method:'POST',
-        headers:{
-          'Content-type':'application/json',
-        },
-        body:JSON.stringify(   {
-            "id": 5,
-            "name": name,
-            "description": description,
-            "portionSize": portionSize,
-            "creationDate": creationDate,
-            "categories": [{"name": "tomato", "description": "5st" },{ "name": "tomato", "description": "5st" }],
-            "ingredients": [],
-            "author": token.email,
-        })
-      }).then((response) => {console.log(response)});
+      const userData = {
+        "name": name,
+        "description": description,
+        "portionSize": portionSize,
+        "creationDate": creationDate,
+        "categories": [],
+        "ingredients": [],
+        "author": null,
+        "picture":  data.image_url,
+      };
+
+      const headers = {
+        "Content-Type": "multipart/form-data",
+      }
+
+      const res = await axios.post(`/recipes/`, userData, {headers})
+      console.log(res);
      */
       
       /*
@@ -171,7 +208,7 @@ const UserAddRecipes = ({catData, ingData}) => {
     }
  
     function AddItems(term, desc, group, groupDesc, set, setDesc, extra, groupExtra, setExtra){
-      if(term==""){
+      if(term===""){
         return;
       }
       if(desc === ""){
@@ -294,6 +331,11 @@ const UserAddRecipes = ({catData, ingData}) => {
 
           <div>
             <h1>AddRecipes</h1>
+
+            <input type="file" 
+              name="image_url"
+              accept="image/jpeg,image/png,image/gif"
+              onChange={(e) => {handleImageChange(e)}}/>
 
             {InputTemplate("text" ,"Enter Your Name","name",name,setName)}
             {InputTemplate("text" ,"Enter description","description",description,setDescription)}
