@@ -202,7 +202,7 @@ const RecipePage = () => {
         
             <div> 
           
-            {comments !== null
+            {comments !== null && recipes !== null
               ?comments.filter(element => recipes.recipe.id === element.recipe).map((item) => <CommentTemplate com={item}/>) 
               : <p></p>
             }
