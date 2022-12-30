@@ -119,7 +119,6 @@ const RecipePage = () => {
 
         let response = await fetch(`/recipeSlugs/${recipeId}/`);
         let data = await response.json();
-        //console.log('DATA: ', data);
         setRecipe(data);
 
     }
@@ -202,8 +201,9 @@ const RecipePage = () => {
         }        
         
         <div> 
+          
             {comments !== null
-            ?comments.filter(element => element.recipe.toString() ===  recipeId).map((item) => <CommentTemplate com={item}/>) 
+            ?comments.filter(element => recipes.recipe.id === element.recipe).map((item) => <CommentTemplate com={item}/>) 
             : <p></p>
             }
            
