@@ -24,22 +24,29 @@ const ReadMore = ({ children }) => {
 //this decide what data to print in the table. Change value to change what to get
 const column = [
     { heading: 'Ingredience', value: 'name' },
-    { heading: 'Amount', value: 'description' },
+    { heading: 'Amount', value: 'amount' },
 ]
 
 const TableHeaderItem = ({item, column}) => <th>{item.heading}</th>
 
 //will change acording to how the data is formated when it is recieved
-const TableRow = ({item}) => {
+const TableRow = ({item, servings}) => {
     return (
         <tr> 
             {column.map((columnItem, index) => 
                 {
-                    if(columnItem.value.includes('description')){
-                        return <td>  {item[columnItem.value]} {item["format"]}</td>
+                    if(columnItem.value.includes('amount')){
+                      var amount = item.amount
+                      var removeSpace = amount.replace(" ", ""); //removes all whitespaces in the string
+                      removeSpace = removeSpace.match(/(\d+|[^\d]+)/g).join(' '); //creates a single space between the number and letters
+                      const splitString = removeSpace.split(" "); //splits the string at the whitespace, [number, letters]
+                      //console.log(splitString)
+                      var newAmount = splitString[0] * servings + splitString[1] //chnges the amount depending on servings menu
+                      
+                        return <td>  {newAmount} </td>
                     }
                      
-                    return <td> {item[columnItem.value]}</td>
+                    return <td> {item.ingredient.name}</td>
                 }
                 )}            
         </tr>
@@ -49,9 +56,31 @@ const TableRow = ({item}) => {
 const TableProcess = ({item}) => <th>{item.name}</th>
 
 
+const SubmitComment = (event) =>{};
+
+//Items for the drop down menu
+const options = [
+    { label: '1', value: '1' },
+    { label: '2', value: '2' },
+    { label: '4', value: '4' },
+    { label: '8', value: '8' },
+  ];
+
+  const Dropdown = ({ label, value, options, onChange }) => {
+    return (
+      <label>
+        {label}
+        <select value={value} onChange={onChange}>
+          {options.map((option) => (
+            <option value={option.value}>{option.label}</option>
+          ))}
+        </select>
+      </label>
+    );
+   };
+
 
 const RecipePage = () => {
-
     let {id} = useParams();
     let recipeId = id;
     let [recipes, setRecipe] = useState(null);
@@ -80,11 +109,12 @@ const RecipePage = () => {
     };
 
     const getRecipe = async() => {
-        let recipeResponse = await fetch(`/recipes/${recipeId}/`);
-        let recipeData = await recipeResponse.json();
-        console.log("recipepage RecipeData: ", recipeData, recipeData.ingredients);
 
-        setRecipe(recipeData);
+        let response = await fetch(`/recipeSlugs/${recipeId}/`);
+        let data = await response.json();
+        //console.log('DATA: ', data);
+        setRecipe(data);
+
     }
 
     const getComments = async() => {
@@ -106,11 +136,20 @@ const RecipePage = () => {
       setComment(e.target.value);
 
     };
+
+    const [servings, setServings] = useState('1');
+
+    const handleChange = (event) => {
+        setServings(event.target.value);
+    };
+
   return (
     <div className="baseBackground">
       
-        <h1 className='recipeh1'> {recipes?.name} </h1>
-        <img src={temp} alt="logo" className='recipeImg'/>
+
+        <h1 className='recipeh1'> {recipes?.recipe.name} </h1>
+        <img src={recipes?.recipe.picture} alt="logo" className='recipeImg'/>
+
   
 
         <div className='recipe_content'>
@@ -123,15 +162,19 @@ const RecipePage = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {recipes?.ingredients.map((item, index) => <TableRow item={item} column={column}/>)}
+                        {recipes?.recipe.ingredients.map((item, index) => <TableRow item={item} column={column} servings={servings}/>)}
                     </tbody>
                 </table>
+                
+                <Dropdown label="Number of servings " options={options} value={servings} onChange={handleChange}/>
+                
             </div>
 
+
             <div className='processing'> 
-                <h2>Processing</h2> 
+                <h2>Categories</h2> 
                 <p>
-                    {recipes?.categories.map((item, index) => <TableProcess item={item}/>)}
+                    {recipes?.recipe.categories.map((item, index) => <TableProcess item={item}/>)}
                 </p>
             </div>
         </div> 
@@ -142,7 +185,7 @@ const RecipePage = () => {
             </h1>
             <div className="container">
                 <p>
-                {recipes?.description}
+                {recipes?.recipe.description}
                 </p>
             </div>
             </div>

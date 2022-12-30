@@ -40,7 +40,7 @@ const Home = () => {
     }, [])
 
     let getRecipes = async () => {
-        let response = await fetch("/recipes/")
+        let response = await fetch("/recipeSlugs/")
         let data = await response.json()
         console.log('DATA: ', data)
         setRecipes(data)
