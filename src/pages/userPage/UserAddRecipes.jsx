@@ -91,14 +91,14 @@ const UserAddRecipes = ({catData, ingData}) => {
         "picture":  data.image_url,
       };
       console.log(userData);
-/*
+
       const headers = {
         "Content-Type": "multipart/form-data",
       }
 
       const res = await axios.post(`/recipes/`, userData, {headers})
       console.log(res);
-  */ 
+  
 /**console.log(imageFile)
       let form_data = new FormData();
       form_data.append("name", name);
