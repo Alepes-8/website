@@ -40,10 +40,11 @@ const ManageUsersRecipe= ({recipes, recipe, index ,slugData}) => {
 
     return( 
         <tr style={{display: `${status}`}} className='User_Template'>
-            
             <button onClick={DeleteRecipe}> delete</button>
-            <b>Slug:</b> <p><Link to={`/EditRecipe/${recipe.id}`}>edit</Link></p>
-          
+            {slugData[0]
+                ?<p><Link to={`/EditRecipe/${slugData[0].slug}/0`}>edit</Link></p>
+                :  <p><button onClick={DeleteRecipe}> create slug</button><Link to={`/EditRecipe/none/${recipe.id}`}>edit</Link></p>
+            }
             <b>Title:</b> {recipe.name}
             <b>Slug:</b>{slugData.length != 1
                 ?<p className='Error'>Error</p>: <p>{slugData[0].slug}</p>
