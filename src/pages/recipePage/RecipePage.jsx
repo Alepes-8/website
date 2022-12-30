@@ -40,8 +40,17 @@ const TableRow = ({item, servings}) => {
                       var removeSpace = amount.replace(" ", ""); //removes all whitespaces in the string
                       removeSpace = removeSpace.match(/(\d+|[^\d]+)/g).join(' '); //creates a single space between the number and letters
                       const splitString = removeSpace.split(" "); //splits the string at the whitespace, [number, letters]
-                      //console.log(splitString)
-                      var newAmount = splitString[0] * servings + splitString[1] //chnges the amount depending on servings menu
+                      console.log(splitString)
+                      var newAmount
+
+                      if(splitString[1] != null){
+                        newAmount = splitString[0] * servings + splitString[1]
+                      }
+                      else{
+                        newAmount = splitString[0] * servings
+                      }
+                      
+                       //changes the amount depending on servings menu
                       
                         return <td>  {newAmount} </td>
                     }
