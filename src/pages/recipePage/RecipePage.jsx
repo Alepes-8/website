@@ -4,92 +4,90 @@ import temp from '../../assets/testporkleg.png';
 import { useParams } from 'react-router-dom';
 import useToken from '../../useToken';
 import { CommentFeatured } from '../../components';
+import axios from 'axios';
+import { async } from 'q';
 
+/*
 const ReadMore = ({ children }) => {
-    const text = children;
-    const [isReadMore, setIsReadMore] = useState(true);
-    const toggleReadMore = () => {
-      setIsReadMore(!isReadMore);
-    };
-    return (
-      <p className="text">
-        {isReadMore ? text.slice(0, 150) : text}
-        <span onClick={toggleReadMore} className="read-or-hide">
-          {isReadMore ? "...read more" : " show less"}
-        </span>
-      </p>
-    );
+  const text = children;
+  const [isReadMore, setIsReadMore] = useState(true);
+  const toggleReadMore = () => {
+    setIsReadMore(!isReadMore);
   };
-
+  return (
+    <p className="text">
+      {isReadMore ? text.slice(0, 150) : text}
+      <span onClick={toggleReadMore} className="read-or-hide">
+        {isReadMore ? "...read more" : " show less"}
+      </span>
+    </p>
+  );
+};
+*/
 //this decide what data to print in the table. Change value to change what to get
 const column = [
-    { heading: 'Ingredience', value: 'name' },
-    { heading: 'Amount', value: 'amount' },
+  { heading: 'Ingredience', value: 'name' },
+  { heading: 'Amount', value: 'amount' },
 ]
 
 const TableHeaderItem = ({item, column}) => <th>{item.heading}</th>
 
 //will change acording to how the data is formated when it is recieved
 const TableRow = ({item, servings}) => {
-    return (
-        <tr> 
-            {column.map((columnItem, index) => 
-                {
-                    if(columnItem.value.includes('amount')){
-                      var amount = item.amount
-                      var removeSpace = amount.replace(" ", ""); //removes all whitespaces in the string
-                      removeSpace = removeSpace.match(/(\d+|[^\d]+)/g).join(' '); //creates a single space between the number and letters
-                      var splitString = removeSpace.split(" "); //splits the string at the whitespace, [number, letters]
-                      console.log(splitString)
-                      var newAmount
+  return (
+    <tr> 
+      {column.map((columnItem, index) => 
+        {
+          if(columnItem.value.includes('amount')){
+            var amount = item.amount
+            var removeSpace = amount.replace(" ", ""); //removes all whitespaces in the string
+            removeSpace = removeSpace.match(/(\d+|[^\d]+)/g).join(' '); //creates a single space between the number and letters
+            var splitString = removeSpace.split(" "); //splits the string at the whitespace, [number, letters]
+            var newAmount
 
-                      //changes the amount depending on servings menu
-                      if(splitString[1] != null){
-                        newAmount = splitString[0] * servings + splitString[1]
-                      }
-                      else{
-                        newAmount = splitString[0] * servings
-                      }
-                      return <td>  {newAmount} </td>
-                    }
-                     
-                    return <td> {item.ingredient.name}</td>
-                }
-                )}            
-        </tr>
-    );
+            //changes the amount depending on servings menu
+            if(splitString[1] != null){
+              newAmount = splitString[0] * servings + splitString[1]
+            }
+            else{
+              newAmount = splitString[0] * servings
+            }
+            return <td>  {newAmount} </td>
+          }
+          return <td> {item.ingredient.name}</td>
+        }
+      )}            
+    </tr>
+  );
 }
 
 const TableProcess = ({item}) => <th>{item.name}</th>
 
-
-const SubmitComment = (event) =>{};
-
 //Items for the drop down menu
 const options = [
-    { label: '1', value: '1' },
-    { label: '2', value: '2' },
-    { label: '4', value: '4' },
-    { label: '8', value: '8' },
-  ];
+  { label: '1', value: '1' },
+  { label: '2', value: '2' },
+  { label: '4', value: '4' },
+  { label: '8', value: '8' },
+];
 
-  const Dropdown = ({ label, value, options, onChange }) => {
-    return (
-      <label>
-        {label}
-        <select value={value} onChange={onChange}>
-          {options.map((option) => (
-            <option value={option.value}>{option.label}</option>
-          ))}
-        </select>
-      </label>
-    );
-   };
+const Dropdown = ({ label, value, options, onChange }) => {
+  return (
+    <label>
+      {label}
+      <select value={value} onChange={onChange}>
+        {options.map((option) => (
+          <option value={option.value}>{option.label}</option>
+        ))}
+      </select>
+    </label>
+  );
+};
 
 
 const RecipePage = () => {
     let {id} = useParams();
-    let recipeId = id;
+    let recipeSlug = id;
     let [recipes, setRecipe] = useState(null);
     let [comments, setComments] = useState(null);
     let [comment, setComment] = useState();
@@ -101,23 +99,28 @@ const RecipePage = () => {
         getComments();
     }, []);
 
-    const SubmitComment = () =>{
-        fetch('comments/', {
-            method:'POST',
-            headers:{
-              'Content-type':'application/json',
-            },
-            body:JSON.stringify(   {
-                "recipe": null,
-                "user": null,
-                "text": comment
-            })
-          }).then((response) => {console.log(response)});
+    const SubmitComment = async() =>{
+      const userData = {
+        "recipe": recipes.recipe.id,
+        "user": null,//TODO user id
+        "text": comment
+      };
+
+      const headers = {
+          'Content-type':'application/json',
+      };
+
+      await axios.post("/comments/", userData, { headers })
+      .then(response => {
+      console.log(response)
+      })
+      window.location.reload(false);
+
     };
 
     const getRecipe = async() => {
 
-        let response = await fetch(`/recipeSlugs/${recipeId}/`);
+        let response = await fetch(`/recipeSlugs/${recipeSlug}/`);
         let data = await response.json();
         setRecipe(data);
 
@@ -126,7 +129,6 @@ const RecipePage = () => {
     const getComments = async() => {
         let commentResponse = await fetch(`/comments/`);
         let commentData = await commentResponse.json();
-        console.log("commentData recipePage",commentData)
         setComments(commentData);     
     
     }
