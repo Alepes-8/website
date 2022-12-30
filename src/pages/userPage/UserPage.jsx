@@ -23,7 +23,7 @@ const UserPage = ({token, setToken, page}) => {
   const UserPageContentSelection = ({page}) => {
    
     if(page === 0) {
-      return <UserSavedRecipes recipes ={recipes} />
+      //return <UserSavedRecipes recipes ={recipes} />
     }else if(page === 1) {
       return(
       <div className='User_selection_results'>
@@ -32,7 +32,6 @@ const UserPage = ({token, setToken, page}) => {
     }else if(page === 3) {
       return <AdminManageRecipes  recipes={recipes} slugs={slugs}/>
     }else if(page === 4) {
-      {console.log("com",comments)}
       return <AdminManageComment  comments={comments}/>
     }else if(page === 5) {
       return <AdminManageUser  privilege={token.supAdmin} dataUsers={users}/>
