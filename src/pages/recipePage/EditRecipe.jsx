@@ -41,24 +41,32 @@ const EditRecipe = () => {
     const [categories, setCategories] = useState("");
     const [ingredients, setIngredients] = useState("");
     const [testing, setTesting] = useState(null);
+    const [recipeId, setRecipeID] = useState();
 
     
 
     useEffect(() => {
       if(recipeState === "0"){
         setTesting(<RecipePage/>);
+        setRecipeID()
       }else{
         setTesting(null)
+        setRecipeID(recipeState);
       }
-      console.log("editrecipe: ", recipeSlug, recipeState)
       getRecipe();
     }, []);
 
     //TODO make sure this works as it should
     const getRecipe = async() => {
-        let response = await fetch(`/recipes/${recipeSlug}/`);
+      if(recipeState === "0"){
+        let response = await fetch(`/recipeSlugs/${recipeSlug}/`);
+        let data = await response.json();
+        setRecipe(data.recipe);
+      }else{
+        let response = await fetch(`/recipes/${recipeState}/`);
         let data = await response.json();
         setRecipe(data);
+      }
     }
       
     //TODO Seems to be a problem with changing recipes with romans changes
@@ -92,11 +100,8 @@ const EditRecipe = () => {
             }
         }while(!acceptingSlug);
 */  
-       
 
-        //
-        const res = await axios.put(`/recipes/${recipe.id}/`, {
-          "id": recipe.id,
+        const userData = {
           "name": userName,
           "description": userDesc,
           "portionSize": recipe.portionSize,
@@ -104,15 +109,20 @@ const EditRecipe = () => {
           "categories": [{"name": "tomato", "description": "5st" },{ "name": "tomato", "description": "5st" }],
           "ingredients": [],
           "author": null,
-        });
-        console.log(res);
+        };
 
+        const headers = {
+            'Content-type':'application/json',
+        };
+
+        const res = await axios.put(`/recipes/${6}/`, userData, { headers })
         setRecipe(res.data);
         if(recipeState === 0){
           setTesting(null)
           await timeout(1000);
           setTesting(<RecipePage/>);
         }
+        setAction("success");
       }        
       
   return (
