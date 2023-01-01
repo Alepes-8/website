@@ -17,6 +17,7 @@ function refreshPage(){
 const Menu = ({loginStatus}) =>(
   <>
     <p> <a href="/"> Home</a></p>
+    <p> <a href="/AdminPage" > testing </a></p>
     
     <div className="LogOutShow">
     {loginStatus
