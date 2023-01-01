@@ -17,6 +17,7 @@ const Menu = ({loginStatus}) =>(
   <>
     <p> <a href="/"> Home</a></p>
     <p> <a href="/AdminPage" > testing </a></p>
+    <p> <Link to="/ContactUsPage" > Contact Us </Link></p>
     
     <div className="LogOutShow">
     {loginStatus
