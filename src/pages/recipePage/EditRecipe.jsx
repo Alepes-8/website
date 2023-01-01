@@ -1,10 +1,12 @@
 import React, { useState ,useEffect} from "react";
 import './editRecipe.css';
-import RecipePage from "./RecipePage";
 //import slugify from 'react-slugify';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import slugify from "react-slugify";
+import useToken from '../../useToken';
+import {LoginPage, RecipePage} from '../../pages';
+
 
 function timeout(number) {
   return new Promise( res => setTimeout(res, number) );
@@ -26,6 +28,7 @@ function InputTemplate (inType, inHolder, inName, inValue, inSet) {
 }
 
 const EditRecipe = () => {
+
     let {id} = useParams();
     let {status} = useParams();
 
@@ -33,6 +36,7 @@ const EditRecipe = () => {
     let recipeState = status;
 
     let [recipe, setRecipe] = useState(null);
+    const {token, setToken } = useToken();
 
     const [action, setAction] = useState("");
     const [name, setName] = useState("");
@@ -45,13 +49,25 @@ const EditRecipe = () => {
     
 
     useEffect(() => {
-      if(recipeState === "0"){
-        setTesting(<RecipePage/>);
-      }else{
-        setTesting(null)
+      if(token){
+        if(token.admin || token.supAdmin){
+          if(recipeState === "0"){
+            setTesting(<RecipePage/>);
+          }else{
+            setTesting(null)
+          }
+          getRecipe();
+        }
+       
       }
-      getRecipe();
+      
     }, []);
+
+    if(!token){
+      if(!token.admin || !token.supAdmin){
+        return <LoginPage token ={token} setToken={setToken} />
+      }
+    }
 
     //TODO make sure this works as it should
     const getRecipe = async() => {
