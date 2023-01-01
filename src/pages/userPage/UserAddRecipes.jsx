@@ -4,6 +4,9 @@ import useToken from '../../useToken';
 import axios from 'axios';
 
 const validFileTypes = ["image/jpg", "image/jpeg"]
+function timeout(number) {
+  return new Promise( res => setTimeout(res, number) );
+}
 
 const UserAddRecipes = ({catData, ingData}) => {
     const {token, setToken } = useToken();
@@ -97,11 +100,7 @@ const UserAddRecipes = ({catData, ingData}) => {
         }
       }while(!acceptingSlug);
       */
-      console.log(data.image_url)
-      const headers = {
-        'Content-type':'application/json',
-        "Content-Type": "multipart/form-data",
-      }     
+     
       const userData = {
 
         "name": name,
@@ -113,20 +112,14 @@ const UserAddRecipes = ({catData, ingData}) => {
         "author": "None",
         "picture": data.image_url
       };
-
-      console.log(userData);
-      console.log(ingredients);
-      console.log(ingredientsDesc);
-      console.log(ingAmount);
-      console.log(ingData);
-
-  
+      const headers = {
+        'Content-type':'application/json',
+        "Content-Type": "multipart/form-data",
+      }    
+      //create the recipe
       const res = await axios.post(`/recipes/`, userData, {headers})
       console.log(res);
-  
-
       //create new ingredients
-      /*finished
       await RemoveMatchingItems(ingredients, ingData).map((item) => { 
         let index = ingredients.indexOf(item);
         const createdIngredient = {
@@ -137,19 +130,48 @@ const UserAddRecipes = ({catData, ingData}) => {
           console.log(response)
         )
       })
-      */
+      
+      await timeout(1000);
+      let fullIngredientList;
+      let notBreak = false;
+      let value = 0
+      do{
+        const response = await axios.get(`/ingredients/`)
+        
+        fullIngredientList = response.data.filter(element => {
+          return ingredients.find(item => item === element.name);
+        })
+      
+        value +=1;
+        console.log( value)
+        if(value > 7){
+          break;
+        }else if(fullIngredientList.length !== ingredients.length ){
+          notBreak = true;
+        }
+      }while(notBreak);
+      
+     
+      //get current id of ingredients
+      
 
-     /*
-      const createIngConnection = {
-        "pk": null, // does not matter due to it being auto generated
-        "recipe": 4,
-        "ingredient": "tomato",
-        "amount": "9"
-      };
-
-      axios.post(`/ingredients-amount/`, createIngConnection, {headers}).then((response)=>
-        console.log(response)
-      )*/
+      //create the ingrdient connections
+      ingredients.map((item, index) => {
+        const createConnectionData = fullIngredientList.filter(element => element.name === item)
+        if(createConnectionData && createConnectionData.length === 1){
+          const ingConnectionData = {
+            "pk": null, // does not matter due to it being auto generated
+            "recipe": res.data.id,
+            "ingredient": createConnectionData[0].id,
+            "amount": ingAmount[index]
+          };
+          console.log("ingConnectionData", ingConnectionData)
+          axios.post(`/ingredients-amount/`, ingConnectionData, {headers}).then((response)=>
+          console.log(response)
+          )
+        }
+      })
+    
       //_______________________________________________________________________________
 
 
