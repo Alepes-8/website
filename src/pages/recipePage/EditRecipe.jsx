@@ -4,6 +4,7 @@ import RecipePage from "./RecipePage";
 //import slugify from 'react-slugify';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import slugify from "react-slugify";
 
 function timeout(number) {
   return new Promise( res => setTimeout(res, number) );
@@ -71,8 +72,24 @@ const EditRecipe = () => {
         let userName = recipe.name;
         let userDesc = recipe.description;
         let UserPort = recipe.portionSize;
+        let newSlug;
         if(name !== ""){
           userName = name;
+          if(recipeState === "0"){
+            newSlug =slugify(userName)
+            let acceptingSlug = false;
+            console.log(newSlug);
+            do{
+                let response = await fetch(`/recipeSlugs/${newSlug}/`)
+                if(response.status === 404){
+                  acceptingSlug = true;
+                }
+                else if(response.status === 200){
+                  let extra = Math.random().toString(36).substring(2,2+2);
+                  newSlug = newSlug + extra;
+                }
+            }while(!acceptingSlug);
+          }
         }
         if(description !== ""){
           userDesc = description;
@@ -81,39 +98,35 @@ const EditRecipe = () => {
           UserPort = portionSize;
         }
 
-        /*
-        let newName =slugify(name)
-        let acceptingSlug = false;
-        console.log(newName);
-        do{
-            let response = await fetch(`recipes/${newName}`)
-            if(response.status === 404){
-            acceptingSlug = true;
-            }
-            else if(response.status === 200){
-            let extra = Math.random().toString(36).substring(2,2+2);
-            newName = newName + extra;
-            }
-        }while(!acceptingSlug);
-*/  
-
+        if(!portionSize){
+          UserPort = recipe.portionSize;
+        }
+      
         const userData = {
-          "name": userName,
-          "description": userDesc,
-          "portionSize": recipe.portionSize,
-          "creationDate": recipe.creationDate,
-          "categories": [{"name": "tomato", "description": "5st" },{ "name": "tomato", "description": "5st" }],
-          "ingredients": [],
-          "author": null,
+          
+            "name": userName,
+            "description": userDesc,
+            "portionSize": UserPort,
+            "creationDate": recipe.creationDate,
+            "categories": [],
+            "ingredients": [],
+            "author": recipe.author,
+
         };
 
-        const headers = {
+        if(recipeState === "0"){
+          let finalPush = { "recipe":userData, "slug":"Chessesting"}
+          await axios.put(`/recipeSlugs/Chessesting/`, finalPush).then(res => setRecipe(res.data)).catch(error => console.log(error))
+        }
+        else{
+          console.log(userData)
+          const headers = {
             'Content-type':'application/json',
-        };
-
-        const res = await axios.put(`/recipes/${6}/`, userData, { headers })
-        setRecipe(res.data);
-        if(recipeState === 0){
+          }     
+          await axios.put(`/recipes/${recipe.id}/`, userData, {headers }).then(res => setRecipe(res.data)).catch(error => console.log(error))
+        }
+        
+        if(recipeState === "0"){
           setTesting(null)
           await timeout(1000);
           setTesting(<RecipePage/>);
