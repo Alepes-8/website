@@ -1,6 +1,6 @@
 import './userPage.css';
 import React, { useState , useEffect} from "react";
-import {LoginPage, Register, UserAddRecipes, UserSavedRecipes, Settings, AdminManageRecipes, AdminManageComment, AdminManageUser} from '../../pages';
+import {LoginPage, Register, UserAddRecipes, ResetPassWord, Settings, AdminManageRecipes, AdminManageComment, AdminManageUser} from '../../pages';
 
 
 
@@ -123,6 +123,8 @@ const UserPage = ({token, setToken, page}) => {
     return <LoginPage token ={token} setToken={setToken} />
   }else if(!token && page === 2) {
     return <Register token ={token} setToken={setToken} />
+  }else if(!token && page === 3) {
+    return <ResetPassWord/>
   }
 
 

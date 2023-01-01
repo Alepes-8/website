@@ -31,6 +31,8 @@ function App() {
 
         <Route path="/Register" element={<UserPage token={token} setToken = {setToken} page={2}/>}/>
 
+        <Route path='/ResetPassWord'  element={<UserPage token={token} setToken = {setToken} page={3}/>}/>
+
         <Route path="/AdminPage" element={<AdminPage/>}/> 
 
         <Route path="/UsersRecipePage" element={<UsersRecipePage/>}/>

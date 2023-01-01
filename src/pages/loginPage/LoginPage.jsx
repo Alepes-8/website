@@ -73,6 +73,7 @@ const LoginPage = ({token, setToken}) => {
             </div>
             <button onClick={(e) => handleLogin()}>Login </button>
             <a href="/Register" className ='link_button'>Don't have an account? Register</a>
+            <a href="/ResetPassWord" className ='link_button'>Forgotten Password</a>
           </div>
         </div>
       </div>

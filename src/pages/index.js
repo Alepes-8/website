@@ -12,4 +12,4 @@ export {default as AdminManageUser} from './adminPage/AdminManageUser'
 export {default as AdminManageRecipes} from './adminPage/AdminManageRecipes'
 export {default as AdminManageComment} from './adminPage/AdminManageComment'
 export {default as EditRecipe} from './recipePage/EditRecipe'
-
+export {default as ResetPassWord} from  './loginPage/ResetPassWord'
