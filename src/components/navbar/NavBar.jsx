@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import './navbar.css';
 import logo from '../../assets/swedishChef.gif';
 import {RiMenu3Line, RiCloseLine} from 'react-icons/ri';
-import { RecipePage } from '../../pages';
 import  '../../useToken';
 import { Link } from 'react-router-dom';
 

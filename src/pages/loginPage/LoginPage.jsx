@@ -3,7 +3,6 @@ import './authentication.css';
 
 
 const LoginPage = ({token, setToken}) => {
-    const [errorMessages, setErrorMessages] = useState({});
 
     const [userEmail, setUserEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -24,13 +23,11 @@ const LoginPage = ({token, setToken}) => {
       console.log(user);
 
       if(user.length !== 1){
-        setErrorMessages("email not found");
         return;
       }
       console.log(user[0], password)
 
       if(user[0].password !== password){
-        setErrorMessages("incorrect password");
         return;
       }
       let userData = { 
