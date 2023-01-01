@@ -65,6 +65,10 @@ const UserAddRecipes = ({catData, ingData}) => {
         setAction("Missing a portionSize, or is a letter");
         return;
       }
+      if(!validFileTypes.find(type => type === data.image_url.type)){
+        setAction("Missing a image, or wrong format. jpg/jpeg");
+        return;
+      }
       CreateRecipe();
     }
 
@@ -78,67 +82,7 @@ const UserAddRecipes = ({catData, ingData}) => {
     // catagory amount
     //5274179a8e21a1fbdc36c1061bd2968a623cfc8d
     const CreateRecipe = async() => {
-      console.log(data.image_url)
-      
-      const userData = {
-        "name": name,
-        "description": description,
-        "portionSize": portionSize,
-        "creationDate": creationDate,
-        "categories": [],
-        "ingredients": [],
-        "author": null,
-        "picture":  data.image_url,
-      };
-      console.log(userData);
-
-      const headers = {
-        "Content-Type": "multipart/form-data",
-      }
-
-      const res = await axios.post(`/recipes/`, userData, {headers})
-      console.log(res);
-  
-/**console.log(imageFile)
-      let form_data = new FormData();
-      form_data.append("name", name);
-      form_data.append("description", description);
-      form_data.append("portionSize", portionSize);
-      form_data.append("creationDate", creationDate);
-      form_data.append("categories", []);
-      form_data.append("ingredients", []);
-      form_data.append("author", null);
-      form_data.append("picture", null);
-      console.log(form_data)
-
-      const headers = {
-        "Content-Type": "multipart/form-data",
-      }
-
-      const res = await axios.post(`/recipes/`, form_data, {headers})
-      console.log(res); */
-     /* 
-      const userData = {
-        username: "admin@admin.com",
-        password: "admin"
-      };
-      axios.post("/api-user-login/", userData, )
-      .then(response => {
-       console.log(response.data.token)
-       setAuth(response.data.token);
-      })
-      
-      const config = {
-        headers: { Authorization: `Bearer ${auth}` }
-    };
-    
-      axios.post( 
-        '/users/',
-        config
-      ).then(console.log).catch(console.log);
-
-*/
-     /*
+      /*
       let newName =slugify(name)
       let acceptingSlug = false;
       console.log(newName);
@@ -152,41 +96,64 @@ const UserAddRecipes = ({catData, ingData}) => {
           newName = newName + extra;
         }
       }while(!acceptingSlug);
-      
+      */
+      console.log(data.image_url)
+      const headers = {
+        'Content-type':'application/json',
+        "Content-Type": "multipart/form-data",
+      }     
       const userData = {
+
         "name": name,
         "description": description,
         "portionSize": portionSize,
-        "creationDate": creationDate,
+        "creationDate": "2022-12-31",
         "categories": [],
         "ingredients": [],
-        "author": null,
-        "picture":  data.image_url,
+        "author": "None",
+        "picture": data.image_url
       };
 
-      const headers = {
-        "Content-Type": "multipart/form-data",
-      }
+      console.log(userData);
+      console.log(ingredients);
+      console.log(ingredientsDesc);
+      console.log(ingAmount);
+      console.log(ingData);
 
+  
       const res = await axios.post(`/recipes/`, userData, {headers})
       console.log(res);
-     */
-      
-      /*
-      
-      await RemoveMatchingItems(ingredients, ingData).map((item) => {
+  
+
+      //create new ingredients
+      /*finished
+      await RemoveMatchingItems(ingredients, ingData).map((item) => { 
         let index = ingredients.indexOf(item);
-        fetch("/ingredients/", {
-        method:'POST',
-        headers:{
-          'Content-type':'application/json',
-        },
-        body:JSON.stringify(   {
+        const createdIngredient = {
           "name": item,
           "description": ingredientsDesc[index] 
-        })})        
+        };
+        axios.post(`/ingredients/`, createdIngredient, {headers}).then((response)=>
+          console.log(response)
+        )
       })
+      */
 
+     /*
+      const createIngConnection = {
+        "pk": null, // does not matter due to it being auto generated
+        "recipe": 4,
+        "ingredient": "tomato",
+        "amount": "9"
+      };
+
+      axios.post(`/ingredients-amount/`, createIngConnection, {headers}).then((response)=>
+        console.log(response)
+      )*/
+      //_______________________________________________________________________________
+
+
+      /*
       await RemoveMatchingItems(categories, catData).filter((item) => {
         let index = categories.indexOf(item);        
         fetch("/categories/", {
@@ -203,8 +170,6 @@ const UserAddRecipes = ({catData, ingData}) => {
 
       setAction("success");
     */
-      // ingAmount[index]
-
     }
  
     function AddItems(term, desc, group, groupDesc, set, setDesc, extra, groupExtra, setExtra){
@@ -387,6 +352,7 @@ const UserAddRecipes = ({catData, ingData}) => {
 };
 
 //time complexity n^2 and can get better if we sort by letter perhaps
+//take out the ingredeints which does not already exists
 function RemoveMatchingItems(data1, data2){
   let create = data1.filter((val, index) => 
   {
