@@ -5,7 +5,7 @@ function ContactUsPage(){
 
     const [ContactData, setContactData]=useState({
         'full_name':'',
-        'email':'',
+        'email':'oliolo.project1@gmail.com',
         'query':'',
         'status':'',
     });
