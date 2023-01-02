@@ -42,7 +42,7 @@ function ContactUsPage(){
     });
 
     return (
-        <div className='container'>
+        <div className='baseBackground'>
             <div className='row'>
                 <div className='col'>
                     {ContactData.status==='success' && <p className='text-success'>Thanks for the Message</p>}
@@ -51,15 +51,15 @@ function ContactUsPage(){
                         <h5 className='card-header'>Contact Us</h5>
                         <div className='card-body'>
                             {/* <form> */}
-                                <div className='field'>
+                                <div className='login_form'>
                                     <label className='form-label'>Full Name</label>
                                     <input value={ContactData.full_name} onChange={handleChange} name="full_name" type="text" className="form-control" />
                                 </div>
-                                <div className='field'>
+                                <div className='login_form'>
                                     <label className='form-label'>Email</label>
                                     <input value={ContactData.email} onChange={handleChange} name="email" type="email" className="form-control" />
                                 </div>
-                                <div className='field'>
+                                <div className='login_form'>
                                     <label className='form-label'>Query</label>
                                     <textarea rows={10} value={ContactData.query} onChange={handleChange} name="query" className="form-control"></textarea>
                                 </div>
