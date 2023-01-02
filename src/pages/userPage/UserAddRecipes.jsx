@@ -100,24 +100,26 @@ const UserAddRecipes = ({catData, ingData}) => {
         }
       }while(!acceptingSlug);
       */
-     
       const userData = {
-
+        "id": 8,
         "name": name,
         "description": description,
-        "portionSize": portionSize,
-        "creationDate": "2022-12-31",
+        "portionSize": 1,
+        "creationDate": creationDate,
         "categories": [],
         "ingredients": [],
         "author": "None",
-        "picture": data.image_url
+        "picture": null //TODO. a problem where the image does not want to be saved
       };
       const headers = {
         'Content-type':'application/json',
-        "Content-Type": "multipart/form-data",
+        //"Content-Type": "multipart/form-data",
       }    
+      console.log(userData)
+
       //create the recipe
-      const res = await axios.post(`/recipes/`, userData, {headers})
+      const finalData = {"recipe": userData, "slug":""};
+      const res = await axios.post(`/recipeSlugs/`, finalData, {headers})
       console.log(res);
       //create new ingredients
       await RemoveMatchingItems(ingredients, ingData).map((item) => { 
@@ -161,7 +163,7 @@ const UserAddRecipes = ({catData, ingData}) => {
         if(createConnectionData && createConnectionData.length === 1){
           const ingConnectionData = {
             "pk": null, // does not matter due to it being auto generated
-            "recipe": res.data.id,
+            "recipe": res.data.recipe.id,
             "ingredient": createConnectionData[0].id,
             "amount": ingAmount[index]
           };
