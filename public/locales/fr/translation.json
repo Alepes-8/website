@@ -1,0 +1,10 @@
+{
+    "Welcome": {
+      "text": "asd asdas dasd",
+      "description": "asd asd as dasd "
+    },
+    "interpolation_pluralization": {
+      "text_one": "asd asd",
+      "text_other": "a sda sda sd"
+    }
+  }

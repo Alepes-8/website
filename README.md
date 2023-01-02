@@ -4,6 +4,7 @@
   - npm install react-scripts --save
   - npm install react-router-dom --save
   - npm install react-slugify
+  - npm install axios --save
 - After that you should only need to run "npm run start" to start the code or run the batchfile "start"
 
 ## If you have problems
