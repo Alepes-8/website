@@ -1,7 +1,21 @@
 import React, {useState} from 'react'
 import './authentication.css';
+import axios from 'axios';
 
-
+/*
+axios.interceptors.request.use(
+  config => {
+      const token = "c861931e674bb10b1989374269af8fd661584218";
+      if (token) {
+          config.headers['Authorization'] = 'Bearer ' + token;
+      }
+      config.headers['Content-Type'] = 'application/json';
+      return config;
+  },
+  error => {
+      Promise.reject(error)
+});
+*/
 const LoginPage = ({token, setToken}) => {
 
     const [userEmail, setUserEmail] = useState("");
@@ -10,9 +24,35 @@ const LoginPage = ({token, setToken}) => {
     // User Login info, temp database
 
     const handleLogin = async() => {
-        
-      //future implementation when the server works as it should
       
+      const dataTokenRequest = {
+        username: "admin@admin.com",
+            password: "admin",
+      }
+  
+      const headerTokenRequest = {
+        'Accept': 'application/json',
+        'Content-type':'application/json',
+      }
+      await axios.post('http://127.0.0.1:8000/api-user-login/', dataTokenRequest,{headerTokenRequest}).then(res =>
+      {
+        console.log("token resuest response", res.data.token);
+        const headerGetUsers = {
+          'content-type': 'application/json',
+          'Authorization': 'Token' + res.data.token, 
+         
+        }
+
+        axios.get(`http://127.0.0.1:8000/users/${1}/`, {headerGetUsers}).then( respo =>
+          console.log("UserResponseData", respo)
+        )
+      })
+    
+
+     
+ 
+      //future implementation when the server works as it should
+      /*
       let response = await fetch("/users/")
       let data = await response.json()
       console.log(data);
@@ -37,7 +77,7 @@ const LoginPage = ({token, setToken}) => {
         supAdmin:user[0].is_superuser
       };
       setToken(userData);
-      return;
+      return;*/
     }
 
     return (
