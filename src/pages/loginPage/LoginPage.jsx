@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import './authentication.css';
-
+import axios from 'axios';
 
 const LoginPage = ({token, setToken}) => {
 
@@ -13,6 +13,36 @@ const LoginPage = ({token, setToken}) => {
         
       //future implementation when the server works as it should
       
+      const dataTokenRequest = {
+        username: "tomatolover69@tomato.com",
+        password: "tomatotomato",
+      }
+      const dataUser = {
+        username: userEmail,
+        password: password,
+      }
+  
+      const headerTokenRequest = {
+        'Accept': 'application/json',
+        'Content-type':'application/json',
+      }
+
+      await axios.post('http://127.0.0.1:8000/api-user-login/', dataUser,{headerTokenRequest}).then(res =>
+      {
+        if(res.status === 200){
+          let userData = { 
+            email: res.data.email,
+            password: password, 
+            admin: res.data.isStaff,
+            supAdmin: res.data.isSuperuser,
+            token: res.data.token,
+          };
+          setToken(userData);
+          return;
+        }
+        console.log(res)
+      });
+      /*
       let response = await fetch("/users/")
       let data = await response.json()
       console.log(data);
@@ -37,7 +67,7 @@ const LoginPage = ({token, setToken}) => {
         supAdmin:user[0].is_superuser
       };
       setToken(userData);
-      return;
+      return;*/
     }
 
     return (
