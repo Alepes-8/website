@@ -3,6 +3,25 @@ import React, { useState , useEffect} from "react";
 import {LoginPage, Register, UserAddRecipes, ResetPassWord, Settings, AdminManageRecipes, AdminManageComment, AdminManageUser} from '../../pages';
 
 
+import axios from 'axios';
+
+
+
+axios.interceptors.request.use(
+  config => {
+      const tokenString = localStorage.getItem('token');
+      const userToken = JSON.parse(tokenString);
+      if (userToken) {
+        console.log( userToken.token);
+        config.headers['Authorization'] = 'Bearer ' + userToken.token;
+      }
+      config.headers['Content-Type'] = 'application/json';
+      return config;
+  },
+  error => {
+      Promise.reject(error)
+});
+
 
 const UserPage = ({token, setToken, page}) => {
   const [count, setCount] = useState(0);
@@ -94,6 +113,11 @@ const UserPage = ({token, setToken, page}) => {
   
   
   let getUsers = async() => {
+    axios.get("http://127.0.0.1:8000/users/").then(res => {
+      console.log("userdata");
+      console.log(res);
+    })
+    
 /*
     fetch('http://127.0.0.1:8000/api-user-login/', {
         method:'POST',
