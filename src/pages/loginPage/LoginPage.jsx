@@ -29,6 +29,7 @@ const LoginPage = ({token, setToken}) => {
         console.log("response", res);
         if(res.status === 200){
           let userData = { 
+            id: res.data.id,
             email: res.data.email,
             password: password, 
             admin: res.data.is_staff,
@@ -40,32 +41,7 @@ const LoginPage = ({token, setToken}) => {
         }
         console.log(res)
       });
-      /*
-      let response = await fetch("/users/")
-      let data = await response.json()
-      console.log(data);
-      let user = data.filter((element) => {if(element.email === userEmail){
-        return element;
-      }})
-      console.log(user);
-      console.log(user);
-
-      if(user.length !== 1){
-        return;
-      }
-      console.log(user[0], password)
-
-      if(user[0].password !== password){
-        return;
-      }
-      let userData = { 
-        email: userEmail,
-        password: password, 
-        admin: user[0].is_staff,
-        supAdmin:user[0].is_superuser
-      };
-      setToken(userData);
-      return;*/
+      
     }
 
     return (
