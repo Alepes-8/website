@@ -14,4 +14,5 @@ export {default as AdminManageComment} from './adminPage/AdminManageComment'
 export {default as EditRecipe} from './recipePage/EditRecipe'
 export {default as ResetPassWord} from  './loginPage/ResetPassWord'
 export {default as ContactUsPage} from  './contactUsPage/ContactUsPage'
+export {default as LiveChatPage} from  './contactUsPage/LiveChatPage'
 

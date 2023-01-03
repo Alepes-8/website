@@ -6,7 +6,7 @@ import {Routes, Route} from 'react-router-dom';
 //import RecipeList from './RecipeList';
 import {NavBar} from './components';
 import {Footer} from './containers';
-import { StartPage, RecipePage, UsersRecipePage, UserPage, AdminPage, EditRecipe, ContactUsPage} from './pages';
+import { StartPage, RecipePage, UsersRecipePage, UserPage, AdminPage, EditRecipe, ContactUsPage, LiveChatPage} from './pages';
 import useToken from './useToken';
 
 function App() {
@@ -36,6 +36,8 @@ function App() {
         <Route path="/AdminPage" element={<AdminPage/>}/> 
 
         <Route path="/ContactUsPage" element={<ContactUsPage/>}/>
+
+        <Route path="/LiveChatPage" element={<LiveChatPage/>}/>
 
         <Route path="/UsersRecipePage" element={<UsersRecipePage/>}/>
       </Routes>
