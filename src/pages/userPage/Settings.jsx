@@ -1,10 +1,9 @@
+import axios from 'axios';
 import React, {useState} from 'react';
 
 
-const Settings = () => {
+const Settings = ({token, setToken}) => {
     const [action, setAction] = useState("");
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
     const [settingsPassword, setSettingsPassword] = useState("");
 
 
@@ -13,53 +12,23 @@ const Settings = () => {
 
     const CheckContent = () => {
         setAction("checking value");
-
-        //check the validation of an email input
-        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if ( re.test(email) ) {
-            setAction("valid email")
-            // this is a valid email address
-            // call setState({email: email}) to update the email
-            // or update the data in redux store.
+        if(!settingsPassword){
+          alert("write password to change");
+          return;
         }
-        else {
-            setAction("invalid email")
-            return;
-            // invalid email, maybe show an error to the user.
-        }
-       
-        /*ChangeRecipeInfo()*/
-      }
-/*
-    const ChangeRecipeInfo = async() => {
-               
 
-        fetch(`/recipes/${recipeId}/`, {
-          method:'PUT',
-          headers:{
-            'Content-type':'application/json',
-          },
-          body:JSON.stringify({"name": name,
-          "email": email,
+        console.log(token);
+        const change ={
+          "email": token.email,
           "password": settingsPassword,
-          
+
+        };
+        axios.put(`/users/${token.id}/`,change).then(res => {
+          setAction("password was changed");
         })
-        }).then((response) => {
-            if(response.status === 200){
-                setAction("Changed");
-                //make sure to reload the page with the new slug for the preview
-                window.history.replaceState(null, `recipeId`, `${newName}`);
-                window.location.reload(false);
-            }else{
-                setAction("something went wrong. Error: ", response.status)
-            }
-          
-        }).catch(function(error){
-          setAction(`${error}`);
-          console.log('ERROR:', error)
-        })
-      }    
-*/
+
+      }
+
 
   return (
     <div className="UserSavedRecipes">
