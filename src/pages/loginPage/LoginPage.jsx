@@ -1,15 +1,14 @@
 import React, {useState} from 'react'
 import './authentication.css';
 import axios from 'axios';
-let tokenKey = "c861931e674bb10b1989374269af8fd661584218";
-axios.defaults.headers.common = {'Authorization': `Bearer ${tokenKey}`}
+axios.defaults.headers.common = {Accept:`application/json`}
 
-/*
+
 axios.interceptors.request.use(
   config => {
       const token = "c861931e674bb10b1989374269af8fd661584218";
       if (token) {
-          config.headers['Authorization'] = 'Bearer ' + token;
+          config.headers['Authorization'] =  `Token ${token}`;
       }
       config.headers['Content-Type'] = 'application/json';
       return config;
@@ -17,7 +16,7 @@ axios.interceptors.request.use(
   error => {
       Promise.reject(error)
 });
-*/
+
 const LoginPage = ({token, setToken}) => {
 
     const [userEmail, setUserEmail] = useState("");
@@ -40,30 +39,19 @@ const LoginPage = ({token, setToken}) => {
         'Accept': 'application/json',
         'Content-type':'application/json',
       }
-
-      await axios.post('http://127.0.0.1:8000/api-user-login/', dataTokenRequest,{headerTokenRequest}).then(res =>
-      {
-        console.log("token resuest response", res.data.token);
-        const headerGetUsers = {
-          'Accept': 'application/json',
-          'Content-type':'application/json',
-          Authorization: `Token ${res.data.token}`,
-           
-        }
-
-        axios.get(`http://127.0.0.1:8000/users/${1}/`, {headerGetUsers}).then( respo =>
-          console.log("UserResponseData", respo)
-        )
-        axios.get(`http://127.0.0.1:8000/users/${1}/`, headerGetUsers).then( respo =>
-          console.log("UserResponseData", respo)
-        )
-        fetch(`http://127.0.0.1:8000/users/${1}/`, {headerGetUsers}).then( respo =>
-        console.log("UserResponseData", respo)
+      const headerGetUsers = {
+        Accept:`application/json`,
+        Authorization: `Token c861931e674bb10b1989374269af8fd661584218`,
+         
+      }
+      axios.get(`http://127.0.0.1:8000/users/`).then( respo =>
+        console.log("users", respo)
       )
-        fetch(`http://127.0.0.1:8000/users/${1}/`, headerGetUsers).then( respo =>
-          console.log("UserResponseData", respo)
-        )
-      })
+
+      axios.get(`http://127.0.0.1:8000/users/1/`).then( respo =>
+        console.log("user1", respo)
+      )
+        
 
       //future implementation when the server works as it should
       /*
