@@ -3,14 +3,23 @@ import { useState } from 'react';
 import './manageUserUser.css';
 import axios from 'axios';
 
-
 const ManageUsersUser = ({privilege, user}) => {
-    
     const [showing, setShowing] = useState("flex");
   
 
     const ChangeAdminStatus = () => {
-        alert("no ChangeAdminStatus functionality made yet");
+        console.log(user)
+        const change ={
+            "id": 7,
+            "is_staff": !user.is_staff,
+            "email": user.email,
+            "password": user.password,
+        };
+        axios.put(`http://127.0.0.1:8000/users/${7}/`,change).then(res =>
+        {
+            console.log(res)
+        })
+        alert("You will change the admin status. Reload to se the current status");
     }
 
 
@@ -52,7 +61,7 @@ const ManageUsersUser = ({privilege, user}) => {
             <b>UserName:</b> {user.email} 
             {privilege
                 ? <div><div className='toggle_Box'>
-                    <input type="checkbox" defaultChecked={user.is_staff} onClick={ChangeAdminStatus} />
+                    <input type="checkbox" defaultChecked={user.is_staff} value = {true} onClick={ChangeAdminStatus} />
                     
                 </div>
                 <strong>{"Admin"}</strong>
