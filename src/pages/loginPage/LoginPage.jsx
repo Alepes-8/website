@@ -29,12 +29,13 @@ const LoginPage = ({token, setToken}) => {
 
       await axios.post('http://127.0.0.1:8000/api-user-login/', dataUser,{headerTokenRequest}).then(res =>
       {
+        console.log("response", res);
         if(res.status === 200){
           let userData = { 
             email: res.data.email,
             password: password, 
-            admin: res.data.isStaff,
-            supAdmin: res.data.isSuperuser,
+            admin: res.data.is_staff,
+            supAdmin: res.data.is_superuser,
             token: res.data.token,
           };
           setToken(userData);
