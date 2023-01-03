@@ -2,24 +2,23 @@ import React from 'react'
 import { useState } from 'react';
 import './manageUserUser.css';
 import axios from 'axios';
+import { async } from 'q';
 
 const ManageUsersUser = ({privilege, user}) => {
     const [showing, setShowing] = useState("flex");
   
 
-    const ChangeAdminStatus = () => {
+    const ChangeAdminStatus = async() => {
         console.log(user)
         const change ={
-            "id": 7,
             "is_staff": !user.is_staff,
             "email": user.email,
             "password": user.password,
         };
-        axios.put(`http://127.0.0.1:8000/users/${7}/`,change).then(res =>
+        axios.put(`http://127.0.0.1:8000/users/${user.id}/`,change).then(res =>
         {
             console.log(res)
         })
-        alert("You will change the admin status. Reload to se the current status");
     }
 
 
