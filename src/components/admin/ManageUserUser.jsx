@@ -8,6 +8,11 @@ const ManageUsersUser = ({privilege, user}) => {
     const ChangeAdminStatus = () => {
         alert("no ChangeAdminStatus functionality made yet");
     }
+    if(!privilege){
+        if(user.is_staff || user.is_superuser){
+            return;
+        }
+    }
 
     //TODO Test and add feature. Not testable with romans changes
    const DeleteUser = async() => {
