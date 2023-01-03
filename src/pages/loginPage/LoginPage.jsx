@@ -13,10 +13,6 @@ const LoginPage = ({token, setToken}) => {
         
       //future implementation when the server works as it should
       
-      const dataTokenRequest = {
-        username: "tomatolover69@tomato.com",
-        password: "tomatotomato",
-      }
       const dataUser = {
         username: userEmail,
         password: password,
@@ -29,6 +25,7 @@ const LoginPage = ({token, setToken}) => {
 
       await axios.post('http://127.0.0.1:8000/api-user-login/', dataUser,{headerTokenRequest}).then(res =>
       {
+
         console.log("response", res);
         if(res.status === 200){
           let userData = { 
