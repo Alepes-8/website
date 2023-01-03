@@ -65,63 +65,6 @@ const LoginPage = ({token, setToken}) => {
         )
       })
 
-      console.log("del två")
-      await axios.post('http://127.0.0.1:8000/api-user-login/', dataTokenRequest2,{headerTokenRequest}).then(res =>
-      {
-        console.log("token resuest response", res.data.token);
-        const headerGetUsers = {
-          'Accept': 'application/json',
-          'Content-type':'application/json',
-          Authorization: `Token ${res.data.token}`,
-           
-        }
-
-        axios.get(`http://127.0.0.1:8000/users/${1}/`, {headerGetUsers}).then( respo =>
-          console.log("UserResponseData", respo)
-        )
-        axios.get(`http://127.0.0.1:8000/users/${1}/`, headerGetUsers).then( respo =>
-          console.log("UserResponseData", respo)
-        )
-        fetch(`http://127.0.0.1:8000/users/${1}/`, {headerGetUsers}).then( respo =>
-        console.log("UserResponseData", respo)
-      )
-        fetch(`http://127.0.0.1:8000/users/${1}/`, headerGetUsers).then( respo =>
-          console.log("UserResponseData", respo)
-        )
-      })
-      console.log("beautiful ")
-
-      const instance = axios.create({
-        baseURL: 'http://127.0.0.1:8000/',
-        timeout: 1000,
-        headers: {'Authorization': 'Bearer '+ tokenKey}
-      });
-    
-      instance.get('users/')
-      .then(response => {
-        console.log("beautiful ")
-        console.log(response)
-          return response.data;
-      })
- 
-
-      const service = axios.create({
-        timeout: 20000 // request timeout
-      });
-      
-      // request interceptor
-      
-      service.interceptors.request.use(
-        config => {
-          // Do something before request is sent
-      
-          config.headers["Authorization"] = "bearer " + tokenKey;
-          return config;
-        },
-        error => {
-          Promise.reject(error);
-        }
-      );
       //future implementation when the server works as it should
       /*
       let response = await fetch("/users/")
