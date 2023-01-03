@@ -59,6 +59,7 @@ class App extends Component {
   render() {
     const { classes } = this.props;
     return (
+      <div className="baseBackground">
       <Container component="main" maxWidth="xs">
         {this.state.filledForm ? (
           <div style={{ marginTop: 50 }}>
@@ -132,6 +133,7 @@ class App extends Component {
           </div>
         )}
       </Container>
+      </div>
     );
   }
 }
