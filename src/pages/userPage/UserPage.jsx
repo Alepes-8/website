@@ -9,18 +9,20 @@ axios.defaults.headers.common = {Accept:`application/json`}
 
 axios.interceptors.request.use(
   config => {
-      const token = "c861931e674bb10b1989374269af8fd661584218";
-      if (token) {
-          config.headers['Authorization'] =  `Token ${token}`;
+      const tokenString = localStorage.getItem('token');
+      const userToken = JSON.parse(tokenString);
+      if(userToken){
+        if (userToken.token) {
+          config.headers['Authorization'] =  `Token ${userToken.token}`;
+        }
       }
+     
       config.headers['Content-Type'] = 'application/json';
       return config;
   },
   error => {
       Promise.reject(error)
 });
-
-
 
 const UserPage = ({token, setToken, page}) => {
   const [count, setCount] = useState(0);
