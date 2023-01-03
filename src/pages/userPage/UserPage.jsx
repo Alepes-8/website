@@ -4,16 +4,14 @@ import {LoginPage, Register, UserAddRecipes, ResetPassWord, Settings, AdminManag
 
 
 import axios from 'axios';
-
+axios.defaults.headers.common = {Accept:`application/json`}
 
 
 axios.interceptors.request.use(
   config => {
-      const tokenString = localStorage.getItem('token');
-      const userToken = JSON.parse(tokenString);
-      if (userToken) {
-        console.log( userToken.token);
-        config.headers['Authorization'] = 'Bearer ' + userToken.token;
+      const token = "c861931e674bb10b1989374269af8fd661584218";
+      if (token) {
+          config.headers['Authorization'] =  `Token ${token}`;
       }
       config.headers['Content-Type'] = 'application/json';
       return config;
@@ -21,6 +19,7 @@ axios.interceptors.request.use(
   error => {
       Promise.reject(error)
 });
+
 
 
 const UserPage = ({token, setToken, page}) => {
@@ -114,8 +113,8 @@ const UserPage = ({token, setToken, page}) => {
   
   let getUsers = async() => {
     axios.get("http://127.0.0.1:8000/users/").then(res => {
-      console.log("userdata");
-      console.log(res);
+      console.log("users", res);
+      setUsers(res.data)
     })
     
 /*
