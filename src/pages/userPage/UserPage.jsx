@@ -55,7 +55,7 @@ const UserPage = ({token, setToken, page}) => {
     }else if(page === 2) {
       return (
       <div className='User_selection_results'>
-        <Settings  />
+        <Settings  token={token} setToken={setToken}/>
       </div>);
     }
   }
@@ -64,13 +64,14 @@ const UserPage = ({token, setToken, page}) => {
 
   useEffect(() => {
     if(token){
-      getRecipes();
-      getUsers();
-      getCat();
-      getIng();
-      getSlug();
-
-      getComments();
+      if(token.admin || token.supAdmin){
+        getRecipes();
+        getUsers();
+        getCat();
+        getIng();
+        getSlug();
+        getComments();
+      }
     }
   }, [])
 
@@ -118,30 +119,6 @@ const UserPage = ({token, setToken, page}) => {
       console.log("users", res);
       setUsers(res.data)
     })
-    
-/*
-    fetch('http://127.0.0.1:8000/api-user-login/', {
-        method:'POST',
-        headers:{
-          'Accept': 'application/json',
-
-          'Content-type':'application/json',
-        },
-        body:JSON.stringify(   {
-            "email": "admin@test.com",
-            "password": "token.password",
-        })
-      }).then((response) => {console.log("test athentication", response)});
-
-    let response = await fetch("api-user-login/")
-    let data = await response.json()
-    //console.log('DATA: ', data)
-    console.log("userdata" , data)
-    let user = data.filter((element) => {if(element.email === token.email){
-      return element;
-    }})
-    setMyRecipes(user[0].savedRecipes) //only my recipes
-    setUsers(data) //all users*/
   }
 
   if(!token && page === 1) {
