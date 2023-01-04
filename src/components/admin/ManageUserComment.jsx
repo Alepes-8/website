@@ -11,7 +11,6 @@ const ManageUserComment = ({comments, comment, index}) => {
     }
 
 
-    //TODO missing unik variable in the table
     const DeleteComment = async() => {
        const rec = await axios.delete(`/comments/${comment.id}/`);
        if(rec.status === 204){

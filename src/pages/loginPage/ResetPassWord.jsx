@@ -32,7 +32,6 @@ const ResetPassWord = () => {
         setStatus("Bad Email")
         return;
       }
-     //does the email exist TODO
      console.log();
      setAthenticated(true); 
     }

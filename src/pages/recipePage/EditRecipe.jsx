@@ -47,6 +47,13 @@ const EditRecipe = () => {
     const [testing, setTesting] = useState(null);
 
     
+    const [cImage, setCImage] = useState();
+
+
+    const handleImageChange = (e) => {
+      setCImage(e.target.files[0]);
+    };
+
 
     useEffect(() => {
       if(token){
@@ -69,7 +76,6 @@ const EditRecipe = () => {
       }
     }
 
-    //TODO make sure this works as it should
     const getRecipe = async() => {
       if(recipeState === "0"){
         let response = await fetch(`/recipeSlugs/${recipeSlug}/`);
@@ -82,31 +88,12 @@ const EditRecipe = () => {
       }
     }
       
-    //TODO Seems to be a problem with changing recipes with romans changes
     const ChangeRecipeInfo = async() => {
         setAction("loading...");
         let userName = recipe.name;
         let userDesc = recipe.description;
         let UserPort = recipe.portionSize;
-        let newSlug;
-        if(name !== ""){
-          userName = name;
-          if(recipeState === "0"){
-            newSlug =slugify(userName)
-            let acceptingSlug = false;
-            console.log(newSlug);
-            do{
-                let response = await fetch(`/recipeSlugs/${newSlug}/`)
-                if(response.status === 404){
-                  acceptingSlug = true;
-                }
-                else if(response.status === 200){
-                  let extra = Math.random().toString(36).substring(2,2+2);
-                  newSlug = newSlug + extra;
-                }
-            }while(!acceptingSlug);
-          }
-        }
+        
         if(description !== ""){
           userDesc = description;
         }
@@ -118,28 +105,23 @@ const EditRecipe = () => {
           UserPort = recipe.portionSize;
         }
       
-        const userData = {
-          
-            "name": userName,
-            "description": userDesc,
-            "portionSize": UserPort,
-            "creationDate": recipe.creationDate,
-            "categories": [],
-            "ingredients": [],
-            "author": recipe.author,
+        const headers = {
+          'Content-type':'application/json',
+          "Content-Type": "multipart/form-data",
+        }    
 
-        };
-
+        const imagedata = {
+          "name": userName,
+          "description": userDesc,
+          "portionSize": 1,
+          "picture": cImage 
+        };     
+        
         if(recipeState === "0"){
-          let finalPush = { "recipe":userData, "slug":"Chessesting"}
-          await axios.put(`/recipeSlugs/Chessesting/`, finalPush).then(res => setRecipe(res.data)).catch(error => console.log(error))
+          await axios.put(`/recipes/${recipe.id}/`,imagedata).then(res => setRecipe(res.data)).catch(error => console.log(error))
         }
         else{
-          console.log(userData)
-          const headers = {
-            'Content-type':'application/json',
-          }     
-          await axios.put(`/recipes/${recipe.id}/`, userData, {headers }).then(res => setRecipe(res.data)).catch(error => console.log(error))
+          await axios.put(`/recipes/${recipe.id}/`, imagedata).then(res => setRecipe(res.data)).catch(error => console.log(error))
         }
         
         if(recipeState === "0"){
@@ -155,11 +137,20 @@ const EditRecipe = () => {
         <div className="Editcontent">
             <div className="UserSavedRecipes">
                 <h1>AddRecipes</h1>
+                    
+                <input
+                  className=""
+                  required
+                  type="file"
+                  name="image"
+                  accept="image/jpeg,image/png,image/gif"
+                  onChange={(e) => {
+                    handleImageChange(e);
+                  }}
+                />
                 {InputTemplate("text" ,"Enter Name","name",name,setName)}
                 {InputTemplate("text" ,"Enter description","description",description,setDescription)}
                 {InputTemplate("number" ,"Enter portionSize","portionSize",portionSize,setPortionSize)}
-                {InputTemplate("text" ,"Enter categories","categories",categories,setCategories)}
-                {InputTemplate("text" ,"Enter ingredients","ingredients",ingredients,setIngredients)}
                 <button onClick={ChangeRecipeInfo}> Add recipe</button>
                 <p>{action}</p>
             </div>
