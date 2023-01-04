@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, {useState} from 'react'
 import './authentication.css';
 
@@ -43,7 +44,39 @@ const ResetPassWord = () => {
         return;
       }
       console.log();
-      setAthenticated(false); 
+      
+      
+      axios.defaults.headers.common = {Accept:`application/json`}
+      axios.interceptors.request.use(
+        config => {
+            const token = "c861931e674bb10b1989374269af8fd661584218";
+
+                config.headers['Authorization'] =  `Token ${token}`;
+            
+            config.headers['Content-Type'] = 'application/json';
+            return config;
+        },
+        error => {
+            Promise.reject(error)
+      });
+      
+      axios.get('http://127.0.0.1:8000/users/').then(res => 
+      {
+        
+        console.log(res)
+        const user = res.data.filter(item => item.email === email);
+        console.log(user)
+        if(user.length === 1){
+          console.log(user[0].id)
+          const newPasswordData ={
+            "email": email,
+            "password": pass1
+          }
+          axios.put(`http://127.0.0.1:8000/users/${user[0].id}/`, newPasswordData).then(res => console.log(res));
+        }
+       
+      })
+
     }
 
     return (
