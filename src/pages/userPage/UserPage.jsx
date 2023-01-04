@@ -34,7 +34,7 @@ const UserPage = ({token, setToken, page}) => {
   let [slugs, setSlugs] = useState()
   let [comments, SetComments] = useState()
 
-  let [users, setUsers] = useState([])
+  let [users, setUsers] = useState()
   let [myRecipes, setMyRecipes] = useState()
 
   const [ingData, setIngData] = useState();
@@ -46,16 +46,32 @@ const UserPage = ({token, setToken, page}) => {
     if(page === 0) {
       //return <UserSavedRecipes recipes ={recipes} />
     }else if(page === 1) {
-      return(
-      <div className='User_selection_results'>
-        <UserAddRecipes ingData={ingData} catData={catData}  />
-      </div>);
+      if(!ingData || !catData){
+        getIng();
+        getCat();
+      }else{
+        return(
+          <div className='User_selection_results'>
+            <UserAddRecipes ingData={ingData} catData={catData}  />
+          </div>);
+      }
+     
     }else if(page === 3) {
-      return <AdminManageRecipes  recipes={recipes} slugs={slugs}/>
+      if(recipes || slugs){
+        return <AdminManageRecipes  recipes={recipes} slugs={slugs}/>
+      }
     }else if(page === 4) {
-      return <AdminManageComment  comments={comments}/>
+      if(!comments){
+        getComments();
+      }else{
+        return <AdminManageComment  comments={comments}/>
+      }
     }else if(page === 5) {
-      return <AdminManageUser  privilege={token.supAdmin} dataUsers={users}/>
+      if(!users){
+        getUsers();
+      }else{
+        return <AdminManageUser  privilege={token.supAdmin} dataUsers={users}/>
+      }
     }else if(page === 2) {
       return (
       <div className='User_selection_results'>
@@ -70,11 +86,7 @@ const UserPage = ({token, setToken, page}) => {
     if(token){
       if(token.admin || token.supAdmin){
         getRecipes();
-        getUsers();
-        getCat();
-        getIng();
         getSlug();
-        getComments();
       }
     }
   }, [])
