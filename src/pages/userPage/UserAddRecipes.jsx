@@ -78,6 +78,7 @@ const UserAddRecipes = ({catData, ingData}) => {
     // catagory amount
     //5274179a8e21a1fbdc36c1061bd2968a623cfc8d
     const CreateRecipe = async() => {
+      setAction("creating recipe");
 
       let newName =slugify(name)
       let acceptingSlug = false;
@@ -123,11 +124,12 @@ const UserAddRecipes = ({catData, ingData}) => {
         "portionSize": 1,
         "picture": cImage //TODO. a problem where the image does not want to be saved
       };
-
+      setAction("add image");
       axios.put(`/recipes/${res.data.recipe.id}/`,imagedata,headers).then(res => {
         console.log(res);
       })
       
+      setAction("creating ingredients");
       //create new ingredients
       await RemoveMatchingItems(ingredients, ingData).map((item) => { 
         let index = ingredients.indexOf(item);
@@ -163,7 +165,7 @@ const UserAddRecipes = ({catData, ingData}) => {
      
       //get current id of ingredients
       
-
+      setAction("add amounts");
       //create the ingrdient connections
       ingredients.map((item, index) => {
         const createConnectionData = fullIngredientList.filter(element => element.name === item)
@@ -180,7 +182,8 @@ const UserAddRecipes = ({catData, ingData}) => {
           )
         }
       })
-    
+      setAction("sucess");
+
       //_______________________________________________________________________________
     }
  
