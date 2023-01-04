@@ -63,35 +63,42 @@ const LoginPage = ({token, setToken}) => {
 
       await axios.post('http://127.0.0.1:8000/api-user-login/', dataUser,{headerTokenRequest}).then(res =>
       {
-        if(shouldAthenticate){
-          var val = Math.floor(1000 + Math.random() * 9000);
-          console.log(val);
-          SetAthCode(val);
-          setAthenticate(true);
-          console.log(res)
-          setUserData( { 
-            id: res.data.id,
-            email: res.data.email,
-            password: password, 
-            admin: res.data.is_staff,
-            supAdmin: res.data.is_superuser,
-            token: res.data.token,
-          })
-          console.log(userData);
+        if(res.status === 500|| res.status===404 ) 
+        {
+          return;
+        }
+        if(res.status === 200){
 
-          sendMail()
-          alert("check mail to se athentication code")
-        }else{
-          const userResult= { 
-            id: res.data.id,
-            email: res.data.email,
-            password: password, 
-            admin: res.data.is_staff,
-            supAdmin: res.data.is_superuser,
-            token: res.data.token,
-          };
-          console.log(userResult)
-          setToken(userResult);
+          if(shouldAthenticate){
+            var val = Math.floor(1000 + Math.random() * 9000);
+            console.log(val);
+            SetAthCode(val);
+            setAthenticate(true);
+            console.log(res)
+            setUserData( { 
+              id: res.data.id,
+              email: res.data.email,
+              password: password, 
+              admin: res.data.is_staff,
+              supAdmin: res.data.is_superuser,
+              token: res.data.token,
+            })
+            console.log(userData);
+  
+            sendMail()
+            alert("check mail to se athentication code")
+          }else{
+            const userResult= { 
+              id: res.data.id,
+              email: res.data.email,
+              password: password, 
+              admin: res.data.is_staff,
+              supAdmin: res.data.is_superuser,
+              token: res.data.token,
+            };
+            console.log(userResult)
+            setToken(userResult);
+          }
         }
         
       });
