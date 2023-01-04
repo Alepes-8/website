@@ -10,6 +10,7 @@ function deleteToken() {
 }
 
 function refreshPage(){
+  window.history.replaceState(null, '/', 'LoginPage');
   window.location.reload(false);
 }
 
@@ -18,7 +19,7 @@ const Menu = ({loginStatus}) =>(
     <p> <a href="/"> Home</a></p>
     <p> <Link to="/ContactUsPage" > Contact Us </Link></p>
     <p> <Link to="/LiveChatPage" > Live chat </Link></p>
-    
+    <p> <button onClick={(e) =>test()}> testing</button></p>
     <div className="LogOutShow">
     {loginStatus
         ? <p><button className='logout' onClick={function(){ deleteToken(); refreshPage();}}> Logout</button></p> : <p></p>
