@@ -69,7 +69,6 @@ const EditRecipe = () => {
       }
     }
 
-    //TODO make sure this works as it should
     const getRecipe = async() => {
       if(recipeState === "0"){
         let response = await fetch(`/recipeSlugs/${recipeSlug}/`);
@@ -82,7 +81,6 @@ const EditRecipe = () => {
       }
     }
       
-    //TODO Seems to be a problem with changing recipes with romans changes
     const ChangeRecipeInfo = async() => {
         setAction("loading...");
         let userName = recipe.name;

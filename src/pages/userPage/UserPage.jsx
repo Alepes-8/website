@@ -32,7 +32,7 @@ const UserPage = ({token, setToken, page}) => {
   const [count, setCount] = useState(0);
   let [recipes, setRecipes] = useState([])
   let [slugs, setSlugs] = useState()
-  let [comments, SetComments] = useState()//TODO
+  let [comments, SetComments] = useState()
 
   let [users, setUsers] = useState([])
   let [myRecipes, setMyRecipes] = useState()
@@ -81,7 +81,7 @@ const UserPage = ({token, setToken, page}) => {
 
   
 
-  let getSlug =async() => {//TODO
+  let getSlug =async() => {
     let response = await fetch("/recipeSlugs/")
     let data = await response.json()
     console.log("recipeSlugs", data);

@@ -2,7 +2,6 @@ import React from 'react'
 import { useState } from 'react';
 import './manageUserUser.css';
 import axios from 'axios';
-import { async } from 'q';
 
 const ManageUsersUser = ({privilege, user}) => {
     const [showing, setShowing] = useState("flex");
@@ -24,7 +23,6 @@ const ManageUsersUser = ({privilege, user}) => {
 
 
    
-    //TODO Test and add feature. Not testable with romans changes
    const DeleteUser = async() => {
   
     console.log(user)

@@ -70,13 +70,6 @@ const UserAddRecipes = ({catData, ingData}) => {
 
 
 
-    //TODO Creating the recipe is not a problem. But todo is to create the 
-    // ingredient
-    // ingredient amount
-    // slug
-    // catagories
-    // catagory amount
-    //5274179a8e21a1fbdc36c1061bd2968a623cfc8d
     const CreateRecipe = async() => {
       setAction("creating recipe");
 
@@ -102,7 +95,7 @@ const UserAddRecipes = ({catData, ingData}) => {
         "categories": [],
         "ingredients": [],
         "author": "None",
-        "picture": null //TODO. a problem where the image does not want to be saved
+        "picture": null 
       };
       const headers = {
         'Content-type':'application/json',
@@ -122,7 +115,7 @@ const UserAddRecipes = ({catData, ingData}) => {
         "name": name,
         "description": description,
         "portionSize": 1,
-        "picture": cImage //TODO. a problem where the image does not want to be saved
+        "picture": cImage 
       };
       setAction("add image");
       axios.put(`/recipes/${res.data.recipe.id}/`,imagedata,headers).then(res => {
