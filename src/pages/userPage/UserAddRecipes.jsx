@@ -78,12 +78,7 @@ const UserAddRecipes = ({catData, ingData}) => {
     // catagory amount
     //5274179a8e21a1fbdc36c1061bd2968a623cfc8d
     const CreateRecipe = async() => {
-      
- 
 
-
-
-      
       let newName =slugify(name)
       let acceptingSlug = false;
       console.log(newName);
@@ -187,25 +182,6 @@ const UserAddRecipes = ({catData, ingData}) => {
       })
     
       //_______________________________________________________________________________
-
-
-      /*
-      await RemoveMatchingItems(categories, catData).filter((item) => {
-        let index = categories.indexOf(item);        
-        fetch("/categories/", {
-        method:'POST',
-        headers:{
-          'Content-type':'application/json',
-        },
-        body:JSON.stringify(   {
-          "name": item,
-          "description": categories[index] 
-        })})        
-      })
-      CreateIngredients();
-
-      setAction("success");
-    */
     }
  
     function AddItems(term, desc, group, groupDesc, set, setDesc, extra, groupExtra, setExtra){
