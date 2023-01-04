@@ -2,6 +2,7 @@ import './userAddRecipes.css';
 import React, {useState,useEffect} from 'react';
 import useToken from '../../useToken';
 import axios from 'axios';
+import slugify from 'react-slugify';
 
 const validFileTypes = ["image/jpg", "image/jpeg"]
 function timeout(number) {
@@ -30,20 +31,12 @@ const UserAddRecipes = ({catData, ingData}) => {
     const [ingSearchTerm, setIngSearchTerm] = useState('');
     const [ingSearchDesc, setIngSearchDesc] = useState('');
     const [ingSearchAmount, setIngSearchAmount] = useState('');
-
-    const [auth, setAuth] = useState();
-
-    const [imageFile, setImageFile] = useState();
-    const [formTest, setFormTest] = useState();
     
-    const [data, setData] = useState({
-      image_url: "",
-    });
+    const [cImage, setCImage] = useState();
+
 
     const handleImageChange = (e) => {
-      let newData = { ...data };
-      newData["image_url"] = e.target.files[0];
-      setData(newData);
+      setCImage(e.target.files[0]);
     };
 
     useEffect(() => {
@@ -67,11 +60,11 @@ const UserAddRecipes = ({catData, ingData}) => {
       if(!portionSize){
         setAction("Missing a portionSize, or is a letter");
         return;
-      }
+      }/*
       if(!validFileTypes.find(type => type === data.image_url.type)){
         setAction("Missing a image, or wrong format. jpg/jpeg");
         return;
-      }
+      }*/
       CreateRecipe();
     }
 
@@ -85,12 +78,17 @@ const UserAddRecipes = ({catData, ingData}) => {
     // catagory amount
     //5274179a8e21a1fbdc36c1061bd2968a623cfc8d
     const CreateRecipe = async() => {
-      /*
+      
+ 
+
+
+
+      
       let newName =slugify(name)
       let acceptingSlug = false;
       console.log(newName);
       do{
-        let response = await fetch(`recipes/${newName}`)
+        let response = await fetch(`/recipeSlugs/${newName}`)
         if(response.status === 404){
           acceptingSlug = true;
         }
@@ -99,9 +97,8 @@ const UserAddRecipes = ({catData, ingData}) => {
           newName = newName + extra;
         }
       }while(!acceptingSlug);
-      */
+      
       const userData = {
-        "id": 8,
         "name": name,
         "description": description,
         "portionSize": 1,
@@ -113,14 +110,29 @@ const UserAddRecipes = ({catData, ingData}) => {
       };
       const headers = {
         'Content-type':'application/json',
-        //"Content-Type": "multipart/form-data",
+        "Content-Type": "multipart/form-data",
       }    
       console.log(userData)
 
       //create the recipe
-      const finalData = {"recipe": userData, "slug":""};
+      const finalData = {"recipe": userData, "slug":newName};
       const res = await axios.post(`/recipeSlugs/`, finalData, {headers})
       console.log(res);
+      if(res.status !== 201){
+        alert("may need to change name or the website may be down for adding recipes")
+      }
+
+      const imagedata = {
+        "name": name,
+        "description": description,
+        "portionSize": 1,
+        "picture": cImage //TODO. a problem where the image does not want to be saved
+      };
+
+      axios.put(`/recipes/${res.data.recipe.id}/`,imagedata,headers).then(res => {
+        console.log(res);
+      })
+      
       //create new ingredients
       await RemoveMatchingItems(ingredients, ingData).map((item) => { 
         let index = ingredients.indexOf(item);
@@ -321,10 +333,16 @@ const UserAddRecipes = ({catData, ingData}) => {
           <div>
             <h1>AddRecipes</h1>
 
-            <input type="file" 
-              name="image_url"
+            <input
+              className=""
+              required
+              type="file"
+              name="image"
               accept="image/jpeg,image/png,image/gif"
-              onChange={(e) => {handleImageChange(e)}}/>
+              onChange={(e) => {
+                handleImageChange(e);
+              }}
+            />
 
             {InputTemplate("text" ,"Enter Your Name","name",name,setName)}
             {InputTemplate("text" ,"Enter description","description",description,setDescription)}

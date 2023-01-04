@@ -16,8 +16,12 @@ axios.interceptors.request.use(
           config.headers['Authorization'] =  `Token ${userToken.token}`;
         }
       }
-     
       config.headers['Content-Type'] = 'application/json';
+      console.log("hejsan", config.url, config.url === '/recipes/40/', config.url.includes("recipes"));
+
+      if(config.url.includes("recipes")){
+        config.headers['Content-Type'] = 'multipart/form-data';
+      }
       return config;
   },
   error => {
