@@ -100,19 +100,21 @@ const LoginPage = ({token, setToken}) => {
 
     const responseFacebook = async (response) => {
       let fbResponse = await fbLogin(response.accessToken);
-      console.log(fbResponse);
-      console.log(response);
-
-      const userResult= { 
-        id: null,
-        email: fbResponse.email,
-        password: password, 
-        admin: false,
-        supAdmin: false,
-        token: fbResponse.key,
-      };
-      console.log(userResult)
-      setToken(userResult);
+      console.log("fbR ", fbResponse);
+      console.log("R ", response);
+      if(fbResponse === 200){
+        const userResult= { 
+          id: null,
+          email: response.email,
+          password: password, 
+          admin: false,
+          supAdmin: false,
+          token: response.key,
+        };
+        console.log("result ", userResult)
+        setToken(userResult);
+      }
+      
     };
 
     return (
