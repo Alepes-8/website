@@ -1,4 +1,6 @@
 import React, {useState} from 'react'
+import FacebookLogin from 'react-facebook-login';
+import fbLogin from './fbLogin';
 import './authentication.css';
 import axios from 'axios';
 import { Checkbox } from '@material-ui/core';
@@ -96,6 +98,12 @@ const LoginPage = ({token, setToken}) => {
       
     }
 
+    const responseFacebook = async (response) => {
+      let fbResponse = await fbLogin(response.accessToken);
+      console.log(fbResponse);
+      console.log(response);
+    };
+
     return (
       <div className='baseBackground'>
        {!athenticate 
@@ -127,7 +135,14 @@ const LoginPage = ({token, setToken}) => {
             />
           </div>
           <button onClick={(e) => handleLogin()}>Login </button>
-         
+
+          <div className="SocialLogin">
+              <FacebookLogin
+                appId= '690160039500591'
+                fields="name,email"
+                callback={responseFacebook}
+              />
+          </div>
 
           <a href="/Register" className ='link_button'>Don't have an account? Register</a>
           <a href="/ResetPassWord" className ='link_button'>Forgotten Password</a>
