@@ -168,7 +168,11 @@ const UserPage = ({token, setToken, page}) => {
       <button onClick={() => setCount(3)}>Manage Recipes</button>
       <button onClick={() => setCount(4)}>Manage Comments</button>
       <button onClick={() => setCount(5)}>Manage Users</button>
-      <button onClick={() => setCount(2)}>Settings</button>
+      {token.id === null
+      ? <p></p>
+      :<button onClick={() => setCount(2)}>Settings</button>
+      }
+      
     </div>);
   }
 
