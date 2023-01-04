@@ -60,11 +60,11 @@ const UserAddRecipes = ({catData, ingData}) => {
       if(!portionSize){
         setAction("Missing a portionSize, or is a letter");
         return;
-      }/*
-      if(!validFileTypes.find(type => type === data.image_url.type)){
+      }
+      if(!cImage){
         setAction("Missing a image, or wrong format. jpg/jpeg");
         return;
-      }*/
+      }
       CreateRecipe();
     }
 
@@ -72,7 +72,7 @@ const UserAddRecipes = ({catData, ingData}) => {
 
     const CreateRecipe = async() => {
       setAction("creating recipe");
-
+      
       let newName =slugify(name)
       let acceptingSlug = false;
       console.log(newName);
@@ -316,7 +316,7 @@ const UserAddRecipes = ({catData, ingData}) => {
               }}
             />
 
-            {InputTemplate("text" ,"Enter Your Name","name",name,setName)}
+            {InputTemplate("text" ,"Enter recipe name","name",name,setName)}
             {InputTemplate("text" ,"Enter description","description",description,setDescription)}
             {InputTemplate("number" ,"Enter portionSize","portionSize",portionSize,setPortionSize)}
             
