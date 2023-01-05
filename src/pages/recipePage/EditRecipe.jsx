@@ -94,6 +94,10 @@ const EditRecipe = () => {
         let userDesc = recipe.description;
         let UserPort = recipe.portionSize;
         
+        if(userName !== ""){
+          userName = name;
+        }
+
         if(description !== ""){
           userDesc = description;
         }
