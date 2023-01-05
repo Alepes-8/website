@@ -3,12 +3,11 @@
  - download the ReactAlepesSetup and place it where you want to set up the front end. Then run it. With it you will install the respoitory and the needed imports.
  - Then you just need to install the backend https://github.com/oliolo/backend which has it's own installation.
 
-# Setting Up the Project on your computer methord 1
+# Setting Up the Project on your computer methord 2
  - Install nodeJS. Try the recomended version or newer. Should still work with anything above version 18.3.0
 
  - download the SetupBack&frontend where you want to have your application and run it
-       - with it a frontend by react and backend should work. 
- - Then you just need to install the backend https://github.com/oliolo/backend which has it's own installation.
+       - with it a frontend by react and backend should work. After you make sure the private keys are placed correctly. Follow https://github.com/oliolo/backend instruction for the placement
 
 # Setting Up the Project on your computer methord 3
 
