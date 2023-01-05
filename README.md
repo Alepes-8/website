@@ -1,10 +1,15 @@
 # Setting Up the Project on your computer
 - Install nodeJS. Try the recomended version or newer. Should still work with anything above version 18.3.0
 - Clone the reposity onto your computer and run the three two commands. ( though this can couse issues due to the global beahvior of it. So for more info read "Possible problems")
-  - npm install react-scripts --save
-  - npm install react-router-dom --save
-  - npm install react-slugify
-  - npm install axios --save
+    - git checkout develop
+    - npm install react-scripts --save
+    - npm install react-router-dom --save 
+    - npm install react-slugify
+    - npm install axios --save
+    - npm install --save --legacy-peer-deps @material-ui/core
+    - npm install websocket
+    - npm i react-facebook-login --force
+    - npm install --save --legacy-peer-deps @material-ui/core
 - After that you should only need to run "npm run start" to start the code or run the batchfile "start"
 
 ## If you have problems
