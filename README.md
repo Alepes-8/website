@@ -23,6 +23,8 @@
     - npm i react-facebook-login --force
     - npm install --save --legacy-peer-deps @material-ui/core
 - After that you should only need to run "npm run start" to start the code or run the batchfile "start"
+- Backend which it is adjusted for is https://github.com/oliolo/backend which has it's own installation.
+
 
 ## If you have problems
 - If npm does not work, check the nodejs version and that it really is downloaded. [Possible help to the solution](https://linuxhint.com/npm-not-recognized-internal-external-command/)that can help .
