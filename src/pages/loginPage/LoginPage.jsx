@@ -160,7 +160,7 @@ const LoginPage = ({token, setToken}) => {
 
           <div className="SocialLogin">
               <FacebookLogin
-                appId= '690160039500591'
+                appId= 'YOUR_FACEBOOK_APP_ID'
                 fields="name,email"
                 callback={responseFacebook}
               />
