@@ -11,16 +11,16 @@ const LoginPage = ({token, setToken}) => {
     const [password, setPassword] = useState("");
     const [shouldAthenticate, setShouldAthenticate] = useState(false);
     const [athenticate, setAthenticate] = useState(false);
-    const [athCode, SetAthCode] = useState(0);
+    const [athCode, SetAthCode] = useState();
     const [inputAthenticateValue, setInputAthenticateValue] = useState(1)
     const [userData, setUserData] = useState();
-
+    let testValue = 0;
     // User Login info, temp database
     function checkAthentication(){
-      console.log(inputAthenticateValue, athCode)
+      console.log(inputAthenticateValue, athCode, testValue)
       if(athCode.toString() !== inputAthenticateValue){
         alert("wrong code")
-        SetAthCode(0);
+        testValue = 0;
         setInputAthenticateValue(1);
         setAthenticate(false)
         setUserData({})
@@ -35,10 +35,10 @@ const LoginPage = ({token, setToken}) => {
 
 
       const contactFormData=new FormData();
-        contactFormData.append('full_name','conformation')
-        contactFormData.append('email', 'oliolo.project1@gmail.com')
-        contactFormData.append('query', athCode.toString())
-      console.log( contactFormData)
+      contactFormData.append('full_name','conformation')
+      contactFormData.append('email', 'oskar.m7011e@gmail.com')
+      contactFormData.append('query', testValue)
+      console.log( " data", contactFormData,testValue)
       try{
           axios.post('http://127.0.0.1:8000/contact/', contactFormData).then(res => console.log("mail response", res))
       }catch(error){
@@ -63,27 +63,29 @@ const LoginPage = ({token, setToken}) => {
 
       await axios.post('http://127.0.0.1:8000/api-user-login/', dataUser,{headerTokenRequest}).then(res =>
       {
-        if(res.status === 500|| res.status===404 ) 
-        {
-          return;
-        }
-        if(res.status === 200){
+        var val = Math.floor(1000 + Math.random() * 9000);
+        console.log(val);
+        SetAthCode(val);
+        testValue = val;
 
           if(shouldAthenticate){
-            var val = Math.floor(1000 + Math.random() * 9000);
-            console.log(val);
-            SetAthCode(val);
+           
             setAthenticate(true);
             console.log(res)
-            setUserData( { 
+            const userTest = {
               id: res.data.id,
               email: res.data.email,
               password: password, 
               admin: res.data.is_staff,
               supAdmin: res.data.is_superuser,
               token: res.data.token,
-            })
-            console.log(userData);
+            }
+            console.log("userdata");
+            console.log("userdata", userTest);
+            console.log(athCode)
+            console.log(testValue)
+            setUserData( userTest)
+            
   
             sendMail()
             alert("check mail to se athentication code")
@@ -99,7 +101,7 @@ const LoginPage = ({token, setToken}) => {
             console.log(userResult)
             setToken(userResult);
           }
-        }
+        
         
       });
       
