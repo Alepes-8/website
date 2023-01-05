@@ -1,0 +1,47 @@
+.AdminPage{
+    display: flex;
+    align-items: left;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 100vh;
+
+    padding: 2rem 6rem;
+
+    background-image: var(--color-background);
+}
+
+.AdminPage_Button_Navigation{
+    display: flex;
+    align-items: left;
+    flex-direction: row;
+    gap: 20px;
+
+}
+.AdminPage_Button_Navigation button{
+    background-color: #3f51b5;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    outline: 0;
+    text-transform: uppercase;
+    margin: 10px;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px rgb(0, 0, 0);
+    transition-duration: 250ms;
+}
+
+.AdminPage_Button_Navigation button:hover{
+    background-color: #283593;
+}
+
+.AdminPage_selection_results{
+    display: flex;
+    align-items: left;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 100vh;
+
+    background-color: rgb(124, 124, 124);
+
+    border: 3px solid rgb(0, 0, 0);
+}

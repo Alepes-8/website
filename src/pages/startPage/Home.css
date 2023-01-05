@@ -1,0 +1,33 @@
+.recipe_alternative_button{
+   
+    background-color:#333;
+    padding:20px;
+    max-height: 380px;
+    border-radius:15px;
+    color:#fff;
+
+    font-size:40px;
+    font-family:sans-serif;
+    word-wrap: break-word; 
+
+    
+}
+
+.recipe_alternative_button p {
+
+    object-fit: contain;
+}
+
+
+.video{
+    
+    border-radius: 8px;
+
+    border: 3px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    padding: 1px;
+
+    box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.5);
+    width:600px;
+    height:300px;
+}

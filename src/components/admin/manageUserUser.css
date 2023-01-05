@@ -1,0 +1,32 @@
+.User_Template{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+
+    background-color: aliceblue;
+    margin: 10px;
+    border-radius: 5px;
+    gap:20px;
+
+    padding: 2px 5px;
+    word-break: break-all;
+}
+
+.User_Template button {
+    background-color: brown;
+}
+
+
+@media screen and (max-width: 650px) {
+    .User_Template {
+        display: flex;
+        align-items: left;
+        flex-direction: column;
+        gap:2px;
+
+    }   
+
+
+
+}
+

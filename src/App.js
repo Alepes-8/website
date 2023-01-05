@@ -1,23 +1,49 @@
-import logo from './logo.svg';
+
 import './App.css';
+import React from 'react'
+import {Routes, Route} from 'react-router-dom';
+
+//import RecipeList from './RecipeList';
+import {NavBar} from './components';
+import {Footer} from './containers';
+import { StartPage, RecipePage, UsersRecipePage, UserPage, EditRecipe, ContactUsPage, LiveChatPage} from './pages';
+import useToken from './useToken';
 
 function App() {
+  const {token, setToken } = useToken();
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='gradient_bg'>
+      {token
+        ? <NavBar loginStatus={true}/>  : <NavBar loginStatus={false} />
+      }
+      </div> 
+
+      <Routes>
+        <Route path="/" element={<StartPage/>}/>
+        
+        <Route path="/recipeSlugs/:id" element={<RecipePage/>}/>
+          
+        <Route path="/EditRecipe/:id/:status" element={<EditRecipe/>}/>
+
+        <Route path="/LoginPage" element={<UserPage token={token} setToken = {setToken} page={1}/>}/>
+
+        <Route path="/Register" element={<UserPage token={token} setToken = {setToken} page={2}/>}/>
+
+        <Route path='/ResetPassWord'  element={<UserPage token={token} setToken = {setToken} page={3}/>}/>
+
+        <Route path="/ContactUsPage" element={<ContactUsPage/>}/>
+
+        <Route path="/LiveChatPage" element={<LiveChatPage/>}/>
+
+        <Route path="/UsersRecipePage" element={<UsersRecipePage/>}/>
+      </Routes>
+
+      <div className='footer_bg'>
+        <Footer/>
+      </div>
+      
     </div>
   );
 }

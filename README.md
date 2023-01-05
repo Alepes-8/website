@@ -1,3 +1,49 @@
+# Setting Up the Project on your computer methord 1
+ - Install nodeJS. Try the recomended version or newer. Should still work with anything above version 18.3.0
+ - download the ReactAlepesSetup and place it where you want to set up the front end. Then run it. With it you will install the respoitory and the needed imports.
+ - Then you just need to install the backend https://github.com/oliolo/backend which has it's own installation.
+
+# Setting Up the Project on your computer methord 2
+ - Install nodeJS. Try the recomended version or newer. Should still work with anything above version 18.3.0
+
+ - download the SetupBack&frontend where you want to have your application and run it
+       - with it a frontend by react and backend should work. After you make sure the private keys are placed correctly. Follow https://github.com/oliolo/backend instruction for the placement
+
+# Setting Up the Project on your computer methord 3
+
+- Install nodeJS. Try the recomended version or newer. Should still work with anything above version 18.3.0
+- Clone the reposity onto your computer and run the three two commands. ( though this can couse issues due to the global beahvior of it. So for more info read "Possible problems")
+    - git checkout develop
+    - npm install react-scripts --save
+    - npm install react-router-dom --save 
+    - npm install react-slugify
+    - npm install axios --save
+    - npm install --save --legacy-peer-deps @material-ui/core
+    - npm install websocket
+    - npm i react-facebook-login --force
+    - npm install --save --legacy-peer-deps @material-ui/core
+- After that you should only need to run "npm run start" to start the code or run the batchfile "start"
+- Backend which it is adjusted for is https://github.com/oliolo/backend which has it's own installation.
+
+
+## If you have problems
+- If npm does not work, check the nodejs version and that it really is downloaded. [Possible help to the solution](https://linuxhint.com/npm-not-recognized-internal-external-command/)that can help .
+
+## Possible problems 
+  - "npm install react-scripts --save" can cause issues with other projects... you should NOT install react-scripts globally like this. https://github.com/facebook/create-react-app/issues/2436#issuecomment-306830791 for more information
+
+## Getting Social Login to work
+
+Run the frontend on https to work with facebook social login.
+Go to https://developers.facebook.com/apps and create a new app. 
+Select the app’s type as Business and leave everything as default. 
+Go ahead and create the app. You will be redirected to the new app’s dashboard page. 
+On the sidebar, you will get a link that says, “Add product”. Click it. Then find the “Facebook Login” and click on its Set Up button.
+Next, choose WEB, and in the site, URL input box write ‘localhost:8000’. 
+After this, click save and keep clicking on continue.
+Look at the sidebar and click on Settings>Basic. 
+There you will get App ID which you want to place on line 163 in the LoginPage.jsx file in the React frontend.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -6,7 +52,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm run start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
