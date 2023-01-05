@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import './authentication.css';
+import axios from 'axios';
 
 function InputTemplate (inType, inHolder, inName, inValue, inSet) {
   return (
@@ -42,8 +43,46 @@ const ResetPassWord = () => {
         setStatus("The Passwords Does Not Match")
         return;
       }
-      console.log();
-      setAthenticated(false); 
+      
+      
+      axios.defaults.headers.common = {Accept:`application/json`}
+      axios.interceptors.request.use(
+        config => {
+            const token = "c861931e674bb10b1989374269af8fd661584218";
+
+                config.headers['Authorization'] =  `Token ${token}`;
+            
+            config.headers['Content-Type'] = 'application/json';
+            return config;
+        },
+        error => {
+            Promise.reject(error)
+      });
+      
+
+      axios.get('http://127.0.0.1:8000/users/').then(res =>  {
+        
+        console.log("res", res)
+        const userData = res.data.filter((item) => {
+          if(item.email === email){
+            return item;
+          }
+        })
+        console.log("userData", userData)
+
+        const change ={
+          "email": email,
+          "password": pass1,
+        };
+        console.log("change", change)
+
+        axios.put(`http://127.0.0.1:8000/users/${userData[0].id}/`,change ).then(resp => {
+          console.log("resonse",resp)
+          setStatus("changed password")
+
+        })
+      })
+
     }
 
     return (
