@@ -34,21 +34,13 @@ const Register = ({setToken}) => {
         "createdRecipes": []
       }
 
-      axios.defaults.headers.common = {Accept:`application/json`}
-      axios.interceptors.request.use(
-        config => {
-            const token = "c861931e674bb10b1989374269af8fd661584218";
-
-                config.headers['Authorization'] =  `Token ${token}`;
-            
-            config.headers['Content-Type'] = 'application/json';
-            return config;
-        },
-        error => {
-            Promise.reject(error)
-      });
+     
+      const header = {
+        'Accept':`application/json`,
+        'Content-Type': 'application/json'
+      }
       
-      axios.post('http://127.0.0.1:8000/users/', user).then(res => 
+      axios.post('http://127.0.0.1:8000/users/', user, {header}).then(res => 
       {
         
         console.log(res)
