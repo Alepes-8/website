@@ -1,18 +1,18 @@
-# Setting Up the Project on your computer methord 1
+# Setting Up the Project on your computer method 1
  - Install nodeJS. Try the recomended version or newer. Should still work with anything above version 18.3.0
- - download the ReactAlepesSetup and place it where you want to set up the front end. Then run it. With it you will install the respoitory and the needed imports.
+ - Download the ReactAlepesSetup and place it where you want to set up the front end. Then run it. With it you will install the respoitory and the needed imports.
  - Then you just need to install the backend https://github.com/oliolo/backend which has it's own installation.
 
-# Setting Up the Project on your computer methord 2
+# Setting Up the Project on your computer method 2
  - Install nodeJS. Try the recomended version or newer. Should still work with anything above version 18.3.0
 
- - download the SetupBack&frontend where you want to have your application and run it
+ - Download the SetupBack&frontend where you want to have your application and run it
        - with it a frontend by react and backend should work. After you make sure the private keys are placed correctly. Follow https://github.com/oliolo/backend instruction for the placement
 
-# Setting Up the Project on your computer methord 3
+# Setting Up the Project on your computer method 3
 
 - Install nodeJS. Try the recomended version or newer. Should still work with anything above version 18.3.0
-- Clone the reposity onto your computer and run the three two commands. ( though this can couse issues due to the global beahvior of it. So for more info read "Possible problems")
+- Clone the reposity onto your computer and run the three two commands. ( though this can couse issues due to the global behavior of it. So for more info read "Possible problems")
     - git checkout develop
     - npm install react-scripts --save
     - npm install react-router-dom --save 
